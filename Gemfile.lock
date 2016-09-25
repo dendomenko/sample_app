@@ -39,6 +39,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.0)
+    bootstrap-sass (2.3.2.0)
+      sass (~> 3.2)
     builder (3.2.2)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -187,6 +189,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bootstrap-sass (= 2.3.2.0)
   byebug
   capybara (= 2.1.0)
   coffee-rails (~> 4.2)
