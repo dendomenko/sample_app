@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:9.4.1
     ports:
-      - "5432:5432"
+      - "5555:5555"
 
   web:
     build: .

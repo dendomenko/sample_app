@@ -1,24 +1,11 @@
-# README
+## How to run app using docker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Install docker and docker-compose.
+2. Run containers using ```sudo docker-compose up```
+3. Check container id using ```sudo docker ps```
+4. Create DB ```sudo docker exec <your web container id> rails db:create```
+5. Migrate DB ```sudo docker exec <your web container id> rails db:migrate```
+6. Restart containers (if problem with server start check ```/tmp/pids/server.pid``` if this file exist delete it and start again)
+7. Test using ```localhost:3000```
 
-Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
