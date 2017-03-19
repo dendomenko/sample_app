@@ -1,24 +1,30 @@
 class ProjectsController < ApplicationController
-  def new
-    @project = Project.new
+  def new()
+    user = User.find(params[:user_id])
+    @project = user.projects.build
   end
 
   def index
-    @projects = Project.all
+    user = User.find(params[:user_id])
+    @projects = user.projects
   end
 
   def create
-    @project = Project.new(project_params)
+    user = User.find(params[:user_id])
+    @project = user.projects.create(project_params)
+
     if @project.save
-      redirect_to @project
+      redirect_to user_projects_path(user)
     else
       render 'new'
     end
   end
 
   def show
-    @project = Project.find(params[:id])
+    user = User.find(params[:user_id])
+    @project = user.projects.find(params[:id])
   end
+
   private
 
   def project_params

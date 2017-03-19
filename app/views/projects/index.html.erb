@@ -1,4 +1,9 @@
 <h1>Projects</h1>
 <div>List of projects</div>
 
+<% @projects.each do |project| %>
+    <p> <%= project.name %> </p>
+    <p> <%= project.task_name %> </p>
+<% end %>
+
 <%= link_to 'New project', new_user_project_path %>

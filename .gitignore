@@ -18,6 +18,7 @@
 !/tmp/.keep
 
 node_modules
+.idea
 
 # Ignore Byebug command history file.
 .byebug_history
