@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  has_many :roles
+  has_many :roles, dependent: :destroy
   has_many :projects, through: :roles
 
   before_save { self.email = email.downcase }

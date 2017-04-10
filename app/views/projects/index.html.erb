@@ -1,9 +1,31 @@
 <h1>Projects</h1>
 <div>List of projects</div>
+<table class="table">
+  <thead>
+  <tr>
+    <td>NAME</td>
+    <td>TASK</td>
+    <td>ROLE</td>
+    <td>Add user</td>
+    <td>GO</td>
+    <td>Delete</td>
+  </tr>
+  </thead>
+  <% @projects.each do |project| %>
 
-<% @projects.each do |project| %>
-    <p> <%= project.name %> </p>
-    <p> <%= project.task_name %> </p>
-<% end %>
+      <tbody>
+      <tr>
+        <td><p> <%= project.name %> </p></td>
+        <td><p> <%= project.task_name %> </p></td>
+        <td><p> <%= project.roles.first.role %></p></td>
+        <td>  <%= link_to 'Add', user_project_add_user_path(@user, project) %>  </td>
+        <td>  <%= link_to 'Look', user_project_path(@user, project) %>  </td>
+        <td>  <%= link_to 'Delete', user_project_path(@user, project), method: 'delete' %>  </td>
+      </tr>
+      </tbody>
+
+  <% end %>
+</table>
+
 
 <%= link_to 'New project', new_user_project_path %>

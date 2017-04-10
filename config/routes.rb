@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   resources :users do
-    resources :projects
+    resources :projects do
+        get 'add_user'
+        post 'add_user_create'
+    end
   end
 
   resources :sessions, only: [:new, :create, :destroy]

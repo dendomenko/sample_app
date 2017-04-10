@@ -1,11 +1,7 @@
 <% provide(:title, @project.name) %>
+<h1>This is  <%= @project.name%> project</h1>
 <div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= @project.name %>
-        <%= @project.task_name %>
-      </h1>
-    </section>
-  </aside>
+  <div class="container">
+      <p><strong>Task name:</strong> <%= @project.task_name %></p>
+  </div>
 </div>
