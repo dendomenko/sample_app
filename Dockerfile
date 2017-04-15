@@ -28,6 +28,9 @@ RUN apt-get install -y nodejs
 # ADD package.json $APP_HOME/
 
 RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/tmp/*
+
+#install 
+RUN npm install -g nvm
 RUN npm install -g yarn
 RUN npm install -g webpack
 

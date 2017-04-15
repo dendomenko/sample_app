@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 
 # gem for project
-gem 'react-rails'
+# gem 'react-rails'
 gem 'rubocop', require: false
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -44,7 +44,11 @@ gem 'rspec-rails', '2.13.1'
 gem 'pg'
 gem 'rake', '< 11.0'
 
-gem 'webpacker', github: "rails/webpacker"
+
+gem 'react_on_rails', '~>6'    
+
+
+# gem 'webpacker', github: "rails/webpacker"
 gem 'foreman'
 
 
