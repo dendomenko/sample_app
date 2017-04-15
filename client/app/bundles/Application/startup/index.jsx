@@ -19,6 +19,7 @@ export default (_props, railsContext) => {
 
     const store = configureStore(_props);
 
+    console.log('dede');
     let error;
     let redirectLocation;
     let routeProps;

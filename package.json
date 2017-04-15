@@ -9,6 +9,8 @@
   "scripts": {
     "postinstall": "cd client && yarn install",
     "rails-server": "echo 'visit http://localhost:3000/hello_world' && foreman start -f Procfile.dev",
-    "test": "rspec"
+    "test": "rspec",
+    "build:dev:client": "(cd client && yarn run build:dev:client --silent)",
+    "build:dev:server": "(cd client && yarn run build:dev:server --silent)"
   }
 }

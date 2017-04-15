@@ -7,7 +7,9 @@ ReactOnRails.configure do |config|
   config.generated_assets_dir = File.join(%w(app assets webpack))
 
   # Define the files we need to check for webpack compilation when running tests.
-  config.webpack_generated_files = %w( webpack-bundle.js )
+  # config.webpack_generated_files = %w( webpack-bundle.js )
+  config.webpack_generated_files = %w[ app-bundle.js vendor-bundle.js app-bundle.css
+                                       vendor-bundle.css server-bundle.js ]
 
   # This is the file used for server rendering of React when using `(prerender: true)`
   # If you are never using server rendering, you may set this to "".
@@ -30,7 +32,7 @@ ReactOnRails.configure do |config|
   # `render_component` view helper method.
   ################################################################################
   # default is false
-  config.prerender = false
+  config.prerender = true
 
   # default is true for development, off otherwise
   config.trace = Rails.env.development?

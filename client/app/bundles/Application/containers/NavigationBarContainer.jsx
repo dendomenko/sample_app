@@ -15,7 +15,7 @@ class NavigationBarContainer extends React.PureComponent {
 
     render() {
         // const { pathname } = this.props;
-
+        console.info('render navbar');
         return (
             <NavigationBar />
         );
