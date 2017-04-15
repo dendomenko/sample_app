@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= full_title(yield(:title)) %> </title>
-    <%= csrf_meta_tags %>
+
+<head>
+  <title>
+    <%= full_title(yield(:title)) %>
+  </title>
+  <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-   <%= render 'layouts/header' %>
+<body>
+  <!--<%= render 'layouts/header' %>-->
+
+  <%= react_component("NavigationBarApp", props: @hello_world_props, prerender: false) %>
+
     <div class="container">
       <% flash.each do |key, value| %>
-         <div class="alert alert-<%= key %>"><%= value %></div>
-      <% end %>
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-       <%= debug(params) if Rails.env.development? %>
+        <div class="alert alert-<%= key %>">
+          <%= value %>
+        </div>
+        <% end %>
+          <%= yield %>
+            <%= render 'layouts/footer' %>
+              <%= debug(params) if Rails.env.development? %>
     </div>
-  </body>
+
+    <%= redux_store_hydration_data %>
+</body>
+
 </html>

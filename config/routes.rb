@@ -18,5 +18,7 @@ Rails.application.routes.draw do
   match '/contact',  to: 'static_pages#contact', via: 'get'
 
 
+get "react-router(/*all)", to: "static_pages#home"
+mount ActionCable.server => "/cable"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

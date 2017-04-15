@@ -7,3 +7,4 @@
 
   <%= link_to 'Sign up now!', signup_path, class: "btn btn-large btn-primary" %>
 </div>
+<%= react_component("App", props: @hello_world_props, prerender: false) %>
