@@ -5,7 +5,6 @@
 // webpack.rails.config.
 const webpack = require('webpack');
 const path = require('path');
-const WebpackNotifierPlugin = require('webpack-notifier');
 
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild
@@ -25,16 +24,19 @@ module.exports = {
             'es5-shim/es5-sham',
             'jquery',
             'turbolinks',
+
+            // Below libraries are listed as entry points to be sure they get included in
+            // the vendor-bundle.js. Note, if we added some library here, but don't use it
+            // in the app-bundle.js, then we just wasted a bunch of space.
             'axios',
-            'classnames',
             'immutable',
             'lodash',
+            'react-bootstrap',
             'react-dom',
             'react-redux',
             'react-on-rails',
             'react-router-redux',
-            'redux-thunk',
-            'redux-saga'
+            'redux-thunk'
         ],
 
         // This will contain the app entry points defined by webpack.hot.config and
@@ -46,13 +48,14 @@ module.exports = {
             '.js', '.jsx'
         ],
         alias: {
+            // libs: path.resolve(__dirname, 'app/libs'),
             react: path.resolve(__dirname, 'node_modules/react'),
             'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
         }
     },
 
     plugins: [
-        new WebpackNotifierPlugin(), new webpack.DefinePlugin({
+        new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify(nodeEnv)
             },
@@ -91,9 +94,6 @@ module.exports = {
                     }
                 }
             }, {
-                test: require.resolve('uikit'),
-                loader: 'expose-loader?UIkit'
-            }, {
                 test: require.resolve('jquery'),
                 use: [
                     {
@@ -111,7 +111,27 @@ module.exports = {
                 }
             },
 
-            // Use one of these to serve jQuery for Bootstrap scripts:
+            // Use one of these to serve jQuery for Bootstrap scripts: Bootstrap 3
+            {
+                test: /bootstrap-sass\/assets\/javascripts\//,
+                use: {
+                    loader: 'imports-loader',
+                    options: {
+                        jQuery: 'jquery'
+                    }
+                }
+            },
+
+            // Bootstrap 4
+            {
+                test: /bootstrap\/dist\/js\/umd\//,
+                use: {
+                    loader: 'imports-loader',
+                    options: {
+                        jQuery: 'jquery'
+                    }
+                }
+            }
         ]
     }
 };

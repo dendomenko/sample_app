@@ -1,14 +1,12 @@
 // eslint-disable new-cap
 import React from 'react';
-import UIkit from 'uikit';
-import css from 'uikit/'
 import { PATHS } from '../../constants/paths';
 
 /*
 *TODO: make active link
 */
 
-const NavigationBar = (props) => {
+const NavigationBar = () => {
     // const { pathname } = props;
 
 

@@ -6,23 +6,6 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const cfg = {
-  noParseTest: /\.min\.js$/,
-  jsLoaderTest: /\.jsx?$/,
-  cssLoaderTest: /\.css$/,
-  scssLoaderTest: /\.scss$/,
-  imagesLoaderTest: /\.(jpe?g|png|gif|svg|ico)$/,
-  fontsLoaderTest: /\.(woff2?|ttf|eot|svg)$/,
-  jsonLoaderTest: /\.json$/,
-  cssLoaderParams: function (params) {
-    return (JSON.stringify({modules: true, importLoaders: params.importLoaders, localIdentName: '[name]__[local]}__[hash:base64:5]'}))
-  },
-  sassLoaderParams: (JSON.stringify({
-    includePaths: [process.cwd()]
-  }))
-
-}
-
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild
   ? 'development'
@@ -54,17 +37,33 @@ module.exports = {
     })],
   module: {
     rules: [
-          {
+      {
         test: /\.jsx?$/,
         use: 'babel-loader',
         exclude: /node_modules/
       }, {
-        test: cfg.cssLoaderTest,
-        loaders: [
-          `css/locals?${cfg.cssLoaderParams({importLoaders: 0})}`]}, {
-          test: cfg.scssLoaderTest,
-          loaders: [
-            `css/locals?${cfg.cssLoaderParams({importLoaders: 1})}`, `sass?${cfg.sassLoaderParams}`]}
+        test: /\.css$/,
+        loader: 'css/locals?modules&localIdentName=[name]__[local]___[hash:base64:5]'
+      }, {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'css-loader/locals',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              localIdentName: '[name]__[local]__[hash:base64:5]'
+            }
+          }, {
+            loader: 'sass-loader'
+          }, {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: './app/assets/styles/app-variables.scss'
+            }
+          }
         ]
       }
-    };
+    ]
+  }
+};

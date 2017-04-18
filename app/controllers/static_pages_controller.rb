@@ -3,6 +3,7 @@ class StaticPagesController < ApplicationController
   def home
     @props = {status: 'unknown'}
          redux_store("configureStore", props:  @props )
+          render_html
   end
 
   def help
