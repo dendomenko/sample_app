@@ -51,31 +51,15 @@ config
         })
     }, {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            loader: [
-                {
-                    loader: 'css-loader',
-                    options: {
-                        minimize: true,
-                        modules: true,
-                        importLoaders: 3,
-                        localIdentName: '[name]__[local]__[hash:base64:5]'
-                    }
-                }, {
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: 'autoprefixer'
-                    }
-                },
-                'sass-loader', {
-                    loader: 'sass-resources-loader',
-                    options: {
-                        resources: './app/assets/styles/app-variables.scss'
-                    }
-                }
-            ]
-        })
+        exclude: /node_modules/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css!sass?indentedSyntax=true&sourceMap=true')
+        // use: ExtractTextPlugin.extract({     fallback: 'style-loader',     loader: [
+        // {             loader: 'css-loader',             options: { minimize: true,
+        // modules: true, importLoaders: 3,    localIdentName:
+        // '[name]__[local]__[hash:base64:5]'             } }, { loader:
+        // 'postcss-loader',             options: { plugins: 'autoprefixer' }         },
+        //         'sass-loader', { loader: 'sass-resources-loader',      options: {
+        // resources: './app/assets/styles/app-variables.scss'   }         }   ] })
     }, {
         test: require.resolve('react'),
         use: {

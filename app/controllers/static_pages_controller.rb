@@ -1,7 +1,8 @@
 class StaticPagesController < ApplicationController
+  include ReactOnRails::Controller
   def home
-     @hello_world_props = { name: "Stranger" }
-     
+    @props = {status: 'unknown'}
+         redux_store("configureStore", props:  @props )
   end
 
   def help

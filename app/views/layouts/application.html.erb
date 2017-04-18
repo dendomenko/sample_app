@@ -5,11 +5,19 @@
   <title>
     <%= full_title(yield(:title)) %>
   </title>
-  <%= csrf_meta_tags %>
 
-    <%= env_stylesheet_link_tag(static: 'application',media: 'all',                      'data-turbolinks-track' => "reload")  %>
+  <%= env_stylesheet_link_tag(static: 'application_static',
+                              hot: 'application_non_webpack',
+                              media: 'all',
+                              'data-turbolinks-track' => "reload")  %>
 
-      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+    <!-- These do use turbolinks -->
+    <%= env_javascript_include_tag(static: 'application_static',
+                                 hot: 'application_non_webpack',
+                                 'data-turbolinks-track' => "reload") %>
+      <%= csrf_meta_tags %>
 </head>
 
 <body>
