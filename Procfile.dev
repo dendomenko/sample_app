@@ -1,2 +1,16 @@
 #web: rails s -p 3000
-client: sh -c 'rm app/assets/webpack/* || true && cd client && bundle exec rake react_on_rails:locale && yarn run build:development'
+#client: sh -c 'rm app/assets/webpack/* || true && cd client && #bundle exec rake react_on_rails:locale && yarn run #build:dev:client && yarn run build:dev:server'
+
+# Render static client assets
+#rails-static-client-assets: sh -c 'yarn run build:dev:client'
+
+# Render static client assets. Remove if not server rendering
+#rails-static-server-assets: sh -c 'yarn run build:dev:server'
+
+
+
+# Build client assets, watching for changes.
+rails-client-assets: rm app/assets/webpack/* || true && bundle exec rake react_on_rails:locale && yarn run build:dev:client
+
+# Build server assets, watching for changes. Remove if not server rendering.
+rails-server-assets: yarn run build:dev:server

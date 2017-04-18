@@ -1,15 +1,12 @@
+import { routerReducer as routing, createReducer } from "react-router-redux";
 import { combineReducers } from 'redux';
+import userReducer from './userReducer';
 
 
-const name = (state = '', action) => {
-    switch (action.type) {
-        case "HELLO_WORLD_NAME_UPDATE":
-            return action.text;
-        default:
-            return state;
-    }
-};
+const rootReducer = combineReducers(
+    {
+        userReducer,
+        routing
+    });
 
-const AppReducer = combineReducers({ name });
-
-export default AppReducer;
+export default rootReducer;

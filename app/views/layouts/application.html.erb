@@ -13,13 +13,13 @@
 </head>
 
 <body>
-  <!--<%= render 'layouts/header' %>-->
+  <%= render 'layouts/header' %>
 
-  <%= react_component("NavigationBarApp", props: @hello_world_props, prerender: false) %>
 
-    <div class="container">
+
+    <div class="uk-container uk-container-expand">
       <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>">
+        <div uk-alert class="uk-alert-primary uk-alert-<%= key %>">
           <%= value %>
         </div>
         <% end %>

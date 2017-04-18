@@ -33,6 +33,7 @@ RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/tmp/*
 RUN npm install -g nvm
 RUN npm install -g yarn
 RUN npm install -g webpack
+npm install -g webpack-dev-server
 
 #RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
