@@ -10,3 +10,21 @@
 8. Test using ```localhost:3000```
 
 
+GET:<br>
+`http://localhost:3000/api/v1/users/ - get all users`
+`http://localhost:3000/api/v1/users/:id - get user by id`
+
+POST:
+```http://localhost:3000/api/v1/users/```
+```
+ {
+  "user":
+   { 
+                   "name":"name",
+                    "email":"te3st@323mail.com",
+                    "password":"12345678",
+                    "password_confirmation":"12345678"
+  }
+}
+```
+
