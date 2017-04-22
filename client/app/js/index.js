@@ -1,29 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {AppContainer} from 'react-hot-loader';
-import {browserHistory} from 'react-router';
+
+import {Provider} from 'react-redux';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {syncHistoryWithStore} from 'react-router-redux';
+import App from './containers/App';
 import configureStore from './store';
 import Routing from './routes';
 // import sagas from './sagas';
+const store = configureStore({}, browserHistory);
+const history = syncHistoryWithStore(browserHistory, store);
+
+ReactDOM.render(
+    <Provider store={store}>
+    <div>
+        <Router history={history}>
+            <Route path="/" component={App}>
+                <IndexRoute component={App}/>
+
+            </Route>
+        </Router>
+        <DevTools/>
+    </div>
+</Provider>, document.getElementById('app'));
 
 const renderToDomElement = document.getElementById('app'); // eslint-disable-line
-const store = configureStore({}, browserHistory);
-// store.runSaga(sagas);
-//
-ReactDOM.render(
-    <AppContainer>
-    <Routing store={store}/>
-</AppContainer>, renderToDomElement);
-
-// HMR for React
-if (module.hot) {
-    module
-        .hot
-        .accept('./routes', () => {
-            const NextHotLoaded = require('./routes').default; // eslint-disable-line
-            ReactDOM.render(
-                <AppContainer>
-                <NextHotLoaded store={store}/>
-            </AppContainer>, renderToDomElement);
-        });
-}
