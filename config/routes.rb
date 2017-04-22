@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :users
+
+  resources :users do
+    resources :projects do
+        get 'add_user'
+        post 'add_user_create'
+    end
+  end
+
   resources :sessions, only: [:new, :create, :destroy]
   root 'static_pages#home'
   match '/signup', to: 'users#new',            via: 'get'  

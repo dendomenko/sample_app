@@ -4,6 +4,15 @@ services:
     image: postgres:9.4.1
     ports:
       - "5555:5555"
+  client:
+    build: ./client
+    command: npm start
+    ports:
+      - "8080:8080"
+    links:
+      - web
+    volumes:
+      - .:/sample_app/client
 
   web:
     build: .
