@@ -33,9 +33,6 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-
-# gem for project
-gem 'react-rails'
 gem 'rubocop', require: false
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,9 +40,6 @@ gem 'byebug', platform: :mri
 gem 'rspec-rails', '2.13.1'
 gem 'pg'
 gem 'rake', '< 11.0'
-
-gem 'webpacker', github: "rails/webpacker"
-gem 'foreman'
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -13,18 +13,10 @@ RUN apt-get install -y libqt4-webkit libqt4-dev xvfb
 
 # for a JS runtime
 
-RUN apt-get install -y nodejs
-RUN apt-get install -y nodejs-legacy 
+# RUN apt-get install -y nodejs
+# RUN apt-get install -y nodejs-legacy
 
-RUN apt-get install -y npm
-
-
-ADD package.json $APP_HOME/
-
-RUN rm -rf node_modules && npm install && npm cache clean && rm -rf ~/tmp/*
-
-
-
+# RUN apt-get install -y npm
 
 
 ENV APP_HOME /sample_app
