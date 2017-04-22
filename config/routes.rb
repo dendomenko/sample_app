@@ -16,6 +16,22 @@ Rails.application.routes.draw do
   match '/about',    to: 'static_pages#about',   via: 'get'
   match '/contact',  to: 'static_pages#contact', via: 'get'
 
+  scope '/api' do
+    scope '/v1' do
+      scope '/users' do
+        post '/' => 'users#create'
+        get  '/' => 'users#index'
+        get '/:id' => 'users#show'
+      end
+    end
+  end
+
+  # namespace :api do
+  #   namespace :v1 do
+  #     resources :users, only: [:index, :create, :show, :update, :destroy]
+  #     # resources :microposts, only: [:index, :create, :show, :update, :destroy]
+  #   end
+  # end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
