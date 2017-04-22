@@ -1,10 +1,12 @@
 version: '2'
 services:
   db:
+    container_name: db
     image: postgres:9.4.1
     ports:
       - "5555:5555"
   client:
+    container_name: client
     build: ./client
     command: npm start
     ports:
@@ -15,6 +17,7 @@ services:
       - .:/sample_app/client
 
   web:
+    container_name: web
     build: .
     command: rails server --port 3000 --binding 0.0.0.0
     ports:
