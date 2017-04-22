@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.0.beta1'
+gem 'rails', '~> 5.1.0.rc2'
 #Bootstrap
 gem 'bootstrap-sass', '2.3.2.0'
 #Gem for crypting password

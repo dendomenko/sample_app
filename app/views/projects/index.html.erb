@@ -17,7 +17,7 @@
       <tr>
         <td><p> <%= project.name %> </p></td>
         <td><p> <%= project.task_name %> </p></td>
-        <td><p> <%= project.roles.first.role %></p></td>
+        <td><p> <%= project.roles.find_by_user_id(params[:user_id]).role %></p></td>
         <td>  <%= link_to 'Add', user_project_add_user_path(@user, project) %>  </td>
         <td>  <%= link_to 'Look', user_project_path(@user, project) %>  </td>
         <td>  <%= link_to 'Delete', user_project_path(@user, project), method: 'delete' %>  </td>

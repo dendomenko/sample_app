@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
   def show
     user = User.find(params[:user_id])
     @project = user.projects.find(params[:id])
-    @role = @project.roles.first.role
+    @role = @project.roles.find_by_user_id(params[:user_id]).role
   end
 
   def add_user
