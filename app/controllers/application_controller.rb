@@ -1,5 +1,6 @@
 include ActionController::HttpAuthentication::Token::ControllerMethods
 include ActionController::MimeResponds
+include ActionController::Cookies
 
 class ApplicationController < ActionController::API
 
