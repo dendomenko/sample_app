@@ -1,20 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {NavLink, Link} from 'react-router-dom';
 
-const NavigationBar = () => (
+/**
+ * TODO:
+ */
+export default(props) => (
     <div>
-        <div>
-            <Link activeOnlyWhenExact to="/">
-                Home
-            </Link>
-            <Link to="/example">
-                Example
-            </Link>
-            <Link to="/notfound">
-                Not Found
-            </Link>
-        </div>
+        <ul>
+            <NavLink to="/" activeClassName="active">Home</NavLink>
+            <br/>
+            <NavLink to="/about" activeClassName="Active">About</NavLink>
+            <br/>
+            <NavLink to="/help" activeClassName="active">FAQ</NavLink>
+            <br/>
+            <Link to="/sigin">Login</Link>
+        </ul>
     </div>
 );
-
-export default NavigationBar;

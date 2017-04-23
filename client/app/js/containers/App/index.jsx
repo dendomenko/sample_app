@@ -1,10 +1,10 @@
-import React from 'react';
-import api from './../../utils/Api';
+import React, {PureComponent} from 'react';
+import api from 'utils/Api';
 
 // axios.defaults.proxy = {     host: '127.0.0.1',     port: 3000 };
 // axios.defaults.baseURL = 'localhost:3000/api/v1/';
 
-class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class App extends PureComponent { // eslint-disable-line react/prefer-stateless-function
 
     componentWillMount() {
         // axios.defaults = {     baseURL: '/api/v1/',     proxy: {         host:
@@ -39,5 +39,3 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
         );
     }
 }
-
-export default App;

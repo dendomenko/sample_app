@@ -27,6 +27,7 @@ var config = {
             'react-router-redux',
             'axios',
             'immutable',
+            'redux-immutable',
             'lodash',
             'redux-form',
             'shortid',

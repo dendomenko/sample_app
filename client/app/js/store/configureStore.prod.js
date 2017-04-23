@@ -1,8 +1,22 @@
-import {createStore, applyMiddleware} from "redux";
-import thunk from "redux-thunk";
-// import multi from "redux-multi"; import api from "../middleware/api";
+import {createStore, applyMiddleware, compose} from 'redux';
+import {fromJS} from 'immutable';
+import {routerMiddleware} from 'react-router-redux';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from "../reducers";
 
-const configureStore = preloadedState => createStore(rootReducer, preloadedState, applyMiddleware(thunk));
+const sagaMiddleware = createSagaMiddleware();
+const devtools = window.devToolsExtension || (() => (noop) => noop); // eslint-disable-line
 
-export default configureStore;
+export default function configureStore(initialState = {}, history) {
+    const middlewares = [sagaMiddleware, routerMiddleware(history)];
+
+    const enhancers = [
+        applyMiddleware(...middlewares),
+        devtools()
+    ];
+
+    const store = createStore(rootReducer, fromJS(initialState), compose(...enhancers));
+
+    store.runSaga = sagaMiddleware.run;
+    return store;
+}
