@@ -29,14 +29,27 @@ module Api
       end
 
       def postback
-        puts request.body.read
-        render json: {message: request.body.read}, status: :bad_request
+        user = User.find_by(email: params[:email].downcase)
+        if user && user.authenticate(params[:password])
+          # sign_in user
+          render json: {message: request.body.read}, status: :ok
+        else
+          render json: {message: request.body.read}, status: :bad_request
+        end
 
       end
 
+      private
       def user_params
         params.require(:user).permit(:name, :email, :password,
                                      :password_confirmation)
+      end
+
+      def sign_in(user)
+        remember_token = User.new_remember_token
+        cookies.permanent[:remember_token] = remember_token
+        user.update_attribute(:remember_token, User.encrypt(remember_token))
+        self.current_user = user
       end
     end
 
