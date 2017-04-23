@@ -11,10 +11,13 @@
 
 
 GET:<br>
-`http://localhost:3000/api/v1/users/ - get all users`
-`http://localhost:3000/api/v1/users/:id - get user by id`
+```http://localhost:3000/api/v1/users/ ``` - get all users <br>
+`http://localhost:3000/api/v1/users/:id` - get user by id
 
 POST:
+
+**REGISTRATION:**
+
 ```http://localhost:3000/api/v1/users/```
 ```
  {
@@ -26,5 +29,12 @@ POST:
                     "password_confirmation":"12345678"
   }
 }
+```
+
+**LOGIN:**
+
+```http://localhost:3000/api/v1/login/```
+```
+{ "email":"dendomenko@gmail.com","password":"den_domenko"}
 ```
 
