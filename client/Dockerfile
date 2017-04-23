@@ -9,6 +9,8 @@ RUN npm config set registry http://registry.npmjs.org/
 # ADD package.json $APP_HOME/
 RUN yarn install
 RUN npm install webpack -g 
+RUN npm install -g flow-bin
+
 
 
 # VOLUME ["/client/"] 

@@ -69,9 +69,7 @@ var config = {
                 test: /\.jsx?$/,
 
                 include: path.join(__dirname, 'app'),
-
                 loader: "babel-loader",
-
                 exclude: [nodeModulesPath]
 
             }, {

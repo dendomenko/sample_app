@@ -13,7 +13,7 @@ export default(props) => (
             <br/>
             <NavLink to="/help" activeClassName="active">FAQ</NavLink>
             <br/>
-            <Link to="/sigin">Login</Link>
+            <Link to="/signin">Login</Link>
         </ul>
     </div>
 );

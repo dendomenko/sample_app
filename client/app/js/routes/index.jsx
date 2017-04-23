@@ -16,6 +16,8 @@ import Layout from '../components/Layout';
 import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import Auth from '../containers/Auth';
+import Dashboard from '../containers/Dashboard';
+
 import PrivateRoute from './helpers/privateRoute';
 const Routing = ({store}) => (
     <Router>
@@ -27,7 +29,8 @@ const Routing = ({store}) => (
                         <Route exact path="/" component={App}/>
                         <Route exact path="/about" component={StaticPage}/>
                         <Route exact path="/help" component={StaticPage}/>
-                        <PrivateRoute path="/protected" component={Auth}/>
+                        <Route exact path="/signin" component={Auth}/>
+                        <PrivateRoute path="/dashboard" component={Dashboard}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

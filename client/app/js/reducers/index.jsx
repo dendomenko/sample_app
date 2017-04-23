@@ -1,9 +1,8 @@
 import {routerReducer as routing, createReducer} from "react-router-redux";
 import {combineReducers} from "redux";
+import {reducer as formReducer} from 'redux-form';
+import userReducer from './userReducer';
 
-const user = {
-    status: 'none'
-};
-const rootReducer = combineReducers({user, routing});
+const rootReducer = combineReducers({user: userReducer, form: formReducer, routing});
 
 export default rootReducer;
