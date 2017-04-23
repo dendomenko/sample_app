@@ -8,13 +8,13 @@ services:
   client:
     container_name: client
     build: ./client
-    command: npm start
+    command: bash -c "npm install && ls && node server.js"
     ports:
       - "8080:8080"
     links:
       - web
     volumes:
-      - .:/sample_app/client
+      - ./client:/client
 
   web:
     container_name: web

@@ -78,7 +78,7 @@ process.on('uncaughtException', evt => {
 server.listen('8080', (err) => {
 
     if (err) {
-
+        console.log('dasd');
         console.error(err);
     }
 

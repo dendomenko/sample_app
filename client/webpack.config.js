@@ -24,7 +24,7 @@ var config = {
 
             'babel-polyfill',
 
-            'webpack-hot-middleware/client?http://localhost.target.com:3000/__webpack_hmr',
+            'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr',
 
             // example for single entry point. Multiple Entry bundle example will be added
             // later

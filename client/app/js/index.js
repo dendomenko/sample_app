@@ -1,32 +1,36 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from "react";
+import { render } from "react-dom";
+import { browserHistory } from "react-router";
+import { syncHistoryWithStore } from "react-router-redux";
+import { createBrowserHistory } from 'history';
+import { Provider } from 'react-redux';
+import { Router, Route, IndexRoute } from 'react-router';
+// import Root from "./containers/Root";
+import configureStore from "./store";
+import  Layout from './components/Layout';
+import App from './containers/App';
 
-var divStyle = {
-    backgroundColor: 'white'
-};
 
-var d = 'dasd';
-
-var imageStyle = {
-    width: '250px'
-};
-
-var Hello = React.createClass({
-    render: function () {
-        return (
-            <div className="jumbotron" style={divStyle}>
-                <img
-                    src={'https://octodex.github.com/images/spidertocat.png'}
-                    alt="Spidertocat"
-                    className="img-responsive center-block"
-                    style={imageStyle}/>
-                <h2 className="text-center">Hello World! DEV3L - v1.3</h2>
-            </div>
-        );
-    }
-});
-
-console.log('daasdasdas');
-
-ReactDOM.render(
-    <Hello/>, document.getElementById('root'));
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import {Provider} from 'react-redux';
+// import {Router, Route, IndexRoute} from 'react-router';
+// import {createBrowserHistory} from 'history';
+// import {syncHistoryWithStore} from 'react-router-redux';
+// import App from './containers/App';
+// import configureStore from './store';
+// import Routing from './routes';
+//
+const store   = configureStore();
+//
+const history = syncHistoryWithStore( createBrowserHistory(), store );
+//
+render(
+    <Provider store={store}>
+            <Router history={history}>
+                <Route path="/" component={App}>
+                    <IndexRoute component={App}/>
+                    <Route path="/help" component={App}/>
+                </Route>
+            </Router>
+    </Provider>, document.getElementById( 'app' ) );
