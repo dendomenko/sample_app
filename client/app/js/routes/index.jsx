@@ -1,14 +1,9 @@
 /*
  eslint import/no-unresolved: 0, global-require: 0, import/no-extraneous-dependencies: 0
  */
-/*
- As we are hot loading in routes when they are used, we have to require them inline.
- */
-
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-// import { BrowserRouter as Router, Route } from 'react-router-dom'
-import {Provider} from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import App from '../containers/App';
 import StaticPage from '../containers/Static';
 import NotFound from '../containers/NotFound';
@@ -19,7 +14,7 @@ import Auth from '../containers/Auth';
 import Dashboard from '../containers/Dashboard';
 
 import PrivateRoute from './helpers/privateRoute';
-const Routing = ({store}) => (
+const Routing = ( { store } ) => (
     <Router>
         <Provider store={store}>
             <Layout>
@@ -34,6 +29,7 @@ const Routing = ({store}) => (
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
+                <Footer/>
             </Layout>
         </Provider>
     </Router>

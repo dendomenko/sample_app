@@ -7,6 +7,8 @@ import rootReducer from "../reducers";
 const sagaMiddleware = createSagaMiddleware();
 const devtools = window.devToolsExtension || (() => (noop) => noop); // eslint-disable-line
 
+
+console.info('prod');
 export default function configureStore(initialState = {}, history) {
     const middlewares = [sagaMiddleware, routerMiddleware(history)];
 

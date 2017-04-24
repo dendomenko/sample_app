@@ -10,8 +10,10 @@ import {
 } from "../constants/user";
 
 /**
- * TODO: make it wuth immutable
+ * TODO: make it with immutable
  */
+
+
 
 const initialState = {
     status: null,
@@ -21,7 +23,7 @@ const initialState = {
     fetch: false,
     error: null,
     token: null
-}
+};
 
 export default function userReducer(state = initialState, {type, payload}) {
 
@@ -31,33 +33,33 @@ export default function userReducer(state = initialState, {type, payload}) {
             return {
                 ...state,
                 ...payload
-            }
+            };
 
         case USER_NOT_AUTH:
             return {
                 ...state,
                 ...payload
-            }
+            };
 
         case USER_REQUEST:
             return {
                 ...initialState
-            }
+            };
 
         case USER_FAILURE:
             return {
                 ...state,
                 ...payload
-            }
+            };
 
         case USER_LOGOUT:
             return {
                 ...state,
                 ...payload
-            }
+            };
 
         default:
-            return state
-    }
+            return state;
+    };
 
 }

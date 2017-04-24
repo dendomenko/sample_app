@@ -1,7 +1,8 @@
+/* @flow */
 import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 
-const SignIn = ({handleSubmit}) => (
+let SignIn = ({handleSubmit}) => (
     <form onSubmit={handleSubmit}>
         <div>
             <label htmlFor="login">Name</label>
@@ -29,4 +30,4 @@ SignIn = reduxForm({
     form: 'signin' // a unique name for this form
 })(SignIn);
 
-export default ContactForm;
+export default SignIn;

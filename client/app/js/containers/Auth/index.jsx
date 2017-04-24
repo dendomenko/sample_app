@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
-import SignInForm from './../components/SignIn';
-import SignIn from './../components/SignIn';
+import SignInForm from './../../components/SignIn';
+
 export default class Auth extends React.PureComponent
 {
     constructor(props)
