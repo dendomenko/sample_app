@@ -1,28 +1,53 @@
-import React, {PureComponent} from 'react';
-import {connect} from "react-redux";
+import React, { PureComponent } from 'react';
+import { connect } from "react-redux";
 import SignInForm from './../../components/SignIn';
+import { registerUser } from "./../../actions/user";
 
-export default class Auth extends React.PureComponent
-{
-    constructor(props)
-    {
-        super(props);
-        console.info('Auth', props);
+/**
+ * TODO: should make validate;
+ */
+class Auth extends React.PureComponent {
+    constructor( props ) {
+        super( props );
 
-        this.handleSignIn = this
-            .handleSignIn
-            .bind(this);
+        this.handleSignInSubmit = this.handleSignInSubmit.bind( this );
+
     }
 
-    handleSignIn(values) {
-        console.log('registerValues', values);
+    handleSignInSubmit( e ) {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        const { signin }   = this.props.form;
+
+        dispatch( registerUser( signin.values ) );
+        console.info( signin );
     }
 
     render() {
+        console.log( this.props );
         return (
-            <div>Auth compoentn
-                <SignInForm handleSubmit={this.submit}/>
+            <div>Auth component
+                <SignInForm handleSubmit={this.handleSignInSubmit}/>
             </div>
         );
     }
 }
+
+const mapStateToProps = ( { form } ) => ({
+    form,
+});
+/**
+ *
+ * @param dispatch
+ * @returns {{mapActions: (A|B|M|N)}}
+ */
+function mapDispatchToProps( dispatch ) {
+    return {
+        dispatch,
+    };
+}
+/**
+ *
+ */
+export default connect( mapStateToProps, mapDispatchToProps )( Auth );
+

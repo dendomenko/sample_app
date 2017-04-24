@@ -1,9 +1,9 @@
 /* @flow */
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
-let SignIn = ({handleSubmit}) => (
-    <form onSubmit={handleSubmit}>
+let SignIn = ( { handleSubmit } ) => (
+    <form onSubmit={ handleSubmit }>
         <div>
             <label htmlFor="login">Name</label>
             <Field name="name" component="input" type="text"/>
@@ -14,11 +14,11 @@ let SignIn = ({handleSubmit}) => (
         </div>
         <div>
             <label htmlFor="password">Password</label>
-            <Field name="password" component="input" type="password"/>
+            <Field name="pwd" component="input" type="password"/>
         </div>
         <div>
             <label htmlFor="password_confirmation">Repeat password</label>
-            <Field name="password_confirmation" component="input" type="password"/>
+            <Field name="confirm_pwd" component="input" type="password"/>
         </div>
 
         <button type="submit">Submit</button>
@@ -26,8 +26,8 @@ let SignIn = ({handleSubmit}) => (
 );
 
 // Decorate the form component
-SignIn = reduxForm({
+SignIn = reduxForm( {
     form: 'signin' // a unique name for this form
-})(SignIn);
+} )( SignIn );
 
 export default SignIn;

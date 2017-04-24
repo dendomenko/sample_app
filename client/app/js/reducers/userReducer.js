@@ -17,17 +17,18 @@ import {
 
 const initialState = {
     status: null,
-    uid: null,
-    email: null,
-    name: null,
-    fetch: false,
-    error: null,
-    token: null
+    uid   : null,
+    email : null,
+    name  : null,
+    fetch : false,
+    error : null,
+    token : null,
+    isAuth: false
 };
 
-export default function userReducer(state = initialState, {type, payload}) {
+export default function userReducer( state = initialState, { type, payload } ) {
 
-    switch (type) {
+    switch ( type ) {
 
         case USER_AUTH:
             return {
@@ -57,9 +58,25 @@ export default function userReducer(state = initialState, {type, payload}) {
                 ...state,
                 ...payload
             };
+        case REGISTER_USER:
+            return {
+                ...state,
+                ...payload
+            };
+        case REGISTER_USER_SUCCESS:
+            return {
+                ...state,
+                ...payload
+            };
+        case REGISTER_USER_FAILURE:
+            return {
+                ...state,
+                ...payload
+            };
 
         default:
             return state;
-    };
+    }
+    ;
 
 }
