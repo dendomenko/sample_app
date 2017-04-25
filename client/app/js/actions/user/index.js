@@ -29,7 +29,7 @@ export const registerUserSuccess = () => ({
  *
  * @param error
  */
-export const registerUserFailire = ( error ) => ({
+export const registerUserFailure = ( error ) => ({
     type   : REGISTER_USER_FAILURE,
     payload: error
 });

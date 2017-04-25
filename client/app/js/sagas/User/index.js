@@ -16,11 +16,17 @@ import {
     userAuth,
     userAuthFailure,
     userAuthSuccess,
-    registerUserFailire,
+    registerUserFailure,
     registerUserSuccess
 } from './../../actions/user';
 
-
+/**
+ *
+ * @param name
+ * @param email
+ * @param pwd
+ * @param confirm_pwd
+ */
 const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/users', {
     "user": {
         "name"                 : name,
@@ -30,6 +36,10 @@ const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/use
     }
 } );
 
+/**
+ *
+ * @param payload
+ */
 function* registerUser( { payload } ) {
 
     try {
@@ -38,19 +48,25 @@ function* registerUser( { payload } ) {
         yield put( registerUserSuccess( response ) );
     }
     catch ( e ) {
-        yield  put( registerUserFailire( e ) );
+        yield  put( registerUserFailure( e ) );
     }
 
 }
-
+/**
+ *
+ */
 function* takeRequest() {
     yield takeLatest( REGISTER_USER, registerUser );
-
 }
+/**
+ *
+ */
 function* rootWatcher() {
     yield [
         fork( takeRequest ),
     ];
 }
-
+/**
+ *
+ */
 export default rootWatcher;

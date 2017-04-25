@@ -17,27 +17,12 @@ class Auth extends React.PureComponent {
     handleSignInSubmit( e ) {
         e.preventDefault();
         const { dispatch } = this.props;
-        // const { signin }   = this.props.form;
+        const { signin }   = this.props.form;
 
-        dispatch( registerUser( {
-            "name"       : "Saga",
-            "email"      : "saga@mail.com",
-            "pwd"        : "12345678",
-            "confirm_pwd": "12345678"
-        } ) );
-        // dispatch( {
-        //     type: 'USER_REQUEST', payload: {
-        //         "name"       : "name1",
-        //         "email"      : "test@mail.com",
-        //         "pwd"        : "12345678",
-        //         "confirm_pwd": "12345678"
-        //     }
-        // } );
-        // console.info( signin );
+        dispatch( registerUser( signin.values ) );
     }
 
     render() {
-        console.log( this.props );
         return (
             <div>Auth component
                 <SignInForm handleSubmit={this.handleSignInSubmit}/>
@@ -46,8 +31,12 @@ class Auth extends React.PureComponent {
     }
 }
 
-const mapStateToProps = ( { form } ) => ({
-    form,
+/**
+ *
+ * @param state
+ */
+const mapStateToProps = ( state = state.toJS() ) => ({
+    form: state.get( 'form' )
 });
 /**
  *

@@ -1,5 +1,4 @@
-import { fromJS } from 'immutable';
-
+import { Map } from 'immutable';
 
 import {
     USER_AUTH,
@@ -18,7 +17,7 @@ import {
 
 
 
-const initialState = fromJS( {
+const initialState =  {
     status: null,
     uid   : null,
     email : null,
@@ -27,9 +26,9 @@ const initialState = fromJS( {
     error : null,
     token : null,
     isAuth: false
-} );
+} ;
 
-export default function userReducer( state = initialState, { type, payload } ) {
+export default function userReducer( state = Map(initialState), { type, payload } ) {
 
     switch ( type ) {
 
