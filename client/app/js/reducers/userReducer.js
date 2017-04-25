@@ -1,3 +1,6 @@
+import { fromJS } from 'immutable';
+
+
 import {
     USER_AUTH,
     USER_NOT_AUTH,
@@ -15,7 +18,7 @@ import {
 
 
 
-const initialState = {
+const initialState = fromJS( {
     status: null,
     uid   : null,
     email : null,
@@ -24,7 +27,7 @@ const initialState = {
     error : null,
     token : null,
     isAuth: false
-};
+} );
 
 export default function userReducer( state = initialState, { type, payload } ) {
 

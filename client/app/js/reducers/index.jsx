@@ -1,5 +1,5 @@
 import { routerReducer as routing, createReducer } from "react-router-redux";
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form';
 import userReducer from './userReducer';
 
