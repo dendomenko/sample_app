@@ -12,9 +12,8 @@ import { validate } from './Helper/validate';
  * Helper
  * @param props
  */
-const renderField = props => {
-    console.log( props );
-    return (
+const renderField = props =>
+    (
         <div>
             <label>{props.placeholder}</label>
             <div>
@@ -23,13 +22,13 @@ const renderField = props => {
             </div>
         </div>
     );
-};
+
 /**
  *
  * @param handleSubmit
  * @constructor
  */
-let SignIn        = ( props ) => {
+let SignIn = ( props ) => {
 
     const { handleSubmit, pristine, reset, submitting } = props;
     return (

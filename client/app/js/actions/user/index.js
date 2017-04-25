@@ -1,9 +1,7 @@
 import {
-    USER_AUTH,
-    USER_NOT_AUTH,
-    USER_FAILURE,
-    USER_LOGOUT,
-    USER_REQUEST,
+    USER_LOGIN,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAILURE,
     REGISTER_USER,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILURE
@@ -36,15 +34,15 @@ export const registerUserFailure = ( error ) => ({
 /**
  *
  */
-export const userAuth            = () => ({
-    type: USER_REQUEST
+export const loginUser           = () => ({
+    type: USER_LOGIN
 });
 /**
  *
  * @param payload
  */
-export const userAuthSuccess     = ( payload ) => ({
-    type: USER_AUTH,
+export const userLoginSuccess    = ( payload ) => ({
+    type: USER_LOGIN_SUCCESS,
     payload
 });
 
@@ -52,7 +50,7 @@ export const userAuthSuccess     = ( payload ) => ({
  *
  * @param error
  */
-export const userAuthFailure = ( error ) => ({
-    type   : USER_FAILURE,
+export const userLoginFailure = ( error ) => ({
+    type   : USER_LOGIN_FAILURE,
     payload: error
 });

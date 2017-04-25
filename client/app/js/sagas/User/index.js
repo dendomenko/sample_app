@@ -2,20 +2,17 @@ import { fork, call, put } from 'redux-saga/effects';
 import { takeLatest, delay } from 'redux-saga';
 import Api from 'utils/Api';
 import {
-    USER_AUTH,
-    USER_NOT_AUTH,
-    USER_FAILURE,
-    USER_LOGOUT,
-    USER_REQUEST,
+    USER_LOGIN,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAILURE,
     REGISTER_USER,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILURE
 } from "./../../constants/user";
 
 import {
-    userAuth,
-    userAuthFailure,
-    userAuthSuccess,
+    userLoginSuccess,
+    userLoginFailure,
     registerUserFailure,
     registerUserSuccess
 } from './../../actions/user';
@@ -34,6 +31,16 @@ const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/use
         "password"             : pwd,
         "password_confirmation": confirm_pwd
     }
+} );
+
+/**
+ *
+ * @param email
+ * @param pwd
+ */
+const loginRequest = ( { email, pwd } ) => Api.post( '/login', {
+    'email'   : email,
+    'password': pwd
 } );
 
 /**
