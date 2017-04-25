@@ -11,44 +11,48 @@ import {
 
 import api from 'utils/Api';
 
-function getUserStatus() {
-    return function ( dispatch ) {
-        dispatch( { type: USER_REQUEST } );
-    };
-}
-
-export function registerUser( { name, email, pwd, confirm_pwd } ) {
-    return function ( dispatch ) {
-        dispatch( { type: REGISTER_USER } );
-        api
-            .post( '/users', {
-                "user": {
-                    "name"                 : name,
-                    "email"                : email,
-                    "password"             : pwd,
-                    "password_confirmation": confirm_pwd
-                }
-            } )
-            .then( res => dispatch( handleRegisterSuccses( res ) ) )
-            .catch( err => dispatch( handleError( err ) ) );
-    };
-};
 /**
  *
- *  COMMON FUNCTION
  */
+export const registerUser = ( payload ) => ({
+    type: REGISTER_USER,
+    payload
+});
 
-const handleRegisterSuccses = ( { status } ) =>
-    ( {
-        type   : REGISTER_USER_SUCCESS,
-        payload: {
-            error : null,
-            isAuth: true
-        }
-    });
-const handleError           = ( error ) => ({
+/**
+ *
+ */
+export const registerUserSuccess = () => ({
+    type: REGISTER_USER_SUCCESS
+});
+/**
+ *
+ * @param error
+ */
+export const registerUserFailire = ( error ) => ({
     type   : REGISTER_USER_FAILURE,
-    payload: {
-        error: new Error( error )
-    }
+    payload: error
+});
+/**
+ *
+ */
+export const userAuth            = () => ({
+    type: USER_REQUEST
+});
+/**
+ *
+ * @param payload
+ */
+export const userAuthSuccess     = ( payload ) => ({
+    type: USER_AUTH,
+    payload
+});
+
+/**
+ *
+ * @param error
+ */
+export const userAuthFailure = ( error ) => ({
+    type   : USER_FAILURE,
+    payload: error
 });

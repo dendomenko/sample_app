@@ -1,20 +1,20 @@
-require('babel-polyfill');
+require( 'babel-polyfill' );
 
-var fs = require('fs');
+var fs = require( 'fs' );
 
-var webpack = require('webpack');
+var webpack = require( 'webpack' );
 
-var path = require('path');
+var path = require( 'path' );
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
 
-var ProgressPlugin = require('webpack/lib/ProgressPlugin');
+var ProgressPlugin = require( 'webpack/lib/ProgressPlugin' );
 
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var nodeModulesPath = path.resolve( __dirname, 'node_modules' );
 
-var mainPath = path.resolve(__dirname, 'src', 'main.js');
+var mainPath = path.resolve( __dirname, 'src', 'main.js' );
 
-var publicPath = path.resolve(__dirname, 'public');
+var publicPath = path.resolve( __dirname, 'public' );
 
 
 /**
@@ -47,7 +47,7 @@ var config = {
 
         filename: '[name].js',
 
-        path: path.join(__dirname, 'public'),
+        path: path.join( __dirname, 'public' ),
 
         publicPath: '/public/'
 
@@ -55,7 +55,7 @@ var config = {
 
     module: {
 
-        preLoaders: [{
+        preLoaders: [ {
 
             test: /\.jsx$|\.js$/,
 
@@ -63,33 +63,33 @@ var config = {
 
             include: __dirname + '/src/'
 
-        }],
+        } ],
 
-        loaders: [{
+        loaders: [ {
 
             test: /\.jsx?$/,
 
-            include: path.join(__dirname, 'src'),
+            include: path.join( __dirname, 'src' ),
 
             loader: "babel-loader",
 
-            exclude: [nodeModulesPath]
+            exclude: [ nodeModulesPath ]
 
         }, {
 
             test: /\.scss$/,
 
-            include: path.join(__dirname, 'src'),
+            include: path.join( __dirname, 'src' ),
 
-            loader: ExtractTextPlugin.extract('style-loader', 'css!autoprefixer-loader?browsers=last 2 version!sass')
+            loader: ExtractTextPlugin.extract( 'style-loader', 'css!autoprefixer-loader?browsers=last 2 version!sass' )
 
-        }]
+        } ]
 
     },
 
     plugins: [
 
-        new webpack.optimize.UglifyJsPlugin({
+        new webpack.optimize.UglifyJsPlugin( {
 
             compress: {
 
@@ -97,18 +97,14 @@ var config = {
 
             }
 
-        }),
+        } ),
 
-        new webpack.DefinePlugin({
+        new webpack.DefinePlugin( {
 
             __DEVELOPMENT__: false,
-            'process.env'  : {
-                NODE_ENV: 'production',
-            }
+        } ),
 
-        }),
-
-        new ExtractTextPlugin('[name].css')
+        new ExtractTextPlugin( '[name].css' )
 
     ],
 
@@ -116,12 +112,11 @@ var config = {
 
         // Allow to omit extensions when requiring these files
 
-        extensions: ["", ".js", ".jsx"],
+        extensions: [ "", ".js", ".jsx" ],
 
     }
 
 }
-
 
 
 module.exports = config;

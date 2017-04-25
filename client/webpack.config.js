@@ -11,10 +11,6 @@ var mainPath              = path.resolve( __dirname, 'app', 'bundle.js' );
 var publicPath            = path.resolve( __dirname, 'dist' );
 
 
-const devBuild = process.env.NODE_ENV !== 'production';
-const nodeEnv  = devBuild ? 'development' : 'production';
-
-
 var config = {
 
     devtool: 'cheap-module-eval-source-map',
@@ -103,9 +99,6 @@ var config = {
         new webpack.DefinePlugin(
             {
                 __DEVELOPMENT__: true,
-                'process.env'  : {
-                    NODE_ENV: 'development',
-                }
             }
         ),
 
