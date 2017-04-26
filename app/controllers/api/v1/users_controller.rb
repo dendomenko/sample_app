@@ -2,6 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       # before_action :restrict_access
+      before_action :inspect_params
 
       def index
         users = User.all
@@ -38,12 +39,23 @@ module Api
         end
       end
 
+      def logout
+        sign_out
+        render json: {message: "Logout"}, status: :ok
+      end
+
+      def postback
+      end
+
       private
       def user_params
         params.require(:user).permit(:name, :email, :password,
                                      :password_confirmation)
       end
 
+      def inspect_params
+        puts params.inspect
+      end
       # def sign_in(user)
       #   remember_token = User.new_remember_token
       #   cookies.permanent[:remember_token] = remember_token
