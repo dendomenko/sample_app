@@ -39,6 +39,10 @@ module Api
         end
       end
 
+      def logout
+        sign_out
+        render json: {message: "Logout"}, status: :ok
+      end
 
       def postback
       end

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login' => 'users#login'
       post '/postback' => 'users#postback'
+      get '/logout' => 'users#logout'
       resources :users do
       end
     end
