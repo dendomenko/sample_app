@@ -2,7 +2,7 @@ include ActionController::HttpAuthentication::Token::ControllerMethods
 include ActionController::MimeResponds
 include ActionController::Cookies
 
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
 
   # protect_from_forgery with: :null
   include SessionsHelper
