@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from "react-redux";
-import SignInForm from './../../components/SignIn';
-import { registerUser } from "./../../actions/user";
+import SignInForm from '../../components/SignIn';
+import { registerUser, loginUser } from "./../../actions/user";
 
 /**
  * TODO: should make validate;
@@ -19,7 +19,7 @@ class Auth extends React.PureComponent {
         const { dispatch } = this.props;
         const { signin }   = this.props.form;
 
-        dispatch( registerUser( signin.values ) );
+        dispatch( loginUser( signin.values ) );
     }
 
     render() {

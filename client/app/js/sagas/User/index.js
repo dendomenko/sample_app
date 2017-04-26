@@ -33,6 +33,7 @@ const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/use
     }
 } );
 
+
 /**
  *
  * @param email
@@ -53,9 +54,37 @@ function* registerUser( { payload } ) {
         const response = yield call( registerRequest, payload );
 
         yield put( registerUserSuccess( response ) );
+
     }
-    catch ( e ) {
-        yield  put( registerUserFailure( e ) );
+    catch ( error ) {
+        yield  put( registerUserFailure( error ) );
+    }
+
+    try {
+
+        const response = yield call( loginRequest, payload );
+        yield put( userLoginSuccess( response ) );
+    }
+    catch ( error ) {
+        yield  put( userLoginFailure( error ) );
+    }
+
+}
+
+/**
+ *
+ * @param payload
+ */
+function* authUser( { payload } ) {
+
+    try {
+
+        const response = yield call( loginRequest, payload );
+        debugger;
+        yield put( userLoginSuccess( response ) );
+    }
+    catch ( error ) {
+        yield  put( userLoginFailure( error ) );
     }
 
 }
@@ -68,12 +97,19 @@ function* takeRequest() {
 /**
  *
  */
-function* rootWatcher() {
+function* takeLoginRequest() {
+    yield takeLatest( USER_LOGIN, authUser );
+}
+/**
+ *
+ */
+function* userSagas() {
     yield [
         fork( takeRequest ),
+        fork( takeLoginRequest )
     ];
 }
 /**
  *
  */
-export default rootWatcher;
+export default userSagas;

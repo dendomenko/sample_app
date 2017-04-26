@@ -8,7 +8,10 @@ import {
     USER_REQUEST,
     REGISTER_USER,
     REGISTER_USER_SUCCESS,
-    REGISTER_USER_FAILURE
+    REGISTER_USER_FAILURE,
+    USER_LOGIN,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAILURE
 } from "../constants/user";
 
 /**
@@ -17,7 +20,7 @@ import {
 
 
 
-const initialState =  {
+const initialState = {
     status: null,
     uid   : null,
     email : null,
@@ -25,10 +28,10 @@ const initialState =  {
     fetch : false,
     error : null,
     token : null,
-    isAuth: false
-} ;
+    isAuth: false,
+};
 
-export default function userReducer( state = Map(initialState), { type, payload } ) {
+export default function userReducer( state = Map( initialState ), { type, payload } ) {
 
     switch ( type ) {
 
@@ -68,9 +71,25 @@ export default function userReducer( state = Map(initialState), { type, payload 
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
-                ...payload
             };
         case REGISTER_USER_FAILURE:
+            return {
+                ...state,
+                ...payload
+            };
+
+        case USER_LOGIN:
+            return {
+                ...state,
+                ...payload
+            };
+        case USER_LOGIN_SUCCESS:
+            return {
+                ...state,
+                ...payload
+            };
+
+        case USER_LOGIN_FAILURE:
             return {
                 ...state,
                 ...payload
@@ -79,6 +98,6 @@ export default function userReducer( state = Map(initialState), { type, payload 
         default:
             return state;
     }
-    ;
+
 
 }

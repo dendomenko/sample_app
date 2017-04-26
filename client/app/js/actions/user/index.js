@@ -29,22 +29,29 @@ export const registerUserSuccess = () => ({
  */
 export const registerUserFailure = ( error ) => ({
     type   : REGISTER_USER_FAILURE,
-    payload: error
+    payload: new Error( error )
 });
 /**
  *
  */
-export const loginUser           = () => ({
-    type: USER_LOGIN
+export const loginUser           = ( payload ) => ({
+    type: USER_LOGIN,
+    payload
 });
 /**
  *
  * @param payload
  */
-export const userLoginSuccess    = ( payload ) => ({
-    type: USER_LOGIN_SUCCESS,
-    payload
-});
+export const userLoginSuccess    = ( { name, email, id, token } ) => ({
+    type   : USER_LOGIN_SUCCESS,
+    payload: {
+        'name'  : name,
+        'token' : token,
+        'uid'   : id,
+        'isAuth': true
+    }
+})
+;
 
 /**
  *
@@ -52,5 +59,11 @@ export const userLoginSuccess    = ( payload ) => ({
  */
 export const userLoginFailure = ( error ) => ({
     type   : USER_LOGIN_FAILURE,
-    payload: error
+    payload: new Error( error )
 });
+
+/**
+ *
+ */
+
+
