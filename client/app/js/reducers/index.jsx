@@ -1,29 +1,12 @@
-import { combineReducers } from 'redux-immutable';
-import { reducer as formReducer } from 'redux-form';
+import {routerReducer} from "react-router-redux";
+import {combineReducers} from 'redux-immutable';
+import {reducer as formReducer} from 'redux-form';
 import userReducer from './userReducer';
-import { Map } from 'immutable';
-import { LOCATION_CHANGE } from 'react-router-redux';
+// import routeReducer from './routeReducer';
 
-
-const initialState = {
-    locationBeforeTransitions: null,
-};
-
-const routeReducer = ( state = Map( initialState ), { type, payload } ) => {
-    if ( type === LOCATION_CHANGE ) {
-        return state.merge( {
-            locationBeforeTransitions: payload,
-        } );
-    }
-    return state;
-};
-
-
-const rootReducer = combineReducers(
-    {
-        user  : userReducer,
-        form  : formReducer,
-        router: routeReducer
-    } );
+/**
+ * TODO: should rewokr reouterReducer
+ */
+const rootReducer = combineReducers({user: userReducer, form: formReducer, routing: routerReducer});
 
 export default rootReducer;

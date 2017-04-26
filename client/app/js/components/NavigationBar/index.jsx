@@ -14,6 +14,9 @@ export default(props) => (
             <NavLink to="/help" activeClassName="active">FAQ</NavLink>
             <br/>
             <Link to="/signin">Login</Link>
+            <br/>
+
+            <Link to="/register">Register</Link>
         </ul>
     </div>
 );
