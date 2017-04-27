@@ -1,25 +1,27 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 
 import * as types from "../constants/user";
 
 /**
- * TODO: make it with immutable
+ * TODO: 1)make it with immutable,
+ * TODO: 2)ruduce function
  */
 
 const initialState = {
     status: null,
-    uid: null,
-    email: null,
-    name: null,
-    fetch: false,
-    error: null,
-    token: 'undefined',
+    uid   : null,
+    email : null,
+    name  : null,
+    fetch : false,
+    error : null,
+    token : 'undefined',
     isAuth: false
 };
 
-export default function userReducer(state = Map(initialState), {type, payload}) {
+export default function userReducer( state = Map( initialState ), { type, payload } ) {
 
-    switch (type) {
+    switch ( type ) {
+
 
         case types.USER_AUTH:
             return {

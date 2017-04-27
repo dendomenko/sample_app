@@ -1,21 +1,31 @@
-import {Map} from 'immutable';
-import {LOCATION_CHANGE, INIT} from 'react-router-redux';
+import { Map } from 'immutable';
+import { L } from 'react-router-redux';
 const initialState = {
     locationBeforeTransitions: null,
-    current_location: null
+    current_location         : null
 };
 
-const routeReducer = (state = Map(initialState), {type, payload}) => {
+/**
+ *
+ *  TODO: check @@INIT action
+ */
+const LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
+const routeReducer    = ( state = Map( initialState ), { type, payload } ) => {
 
-    // debugger;
-    if (type === LOCATION_CHANGE) {
-        console.log(payload);
-        return state.merge({locationBeforeTransitions: payload});
+
+    if ( type === '@@INIT' ) {
+        console.log( 'here', payload );
     }
-    if (type == INIT) {
-        console.log(payload);
-        return state.merge({locationBeforeTransitions: payload});
+    if ( type === LOCATION_CHANGE ) {
+        return state.merge( {
+            current_location         : payload.pathname.substring( 1 ),
+            locationBeforeTransitions: payload
+        } );
     }
+    // if ( type == INIT ) {
+    //     console.log( payload );
+    //     return state.merge( { locationBeforeTransitions: payload } );
+    // }
     return state;
 };
 

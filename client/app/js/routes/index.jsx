@@ -2,8 +2,9 @@
  eslint import/no-unresolved: 0, global-require: 0, import/no-extraneous-dependencies: 0
  */
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import {Provider} from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { Provider } from 'react-redux';
 import App from '../containers/App';
 import StaticPage from '../containers/Static';
 import NotFound from '../containers/NotFound';
@@ -12,12 +13,19 @@ import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import Auth from '../containers/Auth';
 import Dashboard from '../containers/Dashboard';
-
 import PrivateRoute from './helpers/privateRoute';
-const Routing = ({store}) => (
-    <Router>
-        <Provider store={store}>
-            <Layout>
+
+function onAppInit( dispatch ) {
+    return ( nextState, replace, callback ) => {
+        console.log( 'dasd' );
+    };
+}
+
+
+const Routing = ( { store, history } ) => (
+    <Provider store={store}>
+        <ConnectedRouter history={history} onEnter={onAppInit}>
+            <Layout on>
                 <NavigationBar/>
                 <div>
                     <Switch>
@@ -32,8 +40,9 @@ const Routing = ({store}) => (
                 </div>
                 <Footer/>
             </Layout>
-        </Provider>
-    </Router>
+        </ConnectedRouter>
+    </Provider>
+
 );
 
 export default Routing;

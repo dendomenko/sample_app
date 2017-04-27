@@ -1,5 +1,6 @@
-import {fork, call, put} from 'redux-saga/effects';
-import {takeLatest, delay} from 'redux-saga';
+import { fork, call, put } from 'redux-saga/effects';
+import { takeLatest, delay } from 'redux-saga';
+import { Redirect } from 'react-router-dom';
 import Api from 'utils/Api';
 import * as types from './../../constants/user';
 import {
@@ -18,82 +19,88 @@ import {
  * @param pwd
  * @param confirm_pwd
  */
-const registerRequest = ({name, email, pwd, confirm_pwd}) => Api.post('/users', {
+const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/users', {
     "user": {
-        "name": name,
-        "email": email,
-        "password": pwd,
+        "name"                 : name,
+        "email"                : email,
+        "password"             : pwd,
         "password_confirmation": confirm_pwd
     }
-});
+} ).then( res => res.status ).catch( error => {
+    throw error;
+} );
 
 /**
  *
  * @param email
  * @param pwd
  */
-const loginRequest = ({email, pwd}) => Api
-    .post('/login', {
-    'email': email,
-    'password': pwd
-})
-    .then(res => res.data)
-    .catch(error => new Error(error));
+const loginRequest = ( { email, pwd } ) => Api
+    .post( '/login', {
+        'email'   : email,
+        'password': pwd
+    } )
+    .then( res => res.data )
+    .catch( error => {
+        throw  error;
+    } );
 
-const logoutRequest = () => Api.get('/logout');
+const logoutRequest = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
+    throw error;
+} );
 
 /**
  *
  * @param payload
  */
-function * registerUser({payload}) {
+function * registerUser( { payload } ) {
 
     try {
-        const response = yield call(registerRequest, payload);
+        const response = yield call( registerRequest, payload );
 
-        yield put(registerUserSuccess());
+        yield put( registerUserSuccess() );
 
-    } catch (error) {
-        yield put(registerUserFailure(error));
+    } catch ( error ) {
+        yield put( registerUserFailure( error ) );
     }
 
     try {
 
-        const response = yield call(loginRequest, payload);
-        yield put(userLoginSuccess(response));
-    } catch (error) {
-        yield put(userLoginFailure(error));
+        const response = yield call( loginRequest, payload );
+        yield put( userLoginSuccess( response ) );
+
+
+    } catch ( error ) {
+        yield put( userLoginFailure( error ) );
     }
 
 }
 /**
  *
  */
-function * logoutUser()
-{
+function * logoutUser() {
     try {
-        debugger;
-        const response = yield call(logoutRequest);
-        debugger;
-        yield put(userLogoutSuccess);
 
-    } catch (error) {
-        yield put(userLogoutFailure);
+        const response = yield call( logoutRequest );
+
+        yield put( userLogoutSuccess() );
+
+    } catch ( error ) {
+        yield put( userLogoutFailure( error ) );
     }
 }
 /**
  *
  * @param payload
  */
-function * authUser({payload}) {
+function * authUser( { payload } ) {
 
     try {
 
-        const response = yield call(loginRequest, payload);
-        debugger;
-        yield put(userLoginSuccess(response));
-    } catch (error) {
-        yield put(userLoginFailure(error));
+        const response = yield call( loginRequest, payload );
+        yield put( userLoginSuccess( response ) );
+    } catch ( error ) {
+        yield put( userLoginFailure( error ) );
     }
 
 }
@@ -101,26 +108,26 @@ function * authUser({payload}) {
  *
  */
 function * takeRequest() {
-    yield takeLatest(types.REGISTER_USER, registerUser);
+    yield takeLatest( types.REGISTER_USER, registerUser );
 }
 /**
  *
  */
 function * takeLoginRequest() {
-    yield takeLatest(types.USER_LOGIN, authUser);
+    yield takeLatest( types.USER_LOGIN, authUser );
 }
 
 function * takeLogoutRequest() {
-    yield takeLatest(types.USER_LOGOUT, logoutUser);
+    yield takeLatest( types.USER_LOGOUT, logoutUser );
 }
 /**
  *
  */
 
 function * userSagas() {
-    yield[fork(takeRequest),
-        fork(takeLoginRequest),
-        fork(takeLogoutRequest)];
+    yield[ fork( takeRequest ),
+        fork( takeLoginRequest ),
+        fork( takeLogoutRequest ) ];
 }
 /**
  *

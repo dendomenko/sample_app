@@ -26,6 +26,7 @@ var config = {
             'redux',
             'react-router',
             'react-router-redux',
+            'react-router-dom',
             'axios',
             'immutable',
             'redux-immutable',

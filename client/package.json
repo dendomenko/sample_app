@@ -24,7 +24,7 @@
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "next",
-    "react-router-redux": "^4.0.8",
+    "react-router-redux": "5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-form": "^6.6.3",
     "redux-immutable": "^4.0.0",
