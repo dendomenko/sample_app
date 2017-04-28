@@ -1,7 +1,8 @@
-import {fork, call, put} from 'redux-saga/effects';
-import {takeLatest, delay} from 'redux-saga';
-import Api from 'utils/Api';
-import * as types from './../../constants/user';
+import { take, call, put, fork, race, select } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
+import { apiUser } from 'api/User/';
+import * as types from 'constants/user';
+
 import {
     userLoginSuccess,
     userLoginFailure,
@@ -9,120 +10,135 @@ import {
     registerUserSuccess,
     userLogoutSuccess,
     userLogoutFailure
-} from './../../actions/user';
+} from 'actions/user';
+
 
 /**
- *
- * @param name
- * @param email
- * @param pwd
- * @param confirm_pwd
+ * TODO: check logout;
  */
-const registerRequest = ({name, email, pwd, confirm_pwd}) => Api.post('/users', {
-    "user": {
-        "name": name,
-        "email": email,
-        "password": pwd,
-        "password_confirmation": confirm_pwd
-    }
-});
 
-/**
- *
- * @param email
- * @param pwd
- */
-const loginRequest = ({email, pwd}) => Api
-    .post('/login', {
-    'email': email,
-    'password': pwd
-})
-    .then(res => res.data)
-    .catch(error => new Error(error));
 
-const logoutRequest = () => Api.get('/logout');
 
-/**
- *
- * @param payload
- */
-function * registerUser({payload}) {
+function* register( { payload } ) {
 
     try {
-        const response = yield call(registerRequest, payload);
+        const response = call( apiUser.register, payload );
+        yield put( registerUserSuccess( response ) );
 
-        yield put(registerUserSuccess());
+        return response;
 
-    } catch (error) {
-        yield put(registerUserFailure(error));
+    } catch ( error ) {
+        yield put( registerUserFailure( error ) );
+        return false;
     }
+
+}
+
+function* authorize( { payload } ) {
 
     try {
+        const response = call( apiUser.login, payload );
 
-        const response = yield call(loginRequest, payload);
-        yield put(userLoginSuccess(response));
-    } catch (error) {
-        yield put(userLoginFailure(error));
+        yield put( userLoginSuccess( response ) );
+
+        return true;
+    }
+    catch ( error ) {
+        yield put( userLoginFailure( error ) );
+
+        return false;
     }
 
 }
-/**
- *
- */
-function * logoutUser()
-{
-    try {
-        debugger;
-        const response = yield call(logoutRequest);
-        debugger;
-        yield put(userLogoutSuccess);
 
-    } catch (error) {
-        yield put(userLogoutFailure);
-    }
-}
-/**
- *
- * @param payload
- */
-function * authUser({payload}) {
+function* logout() {
 
     try {
+        const response = yield call( apiUser.logout );
 
-        const response = yield call(loginRequest, payload);
-        debugger;
-        yield put(userLoginSuccess(response));
-    } catch (error) {
-        yield put(userLoginFailure(error));
+        yield put( userLogoutSuccess );
+
+        return response;
+    }
+    catch ( error ) {
+
+        yield put( userLogoutFailure( error ) );
+
+        return error.message;
+    }
+}
+
+
+/**
+ *
+ */
+function* loginFlow() {
+
+    while ( true ) {
+
+        const request = yield take( types.USER_LOGIN );
+
+        const winner = yield race( {
+            auth  : call( authorize, request ),
+            logout: take( types.USER_LOGOUT )
+        } );
+
+        if ( winner.auth ) {
+            yield put( push( '/projects' ) );
+        }
+
+
     }
 
 }
 /**
  *
  */
-function * takeRequest() {
-    yield takeLatest(types.REGISTER_USER, registerUser);
-}
-/**
- *
- */
-function * takeLoginRequest() {
-    yield takeLatest(types.USER_LOGIN, authUser);
+function* logoutFlow() {
+    while ( true ) {
+
+        yield take( types.USER_LOGOUT );
+        yield call( logout );
+        yield put( push( '/' ) );
+    }
 }
 
-function * takeLogoutRequest() {
-    yield takeLatest(types.USER_LOGOUT, logoutUser);
-}
 /**
  *
  */
+function* registerFlow() {
+    while ( true ) {
+        const request = yield take( types.REGISTER_USER );
 
-function * userSagas() {
-    yield[fork(takeRequest),
-        fork(takeLoginRequest),
-        fork(takeLogoutRequest)];
+        const response = yield call( register, request );
+
+
+        if ( typeof response === 'object' ) {
+
+            const isAuth = yield call( authorize, response );
+
+            if ( isAuth ) {
+                yield put( push( '/projects' ) );
+            }
+
+        }
+
+    }
+
+}
+
+
+/**
+ *
+ */
+function * rootUserSagas() {
+    yield[
+        fork( loginFlow ),
+        fork( logoutFlow ),
+        fork( registerFlow )
+    ];
 }
 /**
  *
  */
-export default userSagas;
+export default rootUserSagas;

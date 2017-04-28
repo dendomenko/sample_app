@@ -1,29 +1,28 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
-const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-        this.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-        this.isAuthenticated = false;
-        setTimeout(cb, 100);
+import { Route, Redirect, withRouter } from 'react-router-dom';
+
+/**
+ * TODO: Needs to  do it more flexible
+ */
+const PrivateRoutes = function ( { redirectTo, children, store, } ) {
+
+    /**
+     * TODO: should to review
+     */
+    let state   = store.getState().toJS();
+    const token = state.user.token;
+
+    if ( token === null ) {
+        return (<Redirect to={redirectTo}/>);
+    }
+    else {
+        return (
+            <Route>
+                {children}
+            </Route>
+        );
     }
 };
 
-const PrivateRoute = ({component: Component, rest}) => (
-    <Route
-        {...rest}
-        render={props => (fakeAuth.isAuthenticated
-        ? (<Component {...props}/>)
-        : (<Redirect
-            to={{
-            pathname: '/login',
-            state: {
-                from: props.location
-            }
-        }}/>))}/>
-);
 
-export default PrivateRoute;
+export default PrivateRoutes;

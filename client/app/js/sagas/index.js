@@ -1,11 +1,13 @@
 import { fork } from 'redux-saga/effects';
-import userSagas  from './User';
+import rootUserSagas  from './User';
 
-
+/**
+ *
+ */
 function* root() {
     yield[
-        fork( userSagas )
-        ];
+        fork( rootUserSagas )
+    ];
 }
 
 export default root;

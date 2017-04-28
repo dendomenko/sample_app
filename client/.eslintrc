@@ -1,4 +1,10 @@
 {
+  "extends": [
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",

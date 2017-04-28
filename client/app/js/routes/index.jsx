@@ -2,21 +2,24 @@
  eslint import/no-unresolved: 0, global-require: 0, import/no-extraneous-dependencies: 0
  */
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import App from '../containers/App';
-import StaticPage from '../containers/Static';
-import NotFound from '../containers/NotFound';
-import Layout from '../components/Layout';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import Auth from '../containers/Auth';
-import Dashboard from '../containers/Dashboard';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import App from 'containers/App';
+import StaticPage from 'containers/Static';
+import NotFound from 'containers/NotFound';
+import Layout from 'components/Layout';
+import NavigationBar from 'components/NavigationBar';
+import Footer from 'components/Footer';
+import Auth from 'containers/Auth';
+import Dashboard from 'containers/Dashboard';
+import Project from 'containers/Project';
 import PrivateRoute from './helpers/privateRoute';
-const Routing = ({store}) => (
-    <Router>
-        <Provider store={store}>
+
+
+const Routing = ( { store, history } ) => (
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
             <Layout>
                 <NavigationBar/>
                 <div>
@@ -26,14 +29,21 @@ const Routing = ({store}) => (
                         <Route exact path="/help" component={StaticPage}/>
                         <Route exact path="/signin" component={Auth}/>
                         <Route exact path="/register" component={Auth}/>
-                        <PrivateRoute path="/dashboard" component={Dashboard}/>
+                        <PrivateRoute store={store} redirectTo="/signin">
+                            <Switch>
+                                <Route exact path='/projects' component={Project}/>
+                                <Route exact path='/dashboard' component={Dashboard}/>
+                                <Route exact path='/userprofile' component={Project}/>
+                            </Switch>
+                        </PrivateRoute>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
                 <Footer/>
             </Layout>
-        </Provider>
-    </Router>
+        </ConnectedRouter>
+    </Provider>
+
 );
 
 export default Routing;

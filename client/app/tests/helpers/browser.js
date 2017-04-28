@@ -1,3 +1,7 @@
+/**
+ * TODO: see test
+ * @link https://github.com/jcolemorrison/redux-sagas-authentication-app/tree/master/src
+ */
 require('babel-register')();
 
 var jsdom = require("jsdom").jsdom;

@@ -26,6 +26,7 @@ var config = {
             'redux',
             'react-router',
             'react-router-redux',
+            'react-router-dom',
             'axios',
             'immutable',
             'redux-immutable',
@@ -144,6 +145,12 @@ var config = {
         ],
         alias     : {
             utils      : path.resolve( __dirname, 'app/js/utils' ),
+            api        : path.resolve( __dirname, 'app/js/api' ),
+            components : path.resolve( __dirname, 'app/js/components' ),
+            actions    : path.resolve( __dirname, 'app/js/actions' ),
+            constants  : path.resolve( __dirname, 'app/js/constants' ),
+            containers : path.resolve( __dirname, 'app/js/containers' ),
+            reducers   : path.resolve( __dirname, 'app/js/reducers' ),
             react      : path.resolve( __dirname, 'node_modules/react' ),
             'react-dom': path.resolve( __dirname, 'node_modules/react-dom' )
         }
