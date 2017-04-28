@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { L } from 'react-router-redux';
+// import { L } from 'react-router-redux';
 const initialState = {
     locationBeforeTransitions: null,
     current_location         : null

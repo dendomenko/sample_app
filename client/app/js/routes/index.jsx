@@ -13,6 +13,7 @@ import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import Auth from '../containers/Auth';
 import Dashboard from '../containers/Dashboard';
+import Project from '../containers/Project';
 import PrivateRoute from './helpers/privateRoute';
 
 function onAppInit( dispatch ) {
@@ -34,6 +35,7 @@ const Routing = ( { store, history } ) => (
                         <Route exact path="/help" component={StaticPage}/>
                         <Route exact path="/signin" component={Auth}/>
                         <Route exact path="/register" component={Auth}/>
+                        <Route exact path='/projects' component={Project}/>
                         <PrivateRoute path="/dashboard" component={Dashboard}/>
                         <Route component={NotFound}/>
                     </Switch>

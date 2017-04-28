@@ -1,8 +1,9 @@
-import { fork, call, put } from 'redux-saga/effects';
+import { fork, call, put, } from 'redux-saga/effects';
 import { takeLatest, delay } from 'redux-saga';
-import { Redirect } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import Api from 'utils/Api';
 import * as types from './../../constants/user';
+
 import {
     userLoginSuccess,
     userLoginFailure,
@@ -11,6 +12,10 @@ import {
     userLogoutSuccess,
     userLogoutFailure
 } from './../../actions/user';
+
+/**
+ *
+ */
 
 /**
  *
@@ -45,9 +50,11 @@ const loginRequest = ( { email, pwd } ) => Api
         throw  error;
     } );
 
+
 const logoutRequest = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
     throw error;
 } );
+
 
 /**
  *
@@ -67,6 +74,7 @@ function * registerUser( { payload } ) {
     try {
 
         const response = yield call( loginRequest, payload );
+
         yield put( userLoginSuccess( response ) );
 
 
@@ -89,10 +97,13 @@ function * logoutUser() {
         yield put( userLogoutFailure( error ) );
     }
 }
-/**
- *
- * @param payload
- */
+
+function * redirect() {
+    const history = createHistory();
+    yield put( history.push( '/projects' ) );
+}
+
+
 function * authUser( { payload } ) {
 
     try {
@@ -123,10 +134,18 @@ function * takeLogoutRequest() {
 /**
  *
  */
+function* loginSuccessAuth() {
+
+    yield take( types.USER_LOGIN_SUCCESS, redirect );
+}
+/**
+ *
+ */
 
 function * userSagas() {
     yield[ fork( takeRequest ),
         fork( takeLoginRequest ),
+        // fork( loginSuccessAuth ),
         fork( takeLogoutRequest ) ];
 }
 /**
