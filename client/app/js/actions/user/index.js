@@ -1,7 +1,5 @@
 import * as types from "./../../constants/user";
 
-import api from 'utils/Api';
-
 /**
  *
  */

@@ -1,6 +1,6 @@
 import { take, call, put, fork, race, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import Api from 'utils/Api';
+import { apiUser } from './../../api/User/';
 import * as types from './../../constants/user';
 
 import {
@@ -17,57 +17,12 @@ import {
  *
  */
 
-/**
- *
- * @param name
- * @param email
- * @param pwd
- * @param confirm_pwd
- */
-const registerRequest = ( { name, email, pwd, confirm_pwd } ) => Api.post( '/users', {
-    "user": {
-        "name"                 : name,
-        "email"                : email,
-        "password"             : pwd,
-        "password_confirmation": confirm_pwd
-    }
-} ).then( res => ({
-    payload: res.data,
-    status : res.status
-}) ).catch( error => {
-    throw error;
-} );
 
-/**
- *
- * @param token
- */
-const setToken     = ( token ) => sessionStorage.setItem( 'jwtToken', token );
-const clearToken   = () => sessionStorage.removeItem( 'jwtToken' );
-/**
- *
- * @param email
- * @param pwd
- */
-const loginRequest = ( { email, pwd } ) => Api
-    .post( '/login', {
-        'email'   : email,
-        'password': pwd
-    } )
-    .then( res => res.data )
-    .catch( error => {
-        throw  error;
-    } );
-
-
-const logoutRequest = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
-    throw error;
-} );
 
 function* register( { payload } ) {
 
     try {
-        const response = call( registerRequest, payload );
+        const response = call( apiUser.register, payload );
         yield put( registerUserSuccess( response ) );
 
         return response;
@@ -82,7 +37,7 @@ function* register( { payload } ) {
 function* authorize( { payload } ) {
 
     try {
-        const response = call( loginRequest, payload );
+        const response = call( apiUser.login, payload );
 
         yield put( userLoginSuccess( response ) );
 
@@ -99,7 +54,7 @@ function* authorize( { payload } ) {
 function* logout() {
 
     try {
-        const response = yield call( logoutRequest );
+        const response = yield call( apiUser.logout );
 
         yield put( userLogoutSuccess );
 
