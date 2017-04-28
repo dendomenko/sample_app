@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-// import { L } from 'react-router-redux';
+import { LOCATION_CHANGE } from 'react-router-redux/reducer';
 const initialState = {
     locationBeforeTransitions: null,
     current_location         : null
@@ -9,7 +9,7 @@ const initialState = {
  *
  *  TODO: check @@INIT action
  */
-const LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
+
 const routeReducer    = ( state = Map( initialState ), { type, payload } ) => {
 
 

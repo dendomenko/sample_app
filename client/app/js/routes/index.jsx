@@ -16,17 +16,11 @@ import Dashboard from '../containers/Dashboard';
 import Project from '../containers/Project';
 import PrivateRoute from './helpers/privateRoute';
 
-function onAppInit( dispatch ) {
-    return ( nextState, replace, callback ) => {
-        console.log( 'dasd' );
-    };
-}
-
 
 const Routing = ( { store, history } ) => (
     <Provider store={store}>
-        <ConnectedRouter history={history} onEnter={onAppInit}>
-            <Layout on>
+        <ConnectedRouter history={history}>
+            <Layout>
                 <NavigationBar/>
                 <div>
                     <Switch>

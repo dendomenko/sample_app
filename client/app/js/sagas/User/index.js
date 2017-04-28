@@ -1,10 +1,5 @@
-/**
- * TODO: check https://github.com/sotojuan/saga-login-flow
- */
-
 import { take, call, put, fork, race, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import { browserHistory }  from 'react-router';
 import Api from 'utils/Api';
 import * as types from './../../constants/user';
 
@@ -134,8 +129,6 @@ function* loginFlow() {
         } );
 
         if ( winner.auth ) {
-            // yield put( types.USER_AUTH );
-
             yield put( push( '/projects' ) );
         }
 
@@ -150,9 +143,8 @@ function* logoutFlow() {
     while ( true ) {
 
         yield take( types.USER_LOGOUT );
-        // yield put( types.USER.NOT );
         yield call( logout );
-        // forwardTo( '/' );
+        yield put( push( '/' ) );
     }
 }
 
@@ -167,7 +159,7 @@ function* registerFlow() {
         if ( typeof response === 'object' ) {
 
             const isAuth = yield call( authorize, response );
-            debugger;
+
             if ( isAuth ) {
                 yield put( push( '/projects' ) );
             }
