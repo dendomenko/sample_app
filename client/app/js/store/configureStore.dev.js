@@ -14,10 +14,10 @@ const devtools       = window.devToolsExtension || (() => ( noop ) => noop);
 const browserHistory = createHistory();
 const router         = routerMiddleware( browserHistory );
 const logger         = createLogger( {
-          stateTransformer: ( state ) => state.toJS()
+    stateTransformer: ( state ) => state.toJS(),
+    predicate       : ( getState, action ) => !action.type.includes( '@@redux-form/' )
 
-      } )
-;
+} );
 
 const configureStore = preloadedState => {
     const middlewares = [ sagaMiddleware, router, logger ];
