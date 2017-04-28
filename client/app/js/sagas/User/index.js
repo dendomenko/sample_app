@@ -1,7 +1,7 @@
 import { take, call, put, fork, race, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import { apiUser } from './../../api/User/';
-import * as types from './../../constants/user';
+import { apiUser } from 'api/User/';
+import * as types from 'constants/user';
 
 import {
     userLoginSuccess,
@@ -10,11 +10,11 @@ import {
     registerUserSuccess,
     userLogoutSuccess,
     userLogoutFailure
-} from './../../actions/user';
+} from 'actions/user';
 
 
 /**
- *
+ * TODO: check logout;
  */
 
 
@@ -103,7 +103,9 @@ function* logoutFlow() {
     }
 }
 
-
+/**
+ *
+ */
 function* registerFlow() {
     while ( true ) {
         const request = yield take( types.REGISTER_USER );

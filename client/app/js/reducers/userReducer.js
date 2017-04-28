@@ -14,7 +14,7 @@ const initialState = {
     name  : null,
     fetch : false,
     error : null,
-    token : 'undefined',
+    token : null,
     isAuth: false
 };
 

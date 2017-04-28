@@ -1,4 +1,4 @@
-import * as types from "./../../constants/user";
+import * as types from "constants/user";
 
 /**
  *
