@@ -2,7 +2,8 @@ module Api
   module V1
     class UsersController < ApplicationController
       # before_action :restrict_access
-      before_action :inspect_params
+      before_action :inspect_params, :authenticate_request!
+      skip_before_action :authenticate_request!, only: [:login, :create]
 
       def index
         users = User.all
@@ -30,13 +31,21 @@ module Api
       end
 
       def login
-        @user = User.find_by(email: params[:email].downcase)
-        if @user && @user.authenticate(params[:password])
-          sign_in @user
-          render status: :ok
+        user = User.find_by(email: params[:email].downcase)
+
+        if user && user.authenticate(params[:password])
+          auth_token = JsonWebToken.encode({user_id: user.id})
+          render json: {auth_token: auth_token}, status: :ok
         else
-          render json: {message: "Something goes wrong"}, status: :bad_request
+          render json: {error: 'Invalid username / password'}, status: :unauthorized
         end
+
+        # if @user && @user.authenticate(params[:password])
+        #   sign_in @user
+        #   render status: :ok
+        # else
+        #   render json: {message: "Something goes wrong"}, status: :bad_request
+        # end
       end
 
       def logout

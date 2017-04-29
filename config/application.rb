@@ -11,6 +11,7 @@ module SimpleApp
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    # config.authoload_paths << Rails.root.join('lib')
     config.middleware.use ActionDispatch::Cookies
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
