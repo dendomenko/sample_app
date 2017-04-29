@@ -29,14 +29,14 @@ const Routing = ( { store, history } ) => (
                         <Route exact path="/help" component={StaticPage}/>
                         <Route exact path="/signin" component={Auth}/>
                         <Route exact path="/register" component={Auth}/>
-                        <PrivateRoute store={store} redirectTo="/signin">
+                        <PrivateRoute redirectTo="/signin">
                             <Switch>
                                 <Route exact path='/projects' component={Project}/>
                                 <Route exact path='/dashboard' component={Dashboard}/>
                                 <Route exact path='/userprofile' component={Project}/>
                             </Switch>
                         </PrivateRoute>
-                        <Route component={NotFound}/>
+                        <Route path="*" component={NotFound}/>
                     </Switch>
                 </div>
                 <Footer/>

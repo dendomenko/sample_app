@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-
+import { Session } from 'utils/Session';
 import * as types from "../constants/user";
 
 /**
@@ -12,10 +12,7 @@ const initialState = {
     uid   : null,
     email : null,
     name  : null,
-    fetch : false,
     error : null,
-    token : null,
-    isAuth: false
 };
 
 export default function userReducer( state = Map( initialState ), { type, payload } ) {

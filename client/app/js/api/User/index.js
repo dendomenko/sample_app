@@ -1,5 +1,10 @@
 import Api from '../User';
 
+
+
+export class UserApi {
+
+}
 /**
  *
  * @param name
@@ -32,7 +37,11 @@ const loginRequest = ( { email, pwd } ) => Api
         'email'   : email,
         'password': pwd
     } )
-    .then( res => res.data )
+    .then( res => {
+        debugger;
+        console.info( res );
+        return res.data;
+    } )
     .catch( error => {
         throw  error;
     } );
@@ -40,13 +49,26 @@ const loginRequest = ( { email, pwd } ) => Api
 /**
  *
  */
-const logoutRequest = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
+const logoutRequest        = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
     throw error;
 } );
+/**
+ *
+ * @param token
+ */
+const checkToken           = ( token ) => Api.post( '/isauth', {
+    'token': token
+} ).then( res => res.statusTextt )
+    .catch( error => {throw error;} );
+/**
+ *
+ * @type {{register: ((p1:{name?: *, email?: *, pwd?: *, confirm_pwd?: *})=>(*)), login: ((p1:{email?: *, pwd?:
+ *     *})=>(*)), logout: (()=>Promise.<T>)}}
+ */
 
-
-export const apiUser = {
-    register: registerRequest,
-    login   : loginRequest,
-    logout  : logoutRequest
+      export const apiUser = {
+    register  : registerRequest,
+    login     : loginRequest,
+    logout    : logoutRequest,
+    checkToken: checkToken
 };
