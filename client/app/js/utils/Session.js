@@ -14,6 +14,7 @@ export class Session {
      * @param value
      */
     static setToken( value ) {
+        debugger;
         localStorage.setItem( 'jwt', value );
     }
 

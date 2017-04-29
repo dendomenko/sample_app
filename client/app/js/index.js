@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import configureStore from "./store";
 import Routing from './routes';
 import Layout from './components/Layout';
-
+import { Api } from 'api';
 import createBrowserHistory from 'history/createBrowserHistory';
 import NavigationBar from './components/NavigationBar';
 import sagas from './sagas/';
@@ -23,5 +23,7 @@ store.runSaga( sagas );
  */
 store.dispatch( checkAuth() );
 
+
+new Api();
 render(
     <Routing history={history} store={store}/>, renderToDomElement );

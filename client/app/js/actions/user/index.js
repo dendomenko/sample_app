@@ -13,10 +13,7 @@ export const authSuccess = () => ({ type: types.USER_AUTH });
  *
  */
 export const notAuth     = () => ({
-    type   : types.USER_NOT_AUTH,
-    payload: {
-        token: null
-    }
+    type: types.USER_NOT_AUTH,
 });
 
 
@@ -55,12 +52,12 @@ export const loginUser           = ( payload ) => ({ type: types.USER_LOGIN, pay
  */
 
 
-export const userLoginSuccess    = ( { name, email, id, token } ) => ({
+export const userLoginSuccess    = ( { name, email, id } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
     payload: {
         'name' : name,
-        'token': token,
-        'uid'  : id
+        'uid'  : id,
+        'email': email
     }
 });
 
@@ -88,9 +85,9 @@ export const userLogout = () => ({ type: types.USER_LOGOUT });
 export const userLogoutSuccess = () => ({
     type   : types.USER_LOGOUT_SUCCESS,
     payload: {
-        token: 'undefined',
         uid  : null,
-        name : null
+        name : null,
+        email: null
     }
 });
 

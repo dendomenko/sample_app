@@ -1,5 +1,10 @@
 import Api from '../User';
 
+
+
+export class UserApi {
+
+}
 /**
  *
  * @param name
@@ -32,7 +37,11 @@ const loginRequest = ( { email, pwd } ) => Api
         'email'   : email,
         'password': pwd
     } )
-    .then( res => res.data )
+    .then( res => {
+        debugger;
+        console.info( res );
+        return res.data;
+    } )
     .catch( error => {
         throw  error;
     } );

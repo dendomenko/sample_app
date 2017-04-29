@@ -12,10 +12,7 @@ const initialState = {
     uid   : null,
     email : null,
     name  : null,
-    fetch : false,
     error : null,
-    token : Session.getToken(),
-    isAuth: false
 };
 
 export default function userReducer( state = Map( initialState ), { type, payload } ) {
