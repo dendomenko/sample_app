@@ -1,16 +1,13 @@
 import React from 'react';
 import { Route, Redirect, withRouter } from 'react-router-dom';
+import { Session } from 'utils/Session';
 
 /**
  * TODO: Needs to  do it more flexible
  */
-const PrivateRoutes = function ( { redirectTo, children, store, } ) {
+const PrivateRoutes = function ( { redirectTo, children, } ) {
 
-    /**
-     * TODO: should to review
-     */
-    let state   = store.getState().toJS();
-    const token = state.user.token;
+    const token = Session.getToken();
 
     if ( token === null ) {
         return (<Redirect to={redirectTo}/>);

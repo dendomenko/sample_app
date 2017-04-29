@@ -1,9 +1,35 @@
 import * as types from "constants/user";
 
+
 /**
  *
  */
-export const registerUser = ( payload ) => ({ type: types.REGISTER_USER, payload });
+export const checkAuth   = () => ({ type: types.CHECK_AUTH });
+/**
+ *
+ */
+export const authSuccess = () => ({ type: types.USER_AUTH });
+/**
+ *
+ */
+export const notAuth     = () => ({
+    type   : types.USER_NOT_AUTH,
+    payload: {
+        token: null
+    }
+});
+
+
+export const authFailure               = ( error ) => ({
+    type   : types.AUTH_FAILURE,
+    paylaod: {
+        error: new Error( error )
+    }
+});
+/**
+ *
+ */
+             export const registerUser = ( payload ) => ({ type: types.REGISTER_USER, payload });
 
 /**
  *

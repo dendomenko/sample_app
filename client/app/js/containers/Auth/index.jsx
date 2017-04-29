@@ -85,7 +85,7 @@ class Auth extends React.PureComponent {
 }
 
 /**
- *
+ * TODO: SHOULD TO REWORKED DONT USE .toJS in mapStateToProps
  * @param state
  */
 const mapStateToProps = (state = state.toJS()) => ({

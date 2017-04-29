@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-
+import { Session } from 'utils/Session';
 import * as types from "../constants/user";
 
 /**
@@ -14,7 +14,7 @@ const initialState = {
     name  : null,
     fetch : false,
     error : null,
-    token : null,
+    token : Session.getToken(),
     isAuth: false
 };
 

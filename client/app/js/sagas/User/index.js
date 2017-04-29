@@ -2,14 +2,17 @@ import { take, call, put, fork, race, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import { apiUser } from 'api/User/';
 import * as types from 'constants/user';
-
+import { Session } from 'utils/Session';
 import {
     userLoginSuccess,
     userLoginFailure,
     registerUserFailure,
     registerUserSuccess,
     userLogoutSuccess,
-    userLogoutFailure
+    userLogoutFailure,
+    authSuccess,
+    notAuth,
+    authFailure
 } from 'actions/user';
 
 
@@ -17,8 +20,43 @@ import {
  * TODO: check logout;
  */
 
+/**
+ *
+ * @param token
+ * @returns {boolean}
+ */
+function* checkAuth() {
+    try {
 
+        const token      = Session.getToken();
+        const textStatus = call( apiUser.checkToken, token );
 
+        console.log( textStatus );
+
+        if ( textStatus === 'ok' ) {
+
+            yield put( authSuccess() );
+
+            return true;
+        }
+        else {
+            Session.removeToken();
+            yield put( notAuth() );
+            return false;
+        }
+
+    } catch ( error ) {
+        yield put( authFailure( error ) );
+        return false;
+    }
+
+}
+
+/**
+ *
+ * @param payload
+ * @returns {*}
+ */
 function* register( { payload } ) {
 
     try {
@@ -33,13 +71,20 @@ function* register( { payload } ) {
     }
 
 }
-
+/**
+ *
+ * @param payload
+ * @returns {boolean}
+ */
 function* authorize( { payload } ) {
 
     try {
         const response = call( apiUser.login, payload );
 
         yield put( userLoginSuccess( response ) );
+
+
+        Session.setToken( response.token );
 
         return true;
     }
@@ -50,14 +95,17 @@ function* authorize( { payload } ) {
     }
 
 }
-
+/**
+ *
+ * @returns {*}
+ */
 function* logout() {
 
     try {
         const response = yield call( apiUser.logout );
 
         yield put( userLogoutSuccess );
-
+        Session.removeToken();
         return response;
     }
     catch ( error ) {
