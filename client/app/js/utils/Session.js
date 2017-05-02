@@ -14,8 +14,8 @@ export class Session {
      * @param value
      */
     static setToken( value ) {
-        debugger;
         localStorage.setItem( 'jwt', value );
+        return true;
     }
 
     /**
@@ -23,6 +23,7 @@ export class Session {
      */
     static removeToken() {
         localStorage.removeItem( 'jwt' );
+        return true;
     }
 
     /**
@@ -30,5 +31,6 @@ export class Session {
      */
     static clearSession() {
         localStorage.clear();
+        return true;
     }
 }

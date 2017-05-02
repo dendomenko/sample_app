@@ -17,21 +17,6 @@ import {
 } from 'actions/user';
 
 
-const loginRequest = ( { email, pwd } ) => Api
-    .post( '/login', {
-        'email': email,
-        'password': pwd
-    } )
-    .then( res => {
-        debugger;
-        console.info( res );
-        return res.data;
-    } )
-    .catch( error => {
-        throw  error;
-    } );
-
-
 const checkToken = () => Api.get( '/users' ).then( res => {
     console.info( 'data', res );
     return res.statusText;
@@ -51,11 +36,11 @@ const checkToken = () => Api.get( '/users' ).then( res => {
 function* checkAuth() {
     try {
 
-        const token = Session.getToken();
-        console.info( 'token', token );
-        const textStatus = yield call( checkToken );
 
-        console.log( textStatus );
+        console.info( 'CheckToken', token );
+        const textStatus = yield call( apiUser.checkToken );
+
+        console.log( 'texdt', textStatus );
 
         if ( textStatus === 'ok' ) {
 
@@ -90,8 +75,7 @@ function* register( { payload } ) {
         return response;
 
     } catch ( error ) {
-        debugger;
-        // yield put( registerUserFailure( error ) );
+        yield put( registerUserFailure( error ) );
         return false;
     }
 
@@ -104,14 +88,10 @@ function* register( { payload } ) {
 function* authorize( { payload } ) {
 
     try {
-        const response = yield call( loginRequest, payload );
-        debugger;
-        console.log( response );
+        const response = yield call( apiUser.login, payload );
+
         yield put( userLoginSuccess( response ) );
-
-
         Session.setToken( response.auth_token );
-
         return true;
     }
     catch ( error ) {
@@ -127,19 +107,10 @@ function* authorize( { payload } ) {
  */
 function* logout() {
 
-    try {
-        const response = yield call( apiUser.logout );
+    const response = yield call( Session.removeToken );
 
-        yield put( userLogoutSuccess );
-        Session.removeToken();
-        return response;
-    }
-    catch ( error ) {
+    return response;
 
-        yield put( userLogoutFailure( error ) );
-
-        return error.message;
-    }
 }
 
 
@@ -151,20 +122,16 @@ function* loginFlow() {
     while ( true ) {
 
         const request = yield take( types.USER_LOGIN );
-        debugger;
-        const t = yield call( authorize, request );
 
-        console.log( t );
-        debugger;
-        // const winner = yield race( {
-        //     auth  : call( authorize, request ),
-        //     // logout: take( types.USER_LOGOUT )
-        // } );
-        //
-        // if ( winner.auth ) {
-        //
-        //     yield put( push( '/projects' ) );
-        // }
+
+        const winner = yield race( {
+            auth  : call( authorize, request ),
+            logout: take( types.USER_LOGOUT )
+        } );
+
+        if ( winner.auth ) {
+            yield put( push( '/projects' ) );
+        }
 
 
     }
@@ -177,8 +144,10 @@ function* logoutFlow() {
     while ( true ) {
 
         yield take( types.USER_LOGOUT );
-        yield call( logout );
-        yield put( push( '/' ) );
+        const isSuccsess = yield call( logout );
+
+        if ( isSuccsess )
+            yield put( push( '/' ) );
     }
 }
 
@@ -187,9 +156,9 @@ function* logoutFlow() {
  */
 function* registerFlow() {
     while ( true ) {
-        const request = yield take( types.REGISTER_USER );
 
-        const response = yield call( register, request );
+        const request  = yield take( types.REGISTER_USER );
+        const response = yield call( apiUser.register, request );
 
 
         if ( typeof response === 'object' ) {
@@ -206,7 +175,9 @@ function* registerFlow() {
 
 }
 
-
+/**
+ * TODO: should rework
+ */
 function* takeReq() {
     yield takeLatest( 'CHECK_AUTH', checkAuth );
 

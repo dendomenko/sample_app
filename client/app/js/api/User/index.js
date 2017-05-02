@@ -1,10 +1,6 @@
-import Api from '../User';
+import Api from 'api/';
 
 
-
-export class UserApi {
-
-}
 /**
  *
  * @param name
@@ -37,11 +33,7 @@ const loginRequest = ( { email, pwd } ) => Api
         'email'   : email,
         'password': pwd
     } )
-    .then( res => {
-        debugger;
-        console.info( res );
-        return res.data;
-    } )
+    .then( res => res.data )
     .catch( error => {
         throw  error;
     } );
@@ -49,16 +41,17 @@ const loginRequest = ( { email, pwd } ) => Api
 /**
  *
  */
-const logoutRequest        = () => Api.get( '/logout' ).then( res => res.status ).catch( error => {
-    throw error;
-} );
+const logoutRequest        = () => Api.get( '/logout' )
+    .then( res => res.status )
+    .catch( error => {
+        throw error;
+    } );
 /**
  *
  * @param token
  */
-const checkToken           = ( token ) => Api.post( '/isauth', {
-    'token': token
-} ).then( res => res.statusTextt )
+const checkToken           = () => Api.get( '/isauth' )
+    .then( res => res.statusText )
     .catch( error => {throw error;} );
 /**
  *
