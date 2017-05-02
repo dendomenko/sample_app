@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
+      get 'isAuth' => 'users#login'
       post '/login' => 'users#login'
       post '/postback' => 'users#postback'
       get '/logout' => 'users#logout'

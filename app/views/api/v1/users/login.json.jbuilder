@@ -4,4 +4,4 @@ json.id user['id']
 json.name user['name']
 json.email user['email']
 json.created user['created_at']
-json.token user['remember_token']
+json.access_token @auth_token
