@@ -30,12 +30,16 @@ module Api
 
       end
 
-      def login
-        user = User.find_by(email: params[:email].downcase)
+      def is_auth
+        render json: {message: "Logged in"}, status: :ok
+      end
 
-        if user && user.authenticate(params[:password])
-          auth_token = JsonWebToken.encode({user_id: user.id})
-          render json: {auth_token: auth_token}, status: :ok
+      def login
+        @user = User.find_by(email: params[:email].downcase)
+
+        if @user && @user.authenticate(params[:password])
+          @auth_token = JsonWebToken.encode({user_id: @user.id})
+          render status: :ok
         else
           render json: {error: 'Invalid username / password'}, status: :unauthorized
         end
@@ -65,6 +69,8 @@ module Api
       def inspect_params
         puts params.inspect
       end
+
+
       # def sign_in(user)
       #   remember_token = User.new_remember_token
       #   cookies.permanent[:remember_token] = remember_token
