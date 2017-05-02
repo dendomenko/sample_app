@@ -31,7 +31,9 @@ module Api
       end
 
       def is_auth
-        render json: {message: "Logged in"}, status: :ok
+        @user = load_current_user!
+        render status: :ok
+
       end
 
       def login
