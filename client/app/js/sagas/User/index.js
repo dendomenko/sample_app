@@ -17,11 +17,10 @@ import {
 } from 'actions/user';
 
 
-const checkToken = () => Api.get( '/users' ).then( res => {
+const checkToken = () => Api.get( '/isAuth' ).then( res => {
     console.info( 'data', res );
-    return res.statusText;
-} )
-    .catch( error => {throw error;} );
+    return res.data;
+} );
 
 
 /**
@@ -35,28 +34,21 @@ const checkToken = () => Api.get( '/users' ).then( res => {
  */
 function* checkAuth() {
     try {
+        console.log( 'TOKEN', Session.getToken() );
+        const response = yield call( checkToken );
+        debugger;
+        yield put( authSuccess( response ) );
 
+        return true;
 
-        console.info( 'CheckToken', token );
-        const textStatus = yield call( apiUser.checkToken );
-
-        console.log( 'texdt', textStatus );
-
-        if ( textStatus === 'ok' ) {
-
-            yield put( authSuccess() );
-
-            return true;
-        }
-        else {
-            Session.removeToken();
-            yield put( notAuth() );
-            return false;
-        }
 
     } catch ( error ) {
-        yield put( authFailure( error ) );
+        debugger;
+        // yield put( authFailure( error ) );
+        Session.removeToken();
+        yield put( notAuth() );
         return false;
+
     }
 
 }
@@ -179,7 +171,7 @@ function* registerFlow() {
  * TODO: should rework
  */
 function* takeReq() {
-    yield takeLatest( 'CHECK_AUTH', checkAuth );
+    yield takeLatest( types.CHECK_AUTH, checkAuth );
 
 }
 /**

@@ -7,6 +7,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import NavigationBar from './components/NavigationBar';
 import sagas from './sagas/';
 import { checkAuth } from 'actions/user';
+import { Session } from 'utils/Session';
 
 const renderToDomElement = document.getElementById( 'app' );
 
@@ -20,8 +21,11 @@ store.runSaga( sagas );
 /**
  * check jwt
  */
-store.dispatch( checkAuth() );
 
+
+if ( Session.getToken() !== null ) {
+    store.dispatch( checkAuth() );
+}
 
 
 render(

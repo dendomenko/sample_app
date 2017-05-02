@@ -50,8 +50,8 @@ const logoutRequest        = () => Api.get( '/logout' )
  *
  * @param token
  */
-const checkToken           = () => Api.get( '/isauth' )
-    .then( res => res.statusText )
+const checkToken           = () => Api.get( '/isAuth' )
+    .then( res => { debugger; return res.statusText;} )
     .catch( error => {throw error;} );
 /**
  *
