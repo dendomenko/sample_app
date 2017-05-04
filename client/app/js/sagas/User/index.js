@@ -1,4 +1,4 @@
-import { take, call, put, fork, race, select, takeLatest } from 'redux-saga/effects';
+import { take, call, put, fork, race, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import { apiUser } from 'api/User/';
 import * as types from 'constants/user';
@@ -16,17 +16,6 @@ import {
     authFailure
 } from 'actions/user';
 
-
-const checkToken = () => Api.get( '/isAuth' ).then( res => {
-    console.info( 'data', res );
-    return res.data;
-} );
-
-
-/**
- * TODO: check logout;
- */
-
 /**
  *
  * @param token
@@ -34,17 +23,13 @@ const checkToken = () => Api.get( '/isAuth' ).then( res => {
  */
 function* checkAuth() {
     try {
-        console.log( 'TOKEN', Session.getToken() );
-        const response = yield call( checkToken );
-        debugger;
-        yield put( authSuccess( response ) );
+        const response = yield call( apiUser.checkToken );
 
+        yield put( authSuccess( response ) );
         return true;
 
-
     } catch ( error ) {
-        debugger;
-        // yield put( authFailure( error ) );
+
         Session.removeToken();
         yield put( notAuth() );
         return false;
@@ -68,6 +53,7 @@ function* register( { payload } ) {
 
     } catch ( error ) {
         yield put( registerUserFailure( error ) );
+        yield put( push( '/' ) );
         return false;
     }
 
@@ -83,7 +69,7 @@ function* authorize( { payload } ) {
         const response = yield call( apiUser.login, payload );
 
         yield put( userLoginSuccess( response ) );
-        Session.setToken( response.auth_token );
+        Session.setToken( response.access_token );
         return true;
     }
     catch ( error ) {
@@ -136,9 +122,9 @@ function* logoutFlow() {
     while ( true ) {
 
         yield take( types.USER_LOGOUT );
-        const isSuccsess = yield call( logout );
+        const isSuccess = yield call( logout );
 
-        if ( isSuccsess )
+        if ( isSuccess )
             yield put( push( '/' ) );
     }
 }
@@ -167,10 +153,11 @@ function* registerFlow() {
 
 }
 
+
 /**
- * TODO: should rework
+ *
  */
-function* takeReq() {
+function* checkTokenFlow() {
     yield takeLatest( types.CHECK_AUTH, checkAuth );
 
 }
@@ -182,7 +169,7 @@ function * rootUserSagas() {
         fork( loginFlow ),
         fork( logoutFlow ),
         fork( registerFlow ),
-        fork( takeReq )
+        fork( checkTokenFlow )
     ];
 }
 /**

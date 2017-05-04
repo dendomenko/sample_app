@@ -50,9 +50,9 @@ const logoutRequest        = () => Api.get( '/logout' )
  *
  * @param token
  */
-const checkToken           = () => Api.get( '/isAuth' )
-    .then( res => { debugger; return res.statusText;} )
-    .catch( error => {throw error;} );
+const checkToken           = () => Api.get( '/isAuth' ).then( res => {
+    return res.data;
+} );
 /**
  *
  * @type {{register: ((p1:{name?: *, email?: *, pwd?: *, confirm_pwd?: *})=>(*)), login: ((p1:{email?: *, pwd?:
