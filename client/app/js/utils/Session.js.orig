@@ -6,15 +6,20 @@ export class Session {
      *
      */
     static getToken() {
-        return localStorage.getItem( 'jwt' );
+        return localStorage.getItem('jwt');
     }
 
     /**
      *
      * @param value
      */
+<<<<<<< HEAD
+    static setToken(value) {
+        localStorage.setItem('jwt', value);
+=======
     static setToken( value ) {
         localStorage.setItem( 'jwt', value );
+>>>>>>> develop
         return true;
     }
 
@@ -22,7 +27,11 @@ export class Session {
      *
      */
     static removeToken() {
+<<<<<<< HEAD
+        localStorage.removeItem('jwt');
+=======
         localStorage.removeItem( 'jwt' );
+>>>>>>> develop
         return true;
     }
 

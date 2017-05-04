@@ -5,7 +5,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { Provider } from 'react-redux';
-import App from 'containers/App';
+import Home from 'containers/Home';
 import StaticPage from 'containers/Static';
 import NotFound from 'containers/NotFound';
 import Layout from 'components/Layout';
@@ -24,7 +24,7 @@ const Routing = ( { store, history } ) => (
                 <NavigationBar/>
                 <div>
                     <Switch>
-                        <Route exact path="/" component={App}/>
+                        <Route exact path="/" component={Home}/>
                         <Route exact path="/about" component={StaticPage}/>
                         <Route exact path="/help" component={StaticPage}/>
                         <Route exact path="/signin" component={Auth}/>

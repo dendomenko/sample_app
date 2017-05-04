@@ -29,7 +29,11 @@
     "redux-form": "^6.6.3",
     "redux-immutable": "^4.0.0",
     "redux-saga": "^0.14.7",
+<<<<<<< HEAD
+    "semantic-ui-css": "^2.2.10",
+=======
     "semantic-ui-less": "^2.2.10",
+>>>>>>> develop
     "semantic-ui-react": "^0.68.2",
     "shortid": "^2.2.8"
   },
@@ -61,8 +65,13 @@
     "jsdom": "^10.0.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
+<<<<<<< HEAD
+=======
+    "less-plugin-rewrite-import": "^0.1.1",
+>>>>>>> develop
     "mocha": "^3.3.0",
     "node-sass": "^4.1.1",
+    "postcss-loader": "^1.3.3",
     "react-addons-test-utils": "^15.5.1",
     "react-hot-loader": "^1.3.1",
     "react-router-loader": "^0.5.4",
@@ -72,7 +81,13 @@
     "redux-devtools-log-monitor": "^1.2.0",
     "redux-logger": "^3.0.1",
     "redux-saga-devtools": "^0.1.1",
+    "resolve-url-loader": "^2.0.2",
     "sass-loader": "^4.1.1",
+<<<<<<< HEAD
+    "semantic-ui-less": "^2.2.10",
+=======
+    "semantic-ui-less-module-loader": "^1.0.0",
+>>>>>>> develop
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",

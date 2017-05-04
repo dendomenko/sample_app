@@ -10,12 +10,9 @@ const initialState = {
  *  TODO: check @@INIT action
  */
 
-const routeReducer    = ( state = Map( initialState ), { type, payload } ) => {
+const routeReducer = ( state = Map( initialState ), { type, payload } ) => {
 
 
-    if ( type === '@@INIT' ) {
-        console.log( 'here', payload );
-    }
     if ( type === LOCATION_CHANGE ) {
         return state.merge( {
             current_location         : payload.pathname.substring( 1 ),

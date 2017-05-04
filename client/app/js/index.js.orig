@@ -1,0 +1,48 @@
+import React from 'react';
+import {render} from 'react-dom';
+import configureStore from "./store";
+import Routing from './routes';
+<<<<<<< HEAD
+=======
+import Layout from './components/Layout';
+>>>>>>> develop
+import createBrowserHistory from 'history/createBrowserHistory';
+import sagas from './sagas/';
+<<<<<<< HEAD
+import {checkAuth} from 'actions/user';
+import {Session} from 'utils/Session';
+const renderToDomElement = document.getElementById('app');
+=======
+import { checkAuth } from 'actions/user';
+import { Session } from 'utils/Session';
+
+const renderToDomElement = document.getElementById( 'app' );
+>>>>>>> develop
+
+const history = createBrowserHistory();
+const store = configureStore({}, history);
+
+/**
+ *
+ */
+store.runSaga(sagas);
+/**
+ * check jwt
+ */
+<<<<<<< HEAD
+if (Session.getToken() !== null)
+    store.dispatch(checkAuth());
+
+
+
+=======
+
+
+if ( Session.getToken() !== null ) {
+    store.dispatch( checkAuth() );
+}
+
+
+>>>>>>> develop
+render(
+    <Routing history={history} store={store}/>, renderToDomElement);

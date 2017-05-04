@@ -1,16 +1,26 @@
 import axios from 'axios';
+<<<<<<< HEAD
+import {Session} from 'utils/Session';
+
+const api = axios.create({
+=======
 import { Session } from 'utils/Session';
 
 
 const api = axios.create( {
+>>>>>>> develop
     baseURL: 'http://localhost:3000/api/v1/',
-    proxy  : {
+    proxy: {
         host: '127.0.0.1',
         port: 3000
     },
     headers: {
         'Authorization': Session.getToken()
     }
+<<<<<<< HEAD
+});
+=======
 } );
+>>>>>>> develop
 
 export default api;
