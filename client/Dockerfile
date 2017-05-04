@@ -30,4 +30,3 @@ ADD . $APP_HOME
 # ADD . $APP_CLIENT
 
 # EXPOSE 8080
- CMD [ "npm start","bash -c ls" ]
