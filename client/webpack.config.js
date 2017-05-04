@@ -9,12 +9,16 @@ var ProgressPlugin        = require( 'webpack/lib/ProgressPlugin' );
 var nodeModulesPath       = path.resolve( __dirname, 'node_modules' );
 var mainPath              = path.resolve( __dirname, 'app', 'bundle.js' );
 var publicPath            = path.resolve( __dirname, 'dist' );
+var RewriteImportPlugin = require("less-plugin-rewrite-import");
+var lessLoader = ExtractTextPlugin.extract(
+    "css?sourceMap!less?sourceMap"
+);
+var sassLoader = ExtractTextPlugin.extract(
+    'style-loader',
+    'css!autoprefixer-loader?browsers=last 2 version!sass' );
+var config     = {
 
-
-var config = {
-
-    devtool: 'cheap-module-eval-source-map',
-
+    devtool : 'cheap-module-eval-source-map',
     progress: true,
 
     entry: {
@@ -34,8 +38,8 @@ var config = {
             'redux-form',
             'shortid',
             'redux-saga',
-            'redux-thunk',
-            'history'
+            'history',
+            'semantic-ui-react'
         ],
 
         bundle: [ 'babel-polyfill', 'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr', './app/js/index.js' ]
@@ -69,18 +73,32 @@ var config = {
             {
 
                 test: /\.jsx?$/,
-
                 include: path.join( __dirname, 'app' ),
                 loader : "babel-loader",
                 exclude: [ nodeModulesPath ]
 
-            }, {
+            },  {
+                test: /\.less$/, // import css from 'foo.less';
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            },
+            {
+                test  : /\.(png|jpg|gif|woff|svg|eot|ttf|woff2)$/,
+                loader: 'url-loader?limit=1024&name=[name]-[hash:8].[ext]!image-webpack',
+            },
+            {
+                test: /\.(ttf|eot|svg|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader'
+            },{
 
                 test: /\.scss$/,
 
                 include: path.join( __dirname, 'app' ),
 
-                loader: ExtractTextPlugin.extract( 'style-loader', 'css!autoprefixer-loader?browsers=last 2 version!sass' )
+                loader: sassLoader
 
             }
         ]

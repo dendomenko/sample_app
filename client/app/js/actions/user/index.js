@@ -8,7 +8,14 @@ export const checkAuth   = () => ({ type: types.CHECK_AUTH });
 /**
  *
  */
-export const authSuccess = () => ({ type: types.USER_AUTH });
+export const authSuccess = ( { name, email, id } ) => ({
+    type   : types.USER_AUTH,
+    payload: {
+        'name' : name,
+        'uid'  : id,
+        'email': email
+    }
+});
 /**
  *
  */

@@ -1,20 +1,5 @@
 import axios from 'axios';
-import { Axios } from 'axios';
-import { cloneDeep } from 'lodash';
 import { Session } from 'utils/Session';
-
-export class Api extends Axios {
-    constructor() {
-        super();
-        // this.defaults.baseURL = 'https://api.com';
-        this.defaults = cloneDeep(this.defaults);
-        console.info( 'dd', this );
-    }
-
-    cancelOrder( id ) {
-        return this.put( `/cancel/order/${id}` );
-    }
-}
 
 
 const api = axios.create( {
@@ -26,13 +11,6 @@ const api = axios.create( {
     headers: {
         'Authorization': Session.getToken()
     }
-    //     common: {
-    //         'Authorization': Session.getToken()
-    //     },
-    //     post  : {
-    //         'Content-Type': 'application/x-www-form-urlencoded'
-    //     }
-    // }
 } );
 
 export default api;
