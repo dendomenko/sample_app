@@ -7,7 +7,7 @@ export default class Home extends React.PureComponent{
     {
         return(
 
-            <Radio slider />
+            <Radio slider checked="true" />
         );
     }
 }

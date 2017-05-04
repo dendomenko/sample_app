@@ -14,7 +14,6 @@ var publicPath            = path.resolve( __dirname, 'dist' );
 var config = {
 
     devtool: 'cheap-module-eval-source-map',
-    // devtool: '#cheap-module-source-map',
     progress: true,
 
     entry: {
@@ -34,7 +33,8 @@ var config = {
             'redux-form',
             'shortid',
             'redux-saga',
-            'history'
+            'history',
+            'semantic-ui'
         ],
 
         bundle: ['babel-polyfill',
@@ -169,9 +169,9 @@ var config = {
                 // vendor-bundle.js
                 minChunks: Infinity
             })
-    ],
+    ]
 
-    resolve: {
+
 
 };
 

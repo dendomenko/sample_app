@@ -5,7 +5,7 @@ import Routing from './routes';
 import createBrowserHistory from 'history/createBrowserHistory';
 import sagas from './sagas/';
 import { checkAuth } from 'actions/user';
-
+import {Session} from 'utils/Session';
 
 const renderToDomElement = document.getElementById( 'app' );
 
