@@ -2,9 +2,9 @@
  eslint import/no-unresolved: 0, global-require: 0, import/no-extraneous-dependencies: 0
  */
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
-import { Provider } from 'react-redux';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import {ConnectedRouter} from 'react-router-redux';
+import {Provider} from 'react-redux';
 import Home from 'containers/Home';
 import StaticPage from 'containers/Static';
 import NotFound from 'containers/NotFound';
@@ -14,10 +14,11 @@ import Footer from 'components/Footer';
 import Auth from 'containers/Auth';
 import Dashboard from 'containers/Dashboard';
 import Project from 'containers/Project';
+import Profile from 'containers/Profile';
 import PrivateRoute from './helpers/privateRoute';
 
 
-const Routing = ( { store, history } ) => (
+const Routing = ({store, history}) => (
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Layout>
@@ -33,7 +34,7 @@ const Routing = ( { store, history } ) => (
                             <Switch>
                                 <Route exact path='/projects' component={Project}/>
                                 <Route exact path='/dashboard' component={Dashboard}/>
-                                <Route exact path='/userprofile' component={Project}/>
+                                <Route exact path='/userprofile' component={Profile}/>
                             </Switch>
                         </PrivateRoute>
                         <Route path="*" component={NotFound}/>
