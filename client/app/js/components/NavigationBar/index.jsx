@@ -1,30 +1,23 @@
 import React from 'react';
-import { Session } from 'utils/Session';
-import { NavLink, Link } from 'react-router-dom';
+import {Session} from 'utils/Session';
+import {NavLink, Link} from 'react-router-dom';
+import {Menu, Segment} from 'semantic-ui-react';
 
-
-export default( props ) => (
-    <div>
-        <ul>
-            <li>
-                <NavLink to="/" activeClassName="active">Home</NavLink>
-            </li>
-            <li>
-                <NavLink to="/about" activeClassName="Active">About</NavLink>
-            </li>
-            <li>
-                <NavLink to="/help" activeClassName="active">FAQ</NavLink>
-            </li>
-            <li>
-                <Link to="/signin">Login</Link>
-            </li>
-            <li>
-                <Link to="/register">Register</Link>
-            </li>
-        </ul>
-        <br/>
-        {Session.getToken() && <PrivateLinks />}
-    </div>
+export default(props) => (
+    <Segment inverted>
+        <Menu inverted pointing secondary>
+            <Menu.Item as={NavLink} to="/">
+                Home
+            </Menu.Item>
+            <Menu.Item as={NavLink} to="/about">
+                About
+            </Menu.Item>
+            <Menu.Item as={NavLink} to="/help">
+                Help
+            </Menu.Item>
+            {Session.getToken() && <PrivateLinks />}
+        </Menu>
+    </Segment>
 );
 
 /**
@@ -32,15 +25,17 @@ export default( props ) => (
  * @constructor
  */
 const PrivateLinks = () => (
-    <ul>
-        <li>
-            <NavLink to="/projects" activeClassName="active">Projects</NavLink>
-        </li>
-        <li>
-            <NavLink to="/dashboard" activeClassName="active">Dashborad</NavLink>
-        </li>
-        <li>
-            <NavLink to="/userprofile" activeClassName="active">Userprofile</NavLink>
-        </li>
-    </ul>
+    <Menu.Menu position='right'>
+
+        <Menu.Item as={NavLink} to="/projects">
+            Projects
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/dashboard">
+            Dashboard
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/userprofile">
+            Userprofile
+        </Menu.Item>
+
+    </Menu.Menu>
 );

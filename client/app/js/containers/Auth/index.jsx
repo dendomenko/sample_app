@@ -25,14 +25,6 @@ class Auth extends React.PureComponent {
 
     }
 
-    componentWillMount() {
-        console.info('AUTH mound');
-    }
-
-    componentWillReciveProps()
-    {
-        console.info('AUTH will recive');
-    }
 
     render() {
 
@@ -43,7 +35,7 @@ class Auth extends React.PureComponent {
                 {pathname.substring(1) === 'register'
                     ? <RegisterForm handleSubmit={this.handleRegisterSubmit}/>
                     : <SignInForm handleSubmit={this.handleSignInSubmit}/>
-}
+                }
                 <div>
                     <button onClick={this.handleLogoutSubmit}>SIGN OUT</button>
                 </div>
@@ -61,6 +53,7 @@ class Auth extends React.PureComponent {
          */
         dispatch(loginUser(signin.values));
     }
+
     handleRegisterSubmit(e) {
         e.preventDefault();
 
@@ -74,8 +67,7 @@ class Auth extends React.PureComponent {
 
     }
 
-    handleLogoutSubmit(e)
-    {
+    handleLogoutSubmit(e) {
         e.preventDefault();
 
         const {dispatch} = this.props;

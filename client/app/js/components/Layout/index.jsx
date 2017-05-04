@@ -1,10 +1,9 @@
 import React from 'react';
 // import 'semantic-ui-less/semantic.less';
 
-const Layout = (props) => (
+const Layout = ({children}) => (
     <div>
-        <div>Hello</div>
-        {props.children}
+        {children}
     </div>
 );
 
