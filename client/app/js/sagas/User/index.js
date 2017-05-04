@@ -29,6 +29,7 @@ function* checkAuth() {
         const response = yield call(apiUser.checkToken);
 
         yield put(authSuccess(response));
+        yield put(push('/projects'));
         return true;
 
     } catch (error) {
