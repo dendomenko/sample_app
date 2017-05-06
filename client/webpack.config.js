@@ -34,7 +34,7 @@ var config = {
             'shortid',
             'redux-saga',
             'history',
-            'semantic-ui'
+            'semantic-ui-react'
         ],
 
         bundle: ['babel-polyfill',

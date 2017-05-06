@@ -1,14 +1,21 @@
-import React, {PureComponent} from 'react';
+// @flow
+import React, {PureComponent} from "react";
 import {connect} from "react-redux";
-import {Radio, Container} from 'semantic-ui-react';
-import RegisterForm from 'components/registerForm';
-import SignInForm from 'components/SignIn';
+import {Radio, Container} from "semantic-ui-react";
+import RegisterForm from "components/registerForm";
+import SignInForm from "components/SignIn";
 import {registerUser, loginUser, userLogout} from "actions/user";
+import bindFunctions from 'utils/bind-functions';
 
 /**
  *
  */
 class Home extends React.PureComponent {
+
+    state: {
+        checked: boolean,
+        label: string
+    };
 
     constructor() {
         super();
@@ -17,14 +24,7 @@ class Home extends React.PureComponent {
             label: 'Register'
         };
 
-        this.handleChangeForm = this.handleChangeForm.bind(this);
-        this.handleSignInSubmit = this
-            .handleSignInSubmit
-            .bind(this);
-
-        this.handleRegisterSubmit = this
-            .handleRegisterSubmit
-            .bind(this);
+        bindFunctions.call(this, ['handleChangeForm', 'handleSignInSubmit', 'handleRegisterSubmit']);
     }
 
 
@@ -82,10 +82,10 @@ class Home extends React.PureComponent {
 }
 
 /**
- * TODO: SHOULD TO REWORKED DONT USE .toJS in mapStateToProps
+ *
  * @param state
  */
-const mapStateToProps = (state = state.toJS()) => ({
+const mapStateToProps = state => ({
     form: state.get('form')
 });
 /**
