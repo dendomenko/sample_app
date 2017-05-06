@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 import { Session } from 'utils/Session';
-import * as types from "../constants/user";
+import * as types from "../../constants/user/index";
 
 /**
  * TODO: 1)make it with immutable,
