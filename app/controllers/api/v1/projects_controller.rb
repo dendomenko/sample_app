@@ -54,7 +54,7 @@ module Api
       private
 
       def project_params
-        params.require(:project).permit(:name, :task_name)
+        params.require(:project).permit(:name, :task_name, :description)
       end
 
     end
