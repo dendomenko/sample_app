@@ -15,7 +15,7 @@ const initialState = {
  *  TODO: Should to rework
  */
 
-const projectReducer = ( state = Map( initialState ), { type, payload } ) => {
+const reducer = ( state = Map( initialState ), { type, payload } ) => {
 
     switch ( type ) {
         case types.FETCH_PROJECTS:
@@ -54,4 +54,4 @@ const projectReducer = ( state = Map( initialState ), { type, payload } ) => {
 
 };
 
-export default projectReducer;
+export default reducer;
