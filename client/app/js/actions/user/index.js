@@ -4,7 +4,7 @@ import * as types from "constants/user";
 /**
  *
  */
-export const checkAuth   = () => ({ type: types.CHECK_AUTH });
+export const checkAuth = () => ({ type: types.CHECK_AUTH });
 /**
  *
  */
@@ -19,12 +19,12 @@ export const authSuccess = ( { name, email, id } ) => ({
 /**
  *
  */
-export const notAuth     = () => ({
+export const notAuth = () => ({
     type: types.USER_NOT_AUTH,
 });
 
 
-export const authFailure               = ( error ) => ({
+export const authFailure = ( error ) => ({
     type   : types.AUTH_FAILURE,
     paylaod: {
         error: new Error( error )
@@ -33,7 +33,10 @@ export const authFailure               = ( error ) => ({
 /**
  *
  */
-             export const registerUser = ( payload ) => ({ type: types.REGISTER_USER, payload });
+export const registerUser = ( payload ) => ({
+    type: types.REGISTER_USER,
+    payload
+});
 
 /**
  *
@@ -52,14 +55,14 @@ export const registerUserFailure = ( error ) => ({
 /**
  *
  */
-export const loginUser           = ( payload ) => ({ type: types.USER_LOGIN, payload });
+export const loginUser = ( payload ) => ({ type: types.USER_LOGIN, payload });
 /**
  *
  * @param payload
  */
 
 
-export const userLoginSuccess    = ( { name, email, id } ) => ({
+export const userLoginSuccess = ( { name, email, id } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
     payload: {
         'name' : name,

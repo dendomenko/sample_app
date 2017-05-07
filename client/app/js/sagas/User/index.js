@@ -13,7 +13,7 @@ import {
     authSuccess,
     notAuth,
     authFailure
-} from 'actions/user';
+} from 'actions/user/';
 
 /**
  * TODO: check logout;
