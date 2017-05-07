@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { createProject, fetchProjects } from 'actions/project/all-projects';
 import CreateProjectForm  from './../../components/CreateProjectForm';
 import ProjectList  from './../../components/Project/List';
+import  PreloaderBlock from './../../components/Preloader/Segment';
 /**
  *
  */
+const simple = [];
+
 class Project extends React.PureComponent {
 
     constructor() {
@@ -24,11 +27,25 @@ class Project extends React.PureComponent {
     }
 
     render() {
+        const { isFetching, items } = this.props.projects;
 
-        console.info( 'Projects', this.props );
+//        if (isFetching) {
+//
+//            const test = this.props.projects.items.map( ( item, index ) => {
+//                console.info( 'item', item );
+//                console.log( index, 'index' );
+//                return item;
+//            } );
+//        }
+
+        console.warn( !!isFetching );
         return (
             <div>
                 <h1>'Projects Container'</h1>
+
+                <PreloaderBlock active={!!isFetching} preloadText="Preparing Files">
+                    <ProjectList items={items || simple}/>
+                </PreloaderBlock>
                 <CreateProjectForm handleSubmit={this.handleCreateProject}/>
             </div>
         );

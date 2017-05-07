@@ -1,12 +1,12 @@
 import * as types from 'constants/project/all-projects';
-import { Map,List } from 'immutable';
+import { Map, List } from 'immutable';
 /**
  *
  */
 export const fetchProjects = () => ({
     type   : types.FETCH_PROJECTS,
     payload: {
-        isFetching: false
+        isFetching: false,
     }
 });
 /**

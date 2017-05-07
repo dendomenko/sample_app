@@ -4,7 +4,7 @@ import  * as types  from 'constants/project/all-projects';
 
 const initialState = {
 
-    items     : List(),
+    items     : [],
     isFetching: false,
     error     : null
 
