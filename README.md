@@ -10,6 +10,11 @@
 8. Test using ```localhost:3000```
 
 
+## REQUESTS
+For all requests exclude login and register you need to send token in header with name 'Authorization'
+
+### USER requests
+
 GET:<br>
 ```http://localhost:3000/api/v1/users/ ``` - get all users <br>
 `http://localhost:3000/api/v1/users/:id` - get user by id
@@ -38,3 +43,31 @@ POST:
 { "email":"dendomenko@gmail.com","password":"den_domenko"}
 ```
 
+### PROJECT requests
+
+GET:<br>
+**ALL PROJECT OF USER**
+```http://localhost:3000/api/v1/projects/```<br>
+**PROJECT BY ID**
+```http://localhost:3000/api/v1/projects/:id``` <br>
+
+POST:<br>
+**CREATE PROJECT** ```http://localhost:3000/api/v1/projects/```
+```
+{
+    "name":"<name>",
+    "task_name":"<task name>",
+    "description":"<description>"
+}
+```
+
+PATCH/PUT:<br>
+**UPDATE PROJECT**
+
+```http://localhost:3000/api/v1/projects/:id```
+```
+{
+        "name":"<name>",
+        "description":"<description>"
+}
+```

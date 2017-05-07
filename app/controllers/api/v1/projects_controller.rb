@@ -17,7 +17,7 @@ module Api
         @project = load_current_user!.projects.create(project_params)
 
         if @project.save
-          render json: {message: 'Project created'}, status: :ok
+          render json: {id: @project.id}, status: :ok
         else
           render json: {message: 'Wrong query'}, status: :bad_request
         end
@@ -27,6 +27,19 @@ module Api
         user = load_current_user!
         @project = user.projects.find(params[:id])
         @role = @project.roles.find_by_user_id(load_current_user!.id).role
+      end
+
+      def update
+        project = load_current_user!.projects.find(params[:id])
+        project.name = params[:name] unless params[:name].blank?
+        project.description = params[:description] unless params[:description].blank?
+
+        if project.save
+          render json: {message: 'Project updated'}, status: :ok
+        else
+          render json: {message: 'Wrong query'}, status: :bad_request
+        end
+
       end
 
       def add_user
@@ -54,7 +67,7 @@ module Api
       private
 
       def project_params
-        params.require(:project).permit(:name, :task_name)
+        params.require(:project).permit(:name, :task_name, :description)
       end
 
     end
