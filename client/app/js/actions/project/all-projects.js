@@ -1,5 +1,5 @@
 import * as types from 'constants/project/all-projects';
-
+import { Map,List } from 'immutable';
 /**
  *
  */
@@ -18,7 +18,7 @@ export const fetchProjectsSuccsess = ( data ) => (
         type   : types.FETCH_PROJECTS_SUCCESS,
         payload: {
             isFetching: true,
-            ...data
+            items     : List( data )
         }
     });
 
@@ -33,20 +33,59 @@ export const fetchProjectsFailure = ( error ) => ({
     }
 });
 
+/**
+ *
+ * @param payload
+ */
 export const createProject = ( payload ) => ({
     type: types.CREATE_PROJECT,
     payload
 });
 
+/**
+ *
+ * @param payload
+ */
 export const createProjectSuccess = ( payload ) => ({
-    type: types.CREATE_PROJECT_SUCCESS,
-    payload
+    type   : types.CREATE_PROJECT_SUCCESS,
+    payload: {
+        item: Map( payload )
+    }
 });
 
-
+/**
+ *
+ * @param error
+ */
 export const createProjectFailure = ( error ) => ({
     type   : types.CREATE_PROJECT_FAILUR,
     payload: {
         error: new Error( error )
     }
 });
+
+
+/**
+ *
+ */
+export const updateProjectsList = () => ({
+    type   : types.UPDATE_PROJECT,
+    payload: {
+        isFetching: false
+    }
+});
+
+/**
+ *
+ * @param item
+ */
+export const updateComplete = ( item ) => ({
+    type   : types.UPDATE_PROJECTS_COMPLETE,
+    payload: {
+        isFetching: true,
+        item      : Map( item )
+    }
+});
+
+
+

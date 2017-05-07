@@ -10,12 +10,14 @@ import {
     createProjectFailure
 } from 'actions/project/all-projects';
 
-
+/**
+ *
+ * @returns {boolean}
+ */
 function *fetchProjects() {
 
     try {
         const response = yield call( apiProject.fetchALL );
-        debugger;
         yield put( fetchProjectsSuccsess( response ) );
         return true;
     }
@@ -26,10 +28,46 @@ function *fetchProjects() {
     }
 
 }
+/**
+ *
+ * @param payload
+ * @returns {boolean}
+ */
+function* createProject( { payload } ) {
+    try {
+
+        const id = yield call( apiProject.create, payload );
+
+        debugger;
+        yield put( createProjectSuccess( id ) );
+
+        return true;
+    }
+    catch ( e ) {
+        yield put( createProjectFailure( e ) );
+        return false;
+    }
+}
+
+/**
+ *
+ */
+function* flowProjects() {
+    yield takeLatest( types.FETCH_PROJECTS, fetchProjects );
+}
 
 
-function* rootProjectsSaga(){
-    yield[];
+function* flowCreateProject() {
+    yield takeLatest( types.CREATE_PROJECT, createProject );
+}
+/**
+ *
+ */
+function* rootProjectsSaga() {
+    yield[
+        fork( flowProjects ),
+        fork( flowCreateProject )
+    ];
 }
 
 export default rootProjectsSaga;
