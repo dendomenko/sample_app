@@ -38,8 +38,11 @@ function* createProject( { payload } ) {
 
         const id = yield call( apiProject.create, payload );
 
-        debugger;
-        yield put( createProjectSuccess( id ) );
+
+        const project = ( current, newData ) => ({ ...current, ...newData });
+
+
+        yield put( createProjectSuccess( project( payload, id ) ) );
 
         return true;
     }

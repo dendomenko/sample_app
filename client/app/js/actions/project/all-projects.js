@@ -49,7 +49,7 @@ export const createProject = ( payload ) => ({
 export const createProjectSuccess = ( payload ) => ({
     type   : types.CREATE_PROJECT_SUCCESS,
     payload: {
-        item: Map( payload )
+        item: payload
     }
 });
 
