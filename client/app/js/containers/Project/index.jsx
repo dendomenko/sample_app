@@ -5,17 +5,29 @@ import { createProject, fetchProjects } from 'actions/project/all-projects';
 import CreateProjectForm  from './../../components/CreateProjectForm';
 import ProjectList  from './../../components/Project/List';
 import PreloaderBlock from './../../components/Preloader/Segment';
+import Modal from './../../components/Modal';
 import bindFunc from './../../utils/bind-functions';
 /**
  *
  */
 
 
-class Project extends React.PureComponent {
+type State = {
+    isOpenModal: boolean;
+};
+
+class Project extends React.PureComponent<State> {
+
 
     constructor() {
         super();
-        bindFunc.call( this, [ 'handleCreateProject', 'handleEditProject' ] );
+        this.state = {
+            isOpenModal: false
+        };
+        /**
+         *
+         */
+        bindFunc.call( this, [ 'handleCreateProject', 'handleEditProject', 'handleTriggerModal' ] );
     }
 
     componentWillMount() {
@@ -37,10 +49,16 @@ class Project extends React.PureComponent {
                 <PreloaderBlock active={!isFetching} preloadText="Preparing Files">
                     <ProjectList
                         items={items.toArray()}
-                        handleEdit={this.handleEditProject}
+                        handleEdit={this.handleTriggerModal}
                     />
                 </PreloaderBlock>
+
                 <CreateProjectForm handleSubmit={this.handleCreateProject}/>
+
+                <Modal isOpen={this.state.isOpenModal}
+                       handleClose={this.handleTriggerModal}>
+                    <h1>close</h1>
+                </Modal>
             </div>
         );
     }
@@ -58,11 +76,27 @@ class Project extends React.PureComponent {
         dispatch( createProject( newProject.values ) );
     }
 
+    /**
+     *
+     * @param e
+     */
     handleEditProject( e ) {
         e.preventDefault();
         console.info( 'Edit' );
-
     }
+
+    /**
+     *
+     * @param e
+     */
+    handleTriggerModal( e ) {
+        e.preventDefault();
+        this.setState( {
+            isOpenModal: !this.state.isOpenModal
+        } );
+    }
+
+
 }
 
 
