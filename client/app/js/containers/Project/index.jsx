@@ -27,26 +27,16 @@ class Project extends React.PureComponent {
     }
 
     render() {
-        console.info( 'PROPS', this.props );
-//        const { isFetching, items } = this.props.projects;
 
-//        if (isFetching) {
-//
-//            const test = this.props.projects.items.map( ( item, index ) => {
-//                console.info( 'item', item );
-//                console.log( index, 'index' );
-//                return item;
-//            } );
-//        }
+        const { isFetching, items } = this.props.projects.toObject();
 
-        console.warn( isFetching );
         return (
             <div>
                 <h1>'Projects Container'</h1>
 
-                {/*<PreloaderBlock active={!!isFetching} preloadText="Preparing Files">*/}
-                    {/*<ProjectList items={items || simple}/>*/}
-                {/*</PreloaderBlock>*/}
+                <PreloaderBlock active={isFetching} preloadText="Preparing Files">
+                    <ProjectList items={items.toArray()}/>
+                </PreloaderBlock>
                 <CreateProjectForm handleSubmit={this.handleCreateProject}/>
             </div>
         );
