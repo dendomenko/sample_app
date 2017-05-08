@@ -4,11 +4,10 @@ import { Dimmer, Loader, Segment } from 'semantic-ui-react';
 
 
 export default ( { children, active, preloadText }: { children: Object, active: boolean, preloadText: string } ) => (
-    <Dimmer.Dimmable as={Segment}  dimmed={active}>
-        <Dimmer >
-            <Loader active={active}>
-                {children}
-            </Loader>
+    <Segment>
+        <Dimmer active={active}>
+            <Loader indeterminate>Preparing Files</Loader>
         </Dimmer>
-    </Dimmer.Dimmable>
+        {children}
+    </Segment>
 );
