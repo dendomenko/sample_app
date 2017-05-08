@@ -4,7 +4,7 @@ import  * as types  from 'constants/project/all-projects';
 
 const initialState = {
 
-    items     : [],
+    items     : List( [] ),
     isFetching: false,
     error     : null
 
@@ -19,17 +19,21 @@ const reducer = ( state = Map( initialState ), { type, payload } ) => {
 
     switch ( type ) {
         case types.FETCH_PROJECTS:
-            return {
-                ...state,
-                ...payload
-            };
+            console.warn( state, payload );
+            return state.update( 'isFetching', val => payload.isFetching );
+//            return {
+//                ...state,
+//                ...payload
+//            };
         case types.FETCH_PROJECTS_SUCCESS:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.//            return {
+//                ...state,
+//                ...payload
+//            };
 
-        case types.FETCH_PROJECTS_FAILURE:
+                case
+            types.FETCH_PROJECTS_FAILURE
+        :
             return {
                 ...state,
                 ...payload

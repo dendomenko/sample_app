@@ -27,7 +27,8 @@ class Project extends React.PureComponent {
     }
 
     render() {
-        const { isFetching, items } = this.props.projects;
+        console.info( 'PROPS', this.props );
+//        const { isFetching, items } = this.props.projects;
 
 //        if (isFetching) {
 //
@@ -38,14 +39,14 @@ class Project extends React.PureComponent {
 //            } );
 //        }
 
-        console.warn( !!isFetching );
+        console.warn( isFetching );
         return (
             <div>
                 <h1>'Projects Container'</h1>
 
-                <PreloaderBlock active={!!isFetching} preloadText="Preparing Files">
-                    <ProjectList items={items || simple}/>
-                </PreloaderBlock>
+                {/*<PreloaderBlock active={!!isFetching} preloadText="Preparing Files">*/}
+                    {/*<ProjectList items={items || simple}/>*/}
+                {/*</PreloaderBlock>*/}
                 <CreateProjectForm handleSubmit={this.handleCreateProject}/>
             </div>
         );
@@ -70,10 +71,12 @@ class Project extends React.PureComponent {
  *
  * @param state
  */
-const mapStateToProps = state => ({
-    projects: state.get( 'projects' ),
-    form    : state.get( 'form' )
-});
+const mapStateToProps = state => {
+    return {
+        projects: state.get( 'projects' ),
+        form    : state.get( 'form' )
+    };
+};
 /**
  *
  * @param dispatch
