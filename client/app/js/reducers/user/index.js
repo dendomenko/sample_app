@@ -21,58 +21,31 @@ export default function userReducer( state = Map( initialState ), { type, payloa
 
 
         case types.USER_AUTH:
-            return {
-                ...state,
-                ...payload
-            };
+            console.info( 'EEEDDDDDDD', payload );
+            console.info( 'WWWWWWWWWWW', state.merge( payload ) );
+            return state.merge( payload );
 
-        case types.USER_NOT_AUTH:
-            return {
-                ...state,
-                ...payload
-            };
 
         case types.USER_FAILURE:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
 
         case types.REGISTER_USER_SUCCESS:
-            return {
-                ...state
-            };
-        case types.REGISTER_USER_FAILURE:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
 
-        case types.USER_LOGIN:
-            return {
-                ...state
-            };
+        case types.REGISTER_USER_FAILURE:
+            return state.merge( payload );
+
         case types.USER_LOGIN_SUCCESS:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
 
         case types.USER_LOGIN_FAILURE:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
+
         case types.USER_LOGOUT_SUCCESS:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
+
         case types.USER_LOGOUT_FAILURE:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( payload );
 
         default:
             return state;

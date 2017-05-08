@@ -1,5 +1,5 @@
 import * as types from "constants/user";
-
+import { Map } from 'immutable';
 
 /**
  *
@@ -10,11 +10,11 @@ export const checkAuth = () => ({ type: types.CHECK_AUTH });
  */
 export const authSuccess = ( { name, email, id } ) => ({
     type   : types.USER_AUTH,
-    payload: {
+    payload: Map( {
         'name' : name,
         'uid'  : id,
         'email': email
-    }
+    } )
 });
 /**
  *
@@ -26,9 +26,9 @@ export const notAuth = () => ({
 
 export const authFailure = ( error ) => ({
     type   : types.AUTH_FAILURE,
-    paylaod: {
+    payload: Map( {
         error: new Error( error )
-    }
+    } )
 });
 /**
  *
@@ -48,9 +48,9 @@ export const registerUserSuccess = () => ({ type: types.REGISTER_USER_SUCCESS })
  */
 export const registerUserFailure = ( error ) => ({
     type   : types.REGISTER_USER_FAILURE,
-    payload: {
+    payload: Map( {
         error: new Error( error )
-    }
+    } )
 });
 /**
  *
@@ -64,11 +64,11 @@ export const loginUser = ( payload ) => ({ type: types.USER_LOGIN, payload });
 
 export const userLoginSuccess = ( { name, email, id } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
-    payload: {
+    payload: Map( {
         'name' : name,
         'uid'  : id,
         'email': email
-    }
+    } )
 });
 
 /**
@@ -78,9 +78,9 @@ export const userLoginSuccess = ( { name, email, id } ) => ({
 export const userLoginFailure = ( error ) => (
     {
         type   : types.USER_LOGIN_FAILURE,
-        payload: {
+        payload: Map( {
             error: new Error( error.statusText )
-        }
+        } )
     });
 
 /**
@@ -94,17 +94,17 @@ export const userLogout = () => ({ type: types.USER_LOGOUT });
  */
 export const userLogoutSuccess = () => ({
     type   : types.USER_LOGOUT_SUCCESS,
-    payload: {
+    payload: Map( {
         uid  : null,
         name : null,
         email: null
-    }
+    } )
 });
 
 export const userLogoutFailure = ( err ) => (
     {
         type   : types.USER_LOGIN_FAILURE,
-        payload: {
+        payload: Map( {
             error: new Error( err.statusText )
-        }
+        } )
     });
