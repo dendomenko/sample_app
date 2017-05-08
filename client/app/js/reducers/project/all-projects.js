@@ -19,48 +19,29 @@ const reducer = ( state = Map( initialState ), { type, payload } ) => {
 
     switch ( type ) {
         case types.FETCH_PROJECTS:
-            console.warn( state, payload );
             return state.update( 'isFetching', val => payload.isFetching );
-//            return {
-//                ...state,
-//                ...payload
-//            };
         case types.FETCH_PROJECTS_SUCCESS:
-            return state.//            return {
-//                ...state,
-//                ...payload
-//            };
-
-                case
-            types.FETCH_PROJECTS_FAILURE
-        :
-            return {
-                ...state,
-                ...payload
-            };
-        case types.CREATE_PROJECT:
-            return {
-                ...state,
-                ...payload
-            };
+            return state.merge( Map( {
+                isFetching: payload.isFetching,
+                items     : payload.items
+            } ) );
+        case types.FETCH_PROJECTS_FAILURE:
+            return state.merge( Map( {
+                isFetching: payload.isFetching,
+                error     : payload.error
+            } ) );
         case types.CREATE_PROJECT_SUCCESS:
-            return {
-                ...state,
-                ...payload
-//                state.getitems.push(payload.item)
-
-            };
+            return state.update( 'items', items => items.push( payload.item ) );
         case types.CREATE_PROJECT_FAILURE:
+            return state.udpate( 'error', error => payload.error );
+        case types.UPDATE_PROJECT :
             return {
                 ...state,
                 ...payload
             };
-        case types.UPDATE_PROJECT:
-            return {
-                ...state,
-                ...payload
-            };
-        case types.UPDATE_PROJECT_COMPLETE:
+        case
+        types.UPDATE_PROJECT_COMPLETE
+        :
             return {
                 ...state,
                 ...payload
@@ -69,6 +50,7 @@ const reducer = ( state = Map( initialState ), { type, payload } ) => {
             return state;
     }
 
-};
+}
+;
 
 export default reducer;

@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import { createProject, fetchProjects } from 'actions/project/all-projects';
 import CreateProjectForm  from './../../components/CreateProjectForm';
 import ProjectList  from './../../components/Project/List';
-import  PreloaderBlock from './../../components/Preloader/Segment';
+import PreloaderBlock from './../../components/Preloader/Segment';
+import bindFunc from './../../utils/bind-functions';
 /**
  *
  */
-const simple = [];
+
 
 class Project extends React.PureComponent {
 
     constructor() {
         super();
-
-        this.handleCreateProject = this.handleCreateProject.bind( this );
+        bindFunc.call( this, [ 'handleCreateProject', 'handleEditProject' ] );
     }
 
     componentWillMount() {
@@ -27,26 +27,19 @@ class Project extends React.PureComponent {
     }
 
     render() {
-        console.info( 'PROPS', this.props );
-//        const { isFetching, items } = this.props.projects;
 
-//        if (isFetching) {
-//
-//            const test = this.props.projects.items.map( ( item, index ) => {
-//                console.info( 'item', item );
-//                console.log( index, 'index' );
-//                return item;
-//            } );
-//        }
+        const { isFetching, items } = this.props.projects.toObject();
 
-        console.warn( isFetching );
         return (
             <div>
                 <h1>'Projects Container'</h1>
 
-                {/*<PreloaderBlock active={!!isFetching} preloadText="Preparing Files">*/}
-                    {/*<ProjectList items={items || simple}/>*/}
-                {/*</PreloaderBlock>*/}
+                <PreloaderBlock active={!isFetching} preloadText="Preparing Files">
+                    <ProjectList
+                        items={items.toArray()}
+                        handleEdit={this.handleEditProject}
+                    />
+                </PreloaderBlock>
                 <CreateProjectForm handleSubmit={this.handleCreateProject}/>
             </div>
         );
@@ -63,6 +56,12 @@ class Project extends React.PureComponent {
          */
 
         dispatch( createProject( newProject.values ) );
+    }
+
+    handleEditProject( e ) {
+        e.preventDefault();
+        console.info( 'Edit' );
+
     }
 }
 

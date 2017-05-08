@@ -9,9 +9,9 @@ import { generate } from 'shortid';
  *
  * @param props
  */
-export default ( { items }: { items: Array<Object> } ) =>
+export default ( { items, handleEdit }: { items: Array<Object>, handleEdit: void } ) =>
     (
         <List verticalAlign='middle'>
-            {items.map( item => <Item key={generate()} {...item} /> )}
+            {items.map( item => <Item key={generate()} {...item} handleEdit={handleEdit}/> )}
         </List>
     );
