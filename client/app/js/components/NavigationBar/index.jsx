@@ -3,23 +3,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Session } from 'utils/Session';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, Segment, Dropdown, Image } from 'semantic-ui-react';
-import  { userLogout } from 'actions/user/';
+import { Menu, Segment, Dropdown, Image, Button } from 'semantic-ui-react';
+import  { userLogout } from 'actions/user';
 
 
-const MainNavigation = ( props ) => {
-    console.info( 'MENU', props );
-    return (
-        <Segment inverted>
-            <Menu inverted pointing secondary>
-                {Session.getToken() ? <PrivateNavigation /> : <PublicNavigation/>}
-                {Session.getToken() && <UserDropdown
-                    handleLogout={props.handleLogout}
-                    username={props.username}/>}
-            </Menu>
-        </Segment>
-    );
-};
+const MainNavigation = ( { username, handleLogout }: { username: string; handleLogout: void; } ) => (
+    <Segment inverted>
+        <Menu inverted pointing secondary>
+            {Session.getToken() ? <PrivateNavigation /> : <PublicNavigation/>}
+            {Session.getToken() && <UserDropdown
+                handleLogout={handleLogout}
+                username={username}
+            />}
+        </Menu>
+    </Segment>
+);
 
 /**
  *  Render private links
@@ -61,26 +59,35 @@ const PublicNavigation = () => (
  * @constructor
  */
 
-const UserDropdown = ( { username, handleLogout } ) => (
+const UserDropdown = ( { username, handleLogout }: { username: string, handleLogout: void; } ) => (
     <Menu.Menu position="right">
         <Dropdown text={username} pointing className='link item'>
             <Dropdown.Menu>
                 <Dropdown.Item>Profile</Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.item onClick={handleLogout}>Logout</Dropdown.item>
+                <Dropdown.Item as={Button} onClick={ handleLogout }>
+                    Logout
+                </Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     </Menu.Menu>
 );
 
+/**
+ *
+ * @param state
+ */
 const mapStateToProps = state => ({ username: state.getIn( [ 'user', 'name' ] ) });
-const mapDispatchToProps = (dispatch) => {
-    return {
+/**
+ *
+ * @param dispatch
+ */
+const mapDispatchToProps = ( dispatch ) =>
+    ( {
         handleLogout: () => {
-            dispatch({type:'USER_LOGOUT'});
+            dispatch( userLogout() );
         }
-    };
-};
+    });
 
 export default connect( mapStateToProps, mapDispatchToProps )( MainNavigation );
