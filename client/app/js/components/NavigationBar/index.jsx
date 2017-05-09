@@ -19,6 +19,7 @@ const MainNavigation = ( { username, handleLogout }: { username: string; handleL
     </Segment>
 );
 
+
 /**
  *  Render private links
  * @constructor

@@ -17,8 +17,6 @@ import {
 function *fetchProjects() {
 
     try {
-        console.log( 'STORAGE', localStorage );
-
         const response = yield call( apiProject.fetchALL );
         yield put( fetchProjectsSuccsess( response ) );
         return true;

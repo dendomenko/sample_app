@@ -87,7 +87,15 @@ export const userLoginFailure = ( error ) => (
  *
  */
 
-export const userLogout = () => ({ type: types.USER_LOGOUT });
+export const userLogout = () => (
+    {
+        type   : types.USER_LOGOUT,
+        payload: Map( {
+            'name' : null,
+            'uid'  : null,
+            'email': null
+        } )
+    });
 
 /**
  *

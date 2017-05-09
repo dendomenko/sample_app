@@ -1,8 +1,8 @@
-import {take, call, put, fork, race, takeLatest} from 'redux-saga/effects';
-import {push} from 'react-router-redux';
-import {apiUser} from 'api/User/';
+import { take, call, put, fork, race, takeLatest, select } from 'redux-saga/effects';
+import { push, } from 'react-router-redux';
+import { apiUser } from 'api/User/';
 import * as types from 'constants/user';
-import {Session} from 'utils/Session';
+import { Session } from 'utils/Session';
 import {
     userLoginSuccess,
     userLoginFailure,
@@ -26,16 +26,26 @@ import {
  */
 function* checkAuth() {
     try {
-        const response = yield call(apiUser.checkToken);
+        const response = yield call( apiUser.checkToken );
 
-        yield put(authSuccess(response));
-        yield put(push('/projects'));
+        yield put( authSuccess( response ) );
+
+        const location = yield select( state => state.getIn( [ 'routing', 'current_location' ] ) );
+
+        /**
+         * Check if current location !== projects
+         */
+        if (location !== "projects") {
+            yield put( push( '/projects' ) );
+        }
+
         return true;
 
-    } catch (error) {
+    }
+    catch ( error ) {
 
         Session.removeToken();
-        yield put(notAuth());
+        yield put( notAuth() );
         return false;
 
     }
@@ -47,17 +57,18 @@ function* checkAuth() {
  * @param payload
  * @returns {*}
  */
-function* register({payload}) {
+function* register( { payload } ) {
 
     try {
-        const response = yield call(apiUser.register, payload);
-        yield put(registerUserSuccess(response));
+        const response = yield call( apiUser.register, payload );
+        yield put( registerUserSuccess( response ) );
         return response;
 
-    } catch (error) {
+    }
+    catch ( error ) {
         debugger;
-        yield put(registerUserFailure(error));
-        yield put(push('/'));
+        yield put( registerUserFailure( error ) );
+        yield put( push( '/' ) );
         return false;
     }
 
@@ -67,17 +78,17 @@ function* register({payload}) {
  * @param payload
  * @returns {boolean}
  */
-function* authorize({payload}) {
+function* authorize( { payload } ) {
 
     try {
-        const response = yield call(apiUser.login, payload);
+        const response = yield call( apiUser.login, payload );
 
-        yield put(userLoginSuccess(response));
-        Session.setToken(response.access_token);
+        yield put( userLoginSuccess( response ) );
+        Session.setToken( response.access_token );
         return true;
     }
-    catch (error) {
-        yield put(userLoginFailure(error));
+    catch ( error ) {
+        yield put( userLoginFailure( error ) );
 
         return false;
     }
@@ -89,7 +100,7 @@ function* authorize({payload}) {
  */
 function* logout() {
 
-    const response = yield call(Session.removeToken);
+    const response = yield call( Session.removeToken );
 
     return response;
 
@@ -101,18 +112,18 @@ function* logout() {
  */
 function* loginFlow() {
 
-    while (true) {
+    while ( true ) {
 
-        const request = yield take(types.USER_LOGIN);
+        const request = yield take( types.USER_LOGIN );
 
 
-        const winner = yield race({
-            auth: call(authorize, request),
-            logout: take(types.USER_LOGOUT)
-        });
+        const winner = yield race( {
+            auth  : call( authorize, request ),
+            logout: take( types.USER_LOGOUT )
+        } );
 
         if (winner.auth) {
-            yield put(push('/projects'));
+            yield put( push( '/projects' ) );
         }
 
 
@@ -123,13 +134,13 @@ function* loginFlow() {
  *
  */
 function* logoutFlow() {
-    while (true) {
+    while ( true ) {
 
-        yield take(types.USER_LOGOUT);
-        const isSuccess = yield call(logout);
+        yield take( types.USER_LOGOUT );
+        const isSuccess = yield call( logout );
 
         if (isSuccess)
-            yield put(push('/'));
+            yield put( push( '/' ) );
     }
 }
 
@@ -137,17 +148,17 @@ function* logoutFlow() {
  *
  */
 function* registerFlow() {
-    while (true) {
+    while ( true ) {
 
-        const request = yield take(types.REGISTER_USER);
-        const status = yield call(register, request);
+        const request = yield take( types.REGISTER_USER );
+        const status = yield call( register, request );
 
         if (status === 200) {
 
-            const isAuth = yield call(authorize, request);
+            const isAuth = yield call( authorize, request );
 
             if (isAuth) {
-                yield put(push('/projects'));
+                yield put( push( '/projects' ) );
             }
 
         }
@@ -161,7 +172,7 @@ function* registerFlow() {
  *
  */
 function* checkTokenFlow() {
-    yield takeLatest(types.CHECK_AUTH, checkAuth);
+    yield takeLatest( types.CHECK_AUTH, checkAuth );
 
 }
 /**
@@ -169,10 +180,10 @@ function* checkTokenFlow() {
  */
 function * rootUserSagas() {
     yield[
-        fork(loginFlow),
-        fork(logoutFlow),
-        fork(registerFlow),
-        fork(checkTokenFlow)
+        fork( loginFlow ),
+        fork( logoutFlow ),
+        fork( registerFlow ),
+        fork( checkTokenFlow )
     ];
 }
 /**

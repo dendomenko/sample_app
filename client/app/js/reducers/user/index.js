@@ -37,10 +37,7 @@ export default function userReducer( state = Map( initialState ), { type, payloa
         case types.USER_LOGIN_FAILURE:
             return state.merge( payload );
 
-        case types.USER_LOGOUT_SUCCESS:
-            return state.merge( payload );
-
-        case types.USER_LOGOUT_FAILURE:
+        case types.USER_LOGOUT:
             return state.merge( payload );
 
         default:
