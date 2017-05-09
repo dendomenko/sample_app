@@ -6,7 +6,10 @@ export class Session {
      *
      */
     static getToken() {
-        return localStorage.getItem( 'jwt' );
+        const token = localStorage.getItem( 'jwt' );
+        return token !== null
+            ? token
+            : false;
     }
 
     /**

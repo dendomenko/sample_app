@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { Session } from 'utils/Session';
 
-
+/**
+ * TODO: should set token one time
+ * @type {AxiosInstance}
+ */
 const api = axios.create( {
     baseURL: 'http://localhost:3000/api/v1/',
     proxy  : {
@@ -10,7 +13,9 @@ const api = axios.create( {
     },
     headers: {
         'Authorization': Session.getToken()
-    }
+    },
+
+
 } );
 
 export default api;

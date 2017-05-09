@@ -1,11 +1,18 @@
 import Api from 'api';
-
+import { Session } from 'utils/Session';
 const apiPath = '/projects';
 
 /**
  *  GET ALL PROJECTS
  */
-const fetchProjects = () => Api.get( apiPath )
+
+const config = {
+    headers: {
+        'Authorization': Session.getToken()
+    }
+}
+;
+const fetchProjects = () => Api.get( apiPath, config )
     .then( res => res.data )
     .catch( error => {
         throw error;
