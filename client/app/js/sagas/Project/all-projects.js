@@ -1,4 +1,5 @@
 import { take, call, put, fork, race, takeLatest } from 'redux-saga/effects';
+import formSaga from './../Form';
 import { push } from 'react-router-redux';
 import { apiProject } from 'api/Project/';
 import * as types from 'constants/project/all-projects';
@@ -47,9 +48,15 @@ function* createProject( { payload } ) {
         return true;
     }
     catch ( e ) {
+        debugger;
         yield put( createProjectFailure( e ) );
         return false;
     }
+}
+
+function* submitCreateProject( { payload } ) {
+
+    yield call( formSaga, 'newProject', createProject, payload );
 }
 
 /**
@@ -59,9 +66,12 @@ function* flowProjects() {
     yield takeLatest( types.FETCH_PROJECTS, fetchProjects );
 }
 
-
+/**
+ *
+ */
 function* flowCreateProject() {
-    yield takeLatest( types.CREATE_PROJECT, createProject );
+    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
+//    yield takeLatest( types.CREATE_PROJECT, createProject );
 }
 /**
  *

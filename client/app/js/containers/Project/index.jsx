@@ -40,6 +40,7 @@ class Project extends React.PureComponent<State> {
 
     render() {
 
+        console.warn( this.props );
         const { isFetching, items } = this.props.projects.toObject();
 
         return (
@@ -53,7 +54,7 @@ class Project extends React.PureComponent<State> {
                     />
                 </PreloaderBlock>
 
-                <CreateProjectForm handleSubmit={this.handleCreateProject}/>
+                <CreateProjectForm/>
 
                 <Modal isOpen={this.state.isOpenModal}
                        handleClose={this.handleTriggerModal}>

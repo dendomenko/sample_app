@@ -15,9 +15,6 @@ import {
     authFailure
 } from 'actions/user/';
 
-/**
- * TODO: check logout;
- */
 
 /**
  *

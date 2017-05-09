@@ -6,7 +6,12 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, Segment, Dropdown, Image, Button } from 'semantic-ui-react';
 import  { userLogout } from 'actions/user';
 
-
+/**
+ * TODO: should move to containers
+ * @param username
+ * @param handleLogout
+ * @constructor
+ */
 const MainNavigation = ( { username, handleLogout }: { username: string; handleLogout: void; } ) => (
     <Segment inverted>
         <Menu inverted pointing secondary>

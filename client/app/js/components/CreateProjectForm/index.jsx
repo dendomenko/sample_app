@@ -2,6 +2,7 @@
 import React from 'react';
 import { Field, reduxForm, filterProps } from 'redux-form/immutable';
 import { Button, Form, TextArea } from 'semantic-ui-react';
+import { createProject } from 'actions/project/all-projects';
 
 /**
  * TODO: should add validate;
@@ -26,11 +27,18 @@ const renderTextArea = props =>
     );
 
 
+//For any field errors upon submission (i.e. not instant check)
+const validateAndCreatePost = ( values, dispatch ) => {
+    return dispatch( createProject( values ) );
+};
+
+
 let newProject = ( props ) => {
 
+    console.info( props );
     const { handleSubmit, pristine, submitting } = props;
     return (
-        <Form onSubmit={ handleSubmit }>
+        <Form onSubmit={ handleSubmit( validateAndCreatePost ) }>
             <Field name="name" component={renderField} placeholder="Name of project" type="text"/>
             <Field name="task_name" component={renderField} placeholder="Task name" type="text"/>
             <Field name="description" component={renderTextArea} placeholder="Description"/>
