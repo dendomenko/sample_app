@@ -18,17 +18,11 @@ import Profile from 'containers/Profile';
 import PrivateRoute from './helpers/privateRoute';
 
 
-const getUserName = ( state ) => {
-    debugger;
-    console.info( state );
-    return state.getState().getIn( [ 'user', 'name' ] );
-};
-
 const Routing = ( { store, history } ) => (
           <Provider store={store}>
               <ConnectedRouter history={history}>
                   <Layout>
-                      <NavigationBar username={ getUserName( store ) }/>
+                      <NavigationBar/>
                       <div>
                           <Switch>
                               <Route exact path="/" component={Home}/>

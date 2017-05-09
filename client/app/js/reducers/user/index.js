@@ -19,12 +19,8 @@ export default function userReducer( state = Map( initialState ), { type, payloa
 
     switch ( type ) {
 
-
         case types.USER_AUTH:
-            console.info( 'EEEDDDDDDD', payload );
-            console.info( 'WWWWWWWWWWW', state.merge( payload ) );
             return state.merge( payload );
-
 
         case types.USER_FAILURE:
             return state.merge( payload );

@@ -23,5 +23,9 @@ if (Session.getToken() !== null) {
 }
 
 
+/**
+ *
+ */
+
 render(
     <Routing history={history} store={store}/>, renderToDomElement );
