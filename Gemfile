@@ -42,7 +42,7 @@ gem 'jwt'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 gem 'byebug', platform: :mri
 gem 'rspec-rails', '2.13.1'
-gem 'pg'
+gem 'pg', '0.20.0'
 gem 'rake', '< 11.0'
 
 

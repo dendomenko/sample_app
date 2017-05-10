@@ -35,6 +35,8 @@ POST:
   }
 }
 ```
+if success return 201 Created
+if error return 200 OK and errors array
 
 **LOGIN:**
 
@@ -60,6 +62,8 @@ POST:<br>
     "description":"<description>"
 }
 ```
+if success return 201 Created
+if error return 200 OK and errors array
 
 PATCH/PUT:<br>
 **UPDATE PROJECT**
@@ -71,3 +75,5 @@ PATCH/PUT:<br>
         "description":"<description>"
 }
 ```
+if success return 202 Accepted
+if error return 200 OK and errors array
