@@ -19,6 +19,7 @@ function *fetchProjects() {
 
     try {
         const response = yield call( apiProject.fetchALL );
+
         yield put( fetchProjectsSuccsess( response ) );
         return true;
     }
@@ -34,24 +35,28 @@ function *fetchProjects() {
  * @param payload
  * @returns {boolean}
  */
-function* createProject( { payload } ) {
-    try {
+function* createProject( {
+                             name, task_name, description,
+                             resolve, reject
+                         } ) {
+//    try {
 
-        const id = yield call( apiProject.create, payload );
+    const id = yield call( apiProject.create, { name, task_name, description } );
+
+    console.log( 'RESPONSE', id );
 
 
-        const project = ( current, newData ) => ({ ...current, ...newData });
+//        const project = ( current, newData ) => ({ ...current, ...newData });
 
 
-        yield put( createProjectSuccess( project( payload, id ) ) );
+//        yield put( createProjectSuccess( project( payload, id ) ) );
 
-        return true;
-    }
-    catch ( e ) {
-        debugger;
-        yield put( createProjectFailure( e ) );
-        return false;
-    }
+//        return true;
+//    }
+//    catch ( e ) {
+//        yield put( createProjectFailure( e ) );
+//        return false;
+//    }
 }
 
 function* submitCreateProject( { payload } ) {
@@ -70,8 +75,8 @@ function* flowProjects() {
  *
  */
 function* flowCreateProject() {
-    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
-//    yield takeLatest( types.CREATE_PROJECT, createProject );
+//    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
+    yield takeLatest( types.CREATE_PROJECT, createProject );
 }
 /**
  *
