@@ -14,7 +14,9 @@ Rails.application.routes.draw do
       post '/login' => 'users#login'
       post '/postback' => 'users#postback'
       get '/logout' => 'users#logout'
-      resources :users, :projects do
+      resources :users
+      resources :projects do
+        resources :tasks
       end
     end
   end
