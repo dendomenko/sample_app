@@ -2,10 +2,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createProject, fetchProjects } from 'actions/project/all-projects';
-import NewProjectForm  from './../../components/CreateProjectForm';
-import ProjectList  from './../../components/Project/List';
-import PreloaderBlock from './../../components/Preloader/Segment';
-import Modal from './../../components/Modal';
+import NewProjectForm  from 'components/CreateProjectForm';
+import ProjectList  from 'components/Project/List';
+import PreloaderBlock from 'components/Preloader/Segment';
+import Modal from 'components/Modal';
 import bindFunc from 'utils/bind-functions';
 /**
  *
