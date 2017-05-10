@@ -1,72 +1,66 @@
-// @flow
-import React from 'react';
-import { Field, reduxForm, filterProps, SubmissionError } from 'redux-form/immutable';
-import { Button, Form, TextArea } from 'semantic-ui-react';
-import { createProject } from 'actions/project/all-projects';
-import { validate } from './validate';
-import asyncValidation from './../../utils/asyn-validate';
-/**
- * TODO: should add validate;
- * @param props
- */
-const renderField = ( { input, placeholder, type, meta: { touched, error } } ) => {
-//    console.log( 'HAS EROROR', props );
-    return (
-        <Form.Field>
-            <label>{placeholder}</label>
+import React, { Component } from 'react';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Input, Button, Message } from 'semantic-ui-react';
 
-            <input type={type} placeholder={placeholder} {...input}/>
-            {touched && error && <span>{error}</span>}
-        </Form.Field>
-    );
-};
-const renderTextArea = props =>
-    (
-        <Form.Field>
-            <label>{props.placeholder}</label>
-            <TextArea placeholder={props.placeholder} autoHeight {...props.input}/>
-            {props.meta.touched && props.error && <span>{props.meta.error}</span>}
-        </Form.Field>
-    );
+class SimpleForm extends Component {
 
-
-//For any field errors upon submission (i.e. not instant check)
-const validateAndCreatePost = ( { name, task_name, description }, dispatch ) => {
-
-    return new Promise( ( resolve, reject ) => {
-        dispatch(
-            {
-                type: 'CREATE_PROJECT',
-                name, task_name, description,
-                resolve, reject
-            } );
-    } ).catch( error => {
-        throw new SubmissionError( error );
-    } );
-};
-
-
-let newProject = ( props ) => {
-
-    console.info( props );
-    const { error, handleSubmit, pristine, submitting } = props;
-    return (
-        <Form as='form' onSubmit={ handleSubmit( validateAndCreatePost ) }>
-            {error && <strong>{error}</strong>}
-            <Field name="name" component={renderField} placeholder="Name of project" type="text"/>
-            <Field name="task_name" component={renderField} placeholder="Task name" type="text"/>
-            <Field name="description" component={renderTextArea} placeholder="Description"/>
+    locationInput( { input, meta: { touched, error }, ...custom } ) {
+        const hasError = touched && error !== undefined;
+        return (
             <div>
-                <Button type="submit">Create</Button>
+                {hasError &&
+                <Message
+                    error
+                    header='Error'
+                    content={error}/>
+                }
+                <Input
+                    error={hasError}
+                    fluid
+                    placeholder="Location..."
+                    {...input}
+                    {...custom} />
             </div>
-        </Form>
-    );
+        );
+    }
+
+    submit( { location }, dispatch ) {
+        console.log( 'sdsad' );
+//        return new Promise((resolve, reject) => {
+//            dispatch({
+//                type: 'FETCH_WEATHER',
+//                location,
+//                resolve,
+//                reject
+//            });
+//        }).catch((error) => {
+//            throw new SubmissionError(error);
+//        });
+    }
+
+
+    render() {
+        const { handleSubmit } = this.props;
+        return (
+            <form onSubmit={handleSubmit( this.submit.bind( this ) )}>
+                <Field name="location" component={this.locationInput}/>
+                <br/>
+                <Button fluid type="submit">Submit</Button>
+            </form>
+        );
+    }
+}
+
+const validate = values => {
+    const errors = {};
+    if (!values.location || values.location.trim() === '') {
+        errors.location = 'Location required';
+    }
+    return errors;
 };
 
-// Decorate the form component
-newProject = reduxForm( {
-    form: 'newProject',
-    validate
-} )( newProject );
 
-export default newProject;
+export default reduxForm( {
+    form: 'simple',
+    validate
+} )( SimpleForm );

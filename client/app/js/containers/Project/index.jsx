@@ -2,11 +2,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createProject, fetchProjects } from 'actions/project/all-projects';
-import CreateProjectForm  from './../../components/CreateProjectForm';
+import NewProjectForm  from './../../components/CreateProjectForm';
 import ProjectList  from './../../components/Project/List';
 import PreloaderBlock from './../../components/Preloader/Segment';
 import Modal from './../../components/Modal';
-import bindFunc from './../../utils/bind-functions';
+import bindFunc from 'utils/bind-functions';
 /**
  *
  */
@@ -27,7 +27,7 @@ class Project extends React.PureComponent<State> {
         /**
          *
          */
-        bindFunc.call( this, [ 'handleCreateProject', 'handleEditProject', 'handleTriggerModal' ] );
+        bindFunc.call( this, [ 'handleEditProject', 'handleTriggerModal' ] );
     }
 
     componentWillMount() {
@@ -54,7 +54,7 @@ class Project extends React.PureComponent<State> {
                     />
                 </PreloaderBlock>
 
-                <CreateProjectForm/>
+                <NewProjectForm/>
 
                 <Modal isOpen={this.state.isOpenModal}
                        handleClose={this.handleTriggerModal}>
@@ -64,18 +64,6 @@ class Project extends React.PureComponent<State> {
         );
     }
 
-
-    handleCreateProject( e ) {
-        e.preventDefault();
-
-        const { dispatch } = this.props;
-        const { newProject } = this.props.form;
-        /**
-         *
-         */
-
-        dispatch( createProject( newProject.values ) );
-    }
 
     /**
      *

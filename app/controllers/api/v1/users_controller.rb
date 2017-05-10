@@ -21,11 +21,11 @@ module Api
 
       def create
         user = User.new(user_params)
-        user.save!
+        # user.save!
         if user.save
-          render json: {message: 'User created'}, status: :ok
+          render json: {message: 'User created'}, status: :created
         else
-          render json: {message: 'Wrong query'}, status: :bad_request
+          render json: {errors: user.errors}, status: :ok
         end
 
       end
@@ -43,7 +43,7 @@ module Api
           @auth_token = JsonWebToken.encode({user_id: @user.id})
           render status: :ok
         else
-          render json: {error: 'Invalid username / password'}, status: :unauthorized
+          render json: {error: 'Invalid username / password'}, status: :ok
         end
 
         # if @user && @user.authenticate(params[:password])
