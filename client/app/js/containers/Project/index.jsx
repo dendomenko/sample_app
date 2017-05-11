@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { createProject, fetchProjects } from 'actions/project/all-projects';
-import NewProjectForm  from 'components/CreateProjectForm';
+import CreateProject from './../../components/ProjectForm/Create';
 import ProjectList  from 'components/Project/List';
 import PreloaderBlock from 'components/Preloader/Segment';
 import Modal from 'components/Modal';
@@ -54,7 +54,8 @@ class Project extends React.PureComponent<State> {
                     />
                 </PreloaderBlock>
 
-                <NewProjectForm/>
+                <CreateProject/>
+
 
                 <Modal isOpen={this.state.isOpenModal}
                        handleClose={this.handleTriggerModal}>

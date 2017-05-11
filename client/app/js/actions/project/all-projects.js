@@ -37,7 +37,7 @@ export const fetchProjectsFailure = ( error ) => ({
  *
  * @param payload
  */
-export const createProject = ( payload ) => ({
+export const createProject = ( payload) => ({
     type: types.CREATE_PROJECT,
     payload
 });
