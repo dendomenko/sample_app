@@ -43,23 +43,16 @@ function* createProject( { payload: { values, resolve, reject } } ) {
     try {
 
         const response = yield call( apiProject.create, values );
-        console.log( 'RESPONSE', response );
 
         if (response.error) {
 
             yield call(
                 reject,
-                new SubmissionError(
-                    {
-                        name     : 'Username doesn\'t exist',
-                        task_name: 'And your password sucks',
-                        _error   : 'Login failed!'
-                    } )
+                new SubmissionError( response.error )
             );
         }
         else {
             const project = ( current, newData ) => ({ ...current, ...newData });
-//        yield put( createProject() )
             yield call( resolve );
             yield put( createProjectSuccess( project( values, response ) ) );
         }

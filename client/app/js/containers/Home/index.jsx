@@ -1,10 +1,10 @@
 // @flow
-import React, {PureComponent} from "react";
-import {connect} from "react-redux";
-import {Radio, Container} from "semantic-ui-react";
-import RegisterForm from "components/registerForm";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { Radio, Container } from "semantic-ui-react";
+import RegisterForm from "components/RegisterForm";
 import SignInForm from "components/SignIn";
-import {registerUser, loginUser, userLogout} from "actions/user";
+import { registerUser, loginUser, userLogout } from "actions/user";
 import bindFunctions from 'utils/bind-functions';
 
 /**
@@ -21,10 +21,10 @@ class Home extends React.PureComponent {
         super();
         this.state = {
             checked: false,
-            label: 'Register'
+            label  : 'Register'
         };
 
-        bindFunctions.call(this, ['handleChangeForm', 'handleSignInSubmit', 'handleRegisterSubmit']);
+        bindFunctions.call( this, [ 'handleChangeForm', 'handleSignInSubmit', 'handleRegisterSubmit' ] );
     }
 
 
@@ -33,7 +33,7 @@ class Home extends React.PureComponent {
             <Container textAlign="center">
                 <Radio slider label={this.state.label} checked={this.state.checked} onChange={this.handleChangeForm}/>
                 { this.state.checked
-                    ? <RegisterForm handleSubmit={this.handleRegisterSubmit}/>
+                    ? <RegisterForm />
                     : <SignInForm handleSubmit={this.handleSignInSubmit}/>
                 }
             </Container>
@@ -46,36 +46,36 @@ class Home extends React.PureComponent {
      */
 
 
-    handleSignInSubmit(e) {
+    handleSignInSubmit( e ) {
         e.preventDefault();
-        const {dispatch} = this.props;
-        const {signin} = this.props.form;
+        const { dispatch } = this.props;
+        const { signin } = this.props.form;
         /**
          *
          */
-        dispatch(loginUser(signin.values));
+        dispatch( loginUser( signin.values ) );
     }
 
-    handleRegisterSubmit(e) {
+    handleRegisterSubmit( e ) {
         e.preventDefault();
 
-        const {dispatch} = this.props;
-        const {register} = this.props.form;
+        const { dispatch } = this.props;
+        const { register } = this.props.form;
         /**
          *
          */
 
-        dispatch(registerUser(register.values));
+        dispatch( registerUser( register.values ) );
 
     }
 
     handleChangeForm() {
         const newVal = !this.state.checked;
         const newLabel = newVal ? 'Login' : 'Register';
-        this.setState({
+        this.setState( {
             checked: newVal,
-            label: newLabel
-        });
+            label  : newLabel
+        } );
     }
 
 
@@ -86,17 +86,17 @@ class Home extends React.PureComponent {
  * @param state
  */
 const mapStateToProps = state => ({
-    form: state.get('form')
+    form: state.get( 'form' )
 });
 /**
  *
  * @param dispatch
  * @returns {{mapActions: (A|B|M|N)}}
  */
-function mapDispatchToProps(dispatch) {
-    return {dispatch};
+function mapDispatchToProps( dispatch ) {
+    return { dispatch };
 }
 /**
  *
  */
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect( mapStateToProps, mapDispatchToProps )( Home );
