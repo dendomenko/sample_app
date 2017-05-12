@@ -181,7 +181,7 @@ DEPENDENCIES
   jquery-rails
   jwt
   paperclip (~> 5.0.0)
-  pg
+  pg (= 0.20.0)
   puma (~> 3.0)
   rack-cors
   rails (~> 5.1.0.rc2)
