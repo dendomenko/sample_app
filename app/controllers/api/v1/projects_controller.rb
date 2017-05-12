@@ -20,7 +20,7 @@ module Api
         if project.save
           render json: {id: project.id}, status: :created
         else
-          render json: {error: project.errors}, status: :ok
+          render json: {errors: project.errors}, status: :ok
         end
       end
 
