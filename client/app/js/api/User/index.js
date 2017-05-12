@@ -45,12 +45,21 @@ const logoutRequest = () => Api.get( '/logout' )
     } );
 
 
-const updateRequest = ( { name, email, password, avatar } ) =>
-    Api.put( '/update' )
+const updateRequest = ( { name, email, password, avatar } ) => {
+
+    const data = new FormData();
+    data.append( 'name', name );
+    data.append( 'email', email );
+    data.append( 'password', password );
+    data.append( 'avatar', avatar );
+    return Api.put( '/update', {
+        "user": data
+    } )
         .then( res => res.data )
         .catch( error => {
             throw  new Error( error );
         } );
+};
 /**
  *
  * @param token

@@ -1,15 +1,45 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form/immutable';
+import { SubmissionError } from 'redux-form';
 import { InputField } from './../FormFileds';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 import  asyncSubmit from './../../utils/async-validate';
 import  { updateUser } from './../../actions/user';
 
+import Dropzone from 'react-dropzone';
+
+const FILE_FIELD_NAME = 'avatar';
 /**
  *
  * @param values
  * @param dispatch
  */
+
+class FileInput extends React.Component {
+    constructor( props ) {
+        super( props );
+        this.onChange = this.onChange.bind( this );
+    }
+
+    onChange( e ) {
+        const { input: { onChange } } = this.props;
+        onChange( e.target.files[ 0 ] );
+    }
+
+    render() {
+        const { input: { value } } = this.props;
+
+        return (<input
+            type="file"
+            name="avatar"
+            value={value}
+            onChange={this.onChange}
+        />);
+    }
+}
+
+
+
 const editSubmit = ( values, dispatch ) =>
     asyncSubmit( values, dispatch, updateUser )
         .then( ( res ) => {
@@ -26,7 +56,11 @@ const EditUserForm = ( { userProps, error, handleSubmit, submitting, handleCance
             <Field type="text" name="name" label="Name" component={InputField}/>
             <Field type="email" name="email" label="Email" component={InputField}/>
             <Field type="password" name="label" label="password" component={InputField}/>
-            <Field type="file" name="avatar" label="Avatar" component={InputField}/>
+            <Field name="avatar" component="input" type="file"/>
+            <Field
+                name={FILE_FIELD_NAME}
+                component={renderDropzoneInput}
+            />
             <Button.Group>
                 <Button type="submit" positive loading={submitting} disabled={submitting}>
                     Update

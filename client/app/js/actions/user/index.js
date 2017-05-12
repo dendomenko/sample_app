@@ -91,9 +91,9 @@ export const userLogoutSuccess = () => ({
  *
  * @param paylaod
  */
-export const updateUser = ( paylaod ) => ({
+export const updateUser = ( payload ) => ({
     type: types.USER_UPDATE,
-    paylaod
+    payload
 });
 
 /**

@@ -134,7 +134,7 @@ function* update( { payload: { values, resolve, reject } } ) {
 
     try {
         const response = yield call( apiUser.update, values );
-
+        debugger;
         if (response.errors) {
 
             yield call(
