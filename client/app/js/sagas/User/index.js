@@ -2,19 +2,17 @@ import { take, call, put, fork, race, takeLatest, select } from 'redux-saga/effe
 import { push, } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 import { apiUser } from 'api/User/';
-import * as types from 'constants/user';
+import * as types from './../../constants/user';
 import { Session } from 'utils/Session';
+import { handleRequestFailure } from './../../actions/common';
 import {
     userLoginSuccess,
-    userLoginFailure,
-    registerUserFailure,
     registerUserSuccess,
     userLogoutSuccess,
-    userLogoutFailure,
     authSuccess,
     notAuth,
-    authFailure
-} from 'actions/user/';
+    updateUserSuccess
+} from './../../actions/user/';
 
 
 /**
@@ -33,8 +31,8 @@ function* checkAuth() {
         /**
          * Check if current location !== projects
          */
-        console.warn( location );
-        if (!location.includes( 'projects' )) {
+
+        if (location === '') {
             yield put( push( '/projects' ) );
         }
 
@@ -79,7 +77,7 @@ function* register( { payload: { values, resolve, reject } } ) {
     }
     catch ( error ) {
         debugger;
-        yield put( registerUserFailure( error ) );
+        yield put( handleRequestFailure( types.REGISTER_USER_FAILURE, error ) );
         yield put( push( '/' ) );
         return false;
 
@@ -113,7 +111,7 @@ function* authorize( { payload: { values, resolve, reject } } ) {
     }
     catch ( error ) {
         debugger;
-        yield put( userLoginFailure( error ) );
+        yield put( handleRequestFailure( types.USER_LOGIN_FAILURE, error ) );
 
         return false;
     }
@@ -132,6 +130,31 @@ function* logout() {
 }
 
 
+function* update( { payload: { values, resolve, reject } } ) {
+
+    try {
+        const response = yield call( apiUser.update, values );
+
+        if (response.errors) {
+
+            yield call(
+                reject,
+                new SubmissionError( response.errors ) );
+        }
+        else {
+
+            yield call( resolve );
+
+            yield put( updateUserSuccess( response ) );
+        }
+    }
+    catch ( e ) {
+        yield put( handleRequestFailure( types.USER_LOGIN_FAILURE, error ) );
+
+        return false;
+    }
+
+}
 /**
  *
  */
@@ -193,6 +216,15 @@ function* registerFlow() {
 }
 
 
+function* updateFlow() {
+
+    while ( true ) {
+
+        const request = yield take( types.USER_UPDATE );
+
+        const response = yield call( update, request );
+    }
+}
 /**
  *
  */
@@ -208,7 +240,8 @@ function * rootUserSagas() {
         fork( loginFlow ),
         fork( logoutFlow ),
         fork( registerFlow ),
-        fork( checkTokenFlow )
+        fork( checkTokenFlow ),
+        fork( updateFlow )
     ];
 }
 /**

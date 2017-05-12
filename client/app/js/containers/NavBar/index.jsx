@@ -29,7 +29,7 @@ class NavBar extends React.PureComponent<Props> {
      * @returns {XML}
      */
     render() {
-        const { username, token, handleLogout } = this.props;
+        const { username, token, avatar, handleLogout } = this.props;
         return (
             <Segment inverted>
                 <Menu inverted pointing secondary>
@@ -37,6 +37,7 @@ class NavBar extends React.PureComponent<Props> {
                     {(token !== null) && <UserDropdown
                         handleLogout={handleLogout}
                         username={username}
+                        avatar={avatar}
                     />}
                 </Menu>
             </Segment>
@@ -51,7 +52,8 @@ class NavBar extends React.PureComponent<Props> {
 const mapStateToProps = state => (
     {
         username: state.getIn( [ 'user', 'name' ] ),
-        token   : state.getIn( [ 'user', 'token' ] )
+        token   : state.getIn( [ 'user', 'token' ] ),
+        avatar  : state.getIn( [ 'user', 'avatar' ] )
     });
 /**
  *

@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import { Session } from 'utils/Session';
 import * as types from "../../constants/user/index";
-
+import defaultAvatar from 'images/placeholder-user.png';
 /**
  * TODO: 1)make it with immutable,
  * TODO: 2)ruduce function
@@ -13,7 +13,9 @@ const initialState = {
     email : null,
     name  : null,
     error : null,
-    token : Session.getToken()
+    token : Session.getToken(),
+    avatar: defaultAvatar
+
 };
 
 export default function userReducer( state = Map( initialState ), { type, payload } ) {

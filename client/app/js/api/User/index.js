@@ -41,8 +41,16 @@ const loginRequest = ( { email, password } ) => Api
 const logoutRequest = () => Api.get( '/logout' )
     .then( res => res.status )
     .catch( error => {
-        throw error;
+        throw  new Error( error );
     } );
+
+
+const updateRequest = ( { name, email, password, avatar } ) =>
+    Api.put( '/update' )
+        .then( res => res.data )
+        .catch( error => {
+            throw  new Error( error );
+        } );
 /**
  *
  * @param token
@@ -60,5 +68,6 @@ export const apiUser = {
     register  : registerRequest,
     login     : loginRequest,
     logout    : logoutRequest,
+    update    : updateRequest,
     checkToken: checkToken
 };
