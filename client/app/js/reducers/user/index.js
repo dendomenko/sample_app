@@ -13,6 +13,7 @@ const initialState = {
     email : null,
     name  : null,
     error : null,
+    token : Session.getToken()
 };
 
 export default function userReducer( state = Map( initialState ), { type, payload } ) {

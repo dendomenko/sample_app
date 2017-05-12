@@ -18,7 +18,7 @@ const store = configureStore( {}, history );
 store.runSaga( sagas );
 
 
-if (Session.getToken()) {
+if (Session.getToken() !== null) {
     store.dispatch( checkAuth() );
 }
 

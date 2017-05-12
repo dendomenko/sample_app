@@ -62,12 +62,13 @@ export const loginUser = ( payload ) => ({ type: types.USER_LOGIN, payload });
  */
 
 
-export const userLoginSuccess = ( { name, email, id } ) => ({
+export const userLoginSuccess = ( { name, email, id, access_token } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
     payload: Map( {
         'name' : name,
         'uid'  : id,
-        'email': email
+        'email': email,
+        'token': access_token
     } )
 });
 
@@ -93,7 +94,8 @@ export const userLogout = () => (
         payload: Map( {
             'name' : null,
             'uid'  : null,
-            'email': null
+            'email': null,
+            'token': null
         } )
     });
 
@@ -103,9 +105,10 @@ export const userLogout = () => (
 export const userLogoutSuccess = () => ({
     type   : types.USER_LOGOUT_SUCCESS,
     payload: Map( {
-        uid  : null,
-        name : null,
-        email: null
+        uid         : null,
+        name        : null,
+        email       : null,
+        access_token: null
     } )
 });
 

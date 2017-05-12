@@ -9,7 +9,7 @@ import Home from 'containers/Home';
 import StaticPage from 'containers/Static';
 import NotFound from 'containers/NotFound';
 import Layout from 'components/Layout';
-import NavigationBar from 'components/NavigationBar';
+import NavigationBar from 'containers/NavBar';
 import Footer from 'components/Footer';
 import Auth from 'containers/Auth';
 import Dashboard from 'containers/Dashboard';
