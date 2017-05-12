@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { SubmissionError } from 'redux-form';
+import { SubmissionError, reset } from 'redux-form';
 import { Button, Message, Form } from 'semantic-ui-react';
 import { createProject } from './../../actions/project/all-projects';
 import { InputField, TextareaField } from './../FormFileds';
@@ -8,22 +8,28 @@ import asyncSubmit from './../../utils/async-validate';
 
 
 /**
- * TODO: make reusable function
+ *
  * @param values
  * @param dispatch
- * @param reset
  */
-const syncSubmit = ( values, dispatch, reset ) =>
-    asyncSubmit( values, dispatch, reset ).then( ( res ) => {
-        reset();
-    } ).catch( e => {
+const syncSubmit = ( values, dispatch ) =>
+    asyncSubmit( values, dispatch, createProject )
+        .then( ( res ) => {
+            dispatch( reset( 'ProjectCreate' ) );
+        } ).catch( e => {
         console.log( e );
         throw new SubmissionError( e.errors );
     } );
 
-const CreateForm = ( props ) => {
-
-    const { error, handleSubmit, submitting } = props;
+/**
+ *
+ * @param error
+ * @param handleSubmit
+ * @param submitting
+ * @returns {XML}
+ * @constructor
+ */
+const CreateForm = ( { error, handleSubmit, submitting } ) => {
 
     return (
         <div>
@@ -32,12 +38,15 @@ const CreateForm = ( props ) => {
                 <Field name="name" label="Name" component={InputField}/>
                 <Field name="task_name" label="Task Name" component={InputField} required/>
                 <Field name="description" label="Description" component={TextareaField}/>
-                <Button fluid type="submit" disabled={submitting}>Submit</Button>
+                <Button fluid type="submit" inverted color='blue' loading={submitting}
+                        disabled={submitting}>Submit</Button>
             </Form>
 
-            {error && <Message attached='bottom' error>
-                {error}
-            </Message>}
+            {
+                error && <Message attached='bottom' error>
+                    {error}
+                </Message>
+            }
         </div>
     );
 };

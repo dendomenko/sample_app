@@ -40,7 +40,7 @@ class Project extends React.PureComponent<State> {
 
     render() {
 
-        console.warn( this.props );
+
         const { isFetching, items } = this.props.projects.toObject();
 
         return (

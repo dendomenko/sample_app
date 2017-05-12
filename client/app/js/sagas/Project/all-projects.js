@@ -1,6 +1,6 @@
 import { take, call, put, fork, race, takeLatest } from 'redux-saga/effects';
 import formSaga from './../Form';
-import { SubmissionError, stopSubmit } from 'redux-form';
+import { SubmissionError} from 'redux-form';
 import { push } from 'react-router-redux';
 import { apiProject } from 'api/Project/';
 import * as types from 'constants/project/all-projects';
@@ -37,44 +37,37 @@ function *fetchProjects() {
  * @returns {boolean}
  */
 function* createProject( { payload: { values, resolve, reject } } ) {
-//    try {
 
+    try {
 
-    const response = yield call( apiProject.create, values );
-//    debugger;
-    console.log( 'RESPONSE', response );
+        const response = yield call( apiProject.create, values );
+        console.log( 'RESPONSE', response );
 
-    if (response.error) {
+        if (response.error) {
 
-        yield call(
-            reject,
-            new SubmissionError(
-                {
-                    name     : 'Username doesn\'t exist',
-                    task_name: 'And your password sucks'
-                } )
-        );
-        //        yield call( reject, { name: 'FILL' } );
-//        yield call( reject, new SubmissionError( {
-//            name     : 'Username doesn\'t exist',
-//            task_name: 'Please enter your password'
-//        } ) );
-    }
-    else {
-//        const project = ( current, newData ) => ({ ...current, ...newData });
+            yield call(
+                reject,
+                new SubmissionError(
+                    {
+                        name     : 'Username doesn\'t exist',
+                        task_name: 'And your password sucks',
+                        _error   : 'Login failed!'
+                    } )
+            );
+        }
+        else {
+            const project = ( current, newData ) => ({ ...current, ...newData });
 //        yield put( createProject() )
+            yield call( resolve );
+            yield put( createProjectSuccess( project( values, response ) ) );
+        }
+
+        return true;
     }
-//        const project = ( current, newData ) => ({ ...current, ...newData });
-
-
-//        yield put( createProjectSuccess( project( payload, id ) ) );
-
-//        return true;
-//    }
-//    catch ( e ) {
-//        yield put( createProjectFailure( e ) );
-//        return false;
-//    }
+    catch ( e ) {
+        yield  put( createProjectFailure( e ) );
+        return false;
+    }
 }
 
 function* submitCreateProject( { payload } ) {
@@ -96,6 +89,7 @@ function* flowCreateProject() {
 //    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
     yield takeLatest( types.CREATE_PROJECT, createProject );
 }
+
 /**
  *
  */
