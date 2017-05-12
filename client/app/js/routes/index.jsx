@@ -40,6 +40,7 @@ const Routing = ( { store, history } ) => (
                                        * Dynamic routes
                                        */
                                       <Route path='/projects/:projectname' component={SingleProject}/>
+                                      <Route path='/projects/:projectname/board' component={SingleProject}/>
                                   </Switch>
                               </PrivateRoute>
                               <Route path="*" component={NotFound}/>

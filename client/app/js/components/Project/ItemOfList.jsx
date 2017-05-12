@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Button, Image, List } from 'semantic-ui-react';
+import { Button, Image, Item } from 'semantic-ui-react';
 
 
 /**
@@ -23,17 +23,16 @@ type Props = {
  * @param handleClick
  */
 export default ( { id, name, description, task_name, handleEdit, handleClick }: Props ) => (
-    <List.Item onClick={() => handleClick( id )}>
-        <List.Content floated='right'>
-            <Button>Add</Button>
-            <Button onClick={handleEdit}>Edit</Button>
-        </List.Content>
-        <List.Content>
-            <List.Header>{name}</List.Header>
-            <List.Content>{task_name} </List.Content>
-            <List.Description> {description} </List.Description>
-            {/*<Image avatar src='/assets/images/avatar/small/lena.png' />*/}
-
-        </List.Content>
-    </List.Item>
+    <Item onClick={() => handleClick( id )}>
+        <Item.Content verticalAlign='middle'>
+            <Item.Header>{name}</Item.Header>
+            <Item.Meta>{task_name}</Item.Meta>
+            <Item.Description>{description}</Item.Description>
+            <Item.Extra>
+                <Button floated='right' onClick={handleEdit}>
+                    Edit
+                </Button>
+            </Item.Extra>
+        </Item.Content>
+    </Item>
 );

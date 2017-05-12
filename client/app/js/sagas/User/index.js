@@ -33,7 +33,8 @@ function* checkAuth() {
         /**
          * Check if current location !== projects
          */
-        if (location !== "projects") {
+        console.warn( location );
+        if (!location.includes( 'projects' )) {
             yield put( push( '/projects' ) );
         }
 

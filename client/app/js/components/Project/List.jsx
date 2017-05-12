@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import Item from  './ItemOfList';
-import { List } from 'semantic-ui-react';
+import ProjectItem from  './ItemOfList';
+import { Item } from 'semantic-ui-react';
 import { generate } from 'shortid';
 
 
@@ -22,12 +22,12 @@ type Props = {
  */
 export default ( { items, handleEdit, handleClick }: Props ) =>
     (
-        <List verticalAlign='middle'>
-            {items.map( item => <Item
+        <Item.Group relaxed>
+            {items.map( item => <ProjectItem
                 key={generate()}
                 handleClick={ handleClick}
                 handleEdit={handleEdit}
                 {...item}
             /> )}
-        </List>
+        </Item.Group>
     );
