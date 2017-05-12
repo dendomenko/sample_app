@@ -9,17 +9,18 @@ module Api
 
       def index
         @projects = load_current_user!.projects
+        render(json: {message: "You haven't projects"}, status: :ok) unless @projects.any?
         render status: :ok
       end
 
       def create
         # user = User.find(params[:user_id])
-        @project = load_current_user!.projects.create(project_params)
+        project = load_current_user!.projects.create(project_params)
 
-        if @project.save
-          render json: {id: @project.id}, status: :ok
+        if project.save
+          render json: {id: project.id}, status: :created
         else
-          render json: {message: 'Wrong query'}, status: :bad_request
+          render json: {error: project.errors}, status: :ok
         end
       end
 
@@ -31,13 +32,15 @@ module Api
 
       def update
         project = load_current_user!.projects.find(params[:id])
-        project.name = params[:name] unless params[:name].blank?
-        project.description = params[:description] unless params[:description].blank?
+        # project.name = params[:name] unless params[:name].blank?
+        # project.description = params[:description] unless params[:description].blank?
 
-        if project.save
-          render json: {message: 'Project updated'}, status: :ok
+        # project.update project_params
+
+        if project.update project_params
+          render json: {message: 'Project updated'}, status: :accepted
         else
-          render json: {message: 'Wrong query'}, status: :bad_request
+          render json: {error: project.errors}, status: :ok
         end
 
       end
@@ -67,7 +70,7 @@ module Api
       private
 
       def project_params
-        params.require(:project).permit(:name, :task_name, :description)
+        params.permit(:name, :task_name, :description)
       end
 
     end
