@@ -30,15 +30,24 @@ const createProject = ( { name, task_name, description } ) => Api.post( apiPath,
 } )
     .then( res => res.data )
     .catch( error => {
-        throw error;
+        throw new Error( error );
     } );
+
+
+const fetchSingleProject = ( id ) =>
+    Api.get( `${apiPath}/${id}` )
+        .then( res => res.data )
+        .catch( error => {
+            throw new Error( error );
+        } );
 
 /**
  *
  * @type {{fetchALL: (()=>Promise.<T>), create: ((p1:{name?: *, task_name?: *, description?: *})=>(*)), remove: string}}
  */
 export const apiProject = {
-    fetchALL: fetchProjects,
-    create  : createProject,
-    remove  : ''
+    fetchALL   : fetchProjects,
+    create     : createProject,
+    remove     : '',
+    fetchSingle: fetchSingleProject
 };

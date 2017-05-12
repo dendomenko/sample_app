@@ -13,7 +13,8 @@ const SignInSumbit = ( values, dispatch ) =>
         .catch( e => {
             throw new SubmissionError( e.errors );
         } );
-let SignIn = ( { error, handleSubmit, pristine, reset, submitting } ) => (
+
+const SignIn = ( { error, handleSubmit, pristine, reset, submitting } ) => (
     <div>
         <Form onSubmit={ handleSubmit( SignInSumbit ) }>
             <Field name="email" component={InputField} label="Email" type="email"/>
@@ -35,8 +36,7 @@ let SignIn = ( { error, handleSubmit, pristine, reset, submitting } ) => (
 );
 
 // Decorate the form component
-SignIn = reduxForm( {
-    form: 'signin',
-} )( SignIn );
 
-export default SignIn;
+export default reduxForm( {
+    form: 'Signin',
+} )( SignIn );

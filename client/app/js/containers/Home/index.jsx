@@ -24,49 +24,21 @@ class Home extends React.PureComponent {
             label  : 'Register'
         };
 
-        bindFunctions.call( this, [ 'handleChangeForm', 'handleSignInSubmit', 'handleRegisterSubmit' ] );
+        bindFunctions.call( this, [ 'handleChangeForm' ] );
     }
 
 
     render() {
         return (
             <Container textAlign="center">
-                <Radio slider label={this.state.label} checked={this.state.checked} onChange={this.handleChangeForm}/>
+                <Radio slider label={this.state.label} checked={this.state.checked}
+                       onChange={this.handleChangeForm}/>
                 { this.state.checked
                     ? <RegisterForm />
                     : <SignInForm />
                 }
             </Container>
         );
-    }
-
-    /**
-     *
-     *
-     */
-
-
-    handleSignInSubmit( e ) {
-        e.preventDefault();
-        const { dispatch } = this.props;
-        const { signin } = this.props.form;
-        /**
-         *
-         */
-        dispatch( loginUser( signin.values ) );
-    }
-
-    handleRegisterSubmit( e ) {
-        e.preventDefault();
-
-        const { dispatch } = this.props;
-        const { register } = this.props.form;
-        /**
-         *
-         */
-
-        dispatch( registerUser( register.values ) );
-
     }
 
     handleChangeForm() {
@@ -81,13 +53,7 @@ class Home extends React.PureComponent {
 
 }
 
-/**
- *
- * @param state
- */
-const mapStateToProps = state => ({
-    form: state.get( 'form' )
-});
+
 /**
  *
  * @param dispatch
@@ -99,4 +65,4 @@ function mapDispatchToProps( dispatch ) {
 /**
  *
  */
-export default connect( mapStateToProps, mapDispatchToProps )( Home );
+export default connect( null, mapDispatchToProps )( Home );

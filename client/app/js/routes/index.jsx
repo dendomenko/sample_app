@@ -13,7 +13,8 @@ import NavigationBar from 'containers/NavBar';
 import Footer from 'components/Footer';
 import Auth from 'containers/Auth';
 import Dashboard from 'containers/Dashboard';
-import Project from 'containers/Project';
+import Projects from './../containers/Project/all';
+import SingleProject from './../containers/Project/single';
 import Profile from 'containers/Profile';
 import PrivateRoute from './helpers/privateRoute';
 
@@ -32,9 +33,13 @@ const Routing = ( { store, history } ) => (
                               <Route exact path="/register" component={Auth}/>
                               <PrivateRoute redirectTo="/signin">
                                   <Switch>
-                                      <Route exact path='/projects' component={Project}/>
+                                      <Route exact path='/projects' component={Projects}/>
                                       <Route exact path='/dashboard' component={Dashboard}/>
                                       <Route exact path='/userprofile' component={Profile}/>
+                                      /**
+                                       * Dynamic routes
+                                       */
+                                      <Route path='/projects/:projectname' component={SingleProject}/>
                                   </Switch>
                               </PrivateRoute>
                               <Route path="*" component={NotFound}/>

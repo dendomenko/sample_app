@@ -7,6 +7,7 @@ import ProjectList  from 'components/Project/List';
 import PreloaderBlock from 'components/Preloader/Segment';
 import Modal from 'components/Modal';
 import bindFunc from 'utils/bind-functions';
+import { fetchProject } from './../../actions/project/single';
 /**
  *
  */
@@ -27,15 +28,15 @@ class Project extends React.PureComponent<State> {
         /**
          *
          */
-        bindFunc.call( this, [ 'handleEditProject', 'handleTriggerModal' ] );
+        bindFunc.call( this, [ 'handleEditProject', 'handleTriggerModal', 'handleClick' ] );
     }
 
     componentWillMount() {
-        const { dispatch } = this.props;
+        const { fetchAll } = this.props;
         /**
          * Load all pages relate from user
          */
-        dispatch( fetchProjects() );
+        fetchAll();
     }
 
     render() {
@@ -51,6 +52,7 @@ class Project extends React.PureComponent<State> {
                     <ProjectList
                         items={items.toArray()}
                         handleEdit={this.handleTriggerModal}
+                        handleClick={this.handleClick}
                     />
                 </PreloaderBlock>
 
@@ -72,7 +74,18 @@ class Project extends React.PureComponent<State> {
      */
     handleEditProject( e ) {
         e.preventDefault();
+        /**
+         * TODO: should to pass id and then give data
+         */
         console.info( 'Edit' );
+    }
+
+    handleClick( id_project ) {
+
+
+        const { fetchProjectById } = this.props;
+
+        fetchProjectById( id_project );
     }
 
     /**
@@ -97,7 +110,6 @@ class Project extends React.PureComponent<State> {
 const mapStateToProps = state => {
     return {
         projects: state.get( 'projects' ),
-        form    : state.get( 'form' )
     };
 };
 /**
@@ -105,9 +117,16 @@ const mapStateToProps = state => {
  * @param dispatch
  * @returns {{mapActions: (A|B|M|N)}}
  */
-function mapDispatchToProps( dispatch ) {
-    return { dispatch };
-}
+const mapDispatchToProps = ( dispatch ) =>
+    ( {
+        fetchProjectById: ( id ) => {
+            dispatch( fetchProject( id ) );
+        },
+        fetchAll        : () => {
+            dispatch( fetchProjects() );
+        }
+
+    });
 /**
  *
  */
