@@ -6,16 +6,14 @@ const apiPath = '/projects';
  *  GET ALL PROJECTS
  */
 
-const config = {
-    headers: {
-        'Authorization': Session.getToken()
-    }
-}
-;
-const fetchProjects = () => Api.get( apiPath, config )
+/**
+ *
+ * @param config
+ */
+const fetchProjects = ( config ) => Api.get( apiPath, config )
     .then( res => res.data )
     .catch( error => {
-        throw error;
+        throw new Error( error );
     } );
 
 

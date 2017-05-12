@@ -55,12 +55,25 @@ function* checkAuth() {
  * @param payload
  * @returns {*}
  */
-function* register( { payload } ) {
+function* register( { payload: { values, resolve, reject } } ) {
 
     try {
-        const response = yield call( apiUser.register, payload );
-        yield put( registerUserSuccess( response ) );
-        return response;
+
+        const { data, status } = yield call( apiUser.register, values );
+
+        if (data.errors) {
+            console.log( data.errors );
+            yield call(
+                reject,
+                new SubmissionError( data.errors )
+            );
+        }
+        else {
+            yield call( resolve );
+            yield put( registerUserSuccess( data ) );
+        }
+
+        return status;
 
     }
     catch ( error ) {
@@ -68,24 +81,37 @@ function* register( { payload } ) {
         yield put( registerUserFailure( error ) );
         yield put( push( '/' ) );
         return false;
-    }
 
+    }
 }
 /**
  *
  * @param payload
  * @returns {boolean}
  */
-function* authorize( { payload } ) {
+function* authorize( { payload: { values, resolve, reject } } ) {
 
     try {
-        const response = yield call( apiUser.login, payload );
 
-        yield put( userLoginSuccess( response ) );
-        Session.setToken( response.access_token );
-        return true;
+        const response = yield call( apiUser.login, values );
+        if (response.errors) {
+            yield call(
+                reject,
+                new SubmissionError( response.errors )
+            );
+            return false;
+        }
+        else {
+            yield call( resolve );
+            yield put( userLoginSuccess( response ) );
+            Session.setToken( response.access_token );
+            return true;
+        }
+
+
     }
     catch ( error ) {
+        debugger;
         yield put( userLoginFailure( error ) );
 
         return false;
@@ -151,7 +177,7 @@ function* registerFlow() {
         const request = yield take( types.REGISTER_USER );
         const status = yield call( register, request );
 
-        if (status === 200) {
+        if (status === 201) {
 
             const isAuth = yield call( authorize, request );
 

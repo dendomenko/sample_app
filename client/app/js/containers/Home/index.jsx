@@ -34,7 +34,7 @@ class Home extends React.PureComponent {
                 <Radio slider label={this.state.label} checked={this.state.checked} onChange={this.handleChangeForm}/>
                 { this.state.checked
                     ? <RegisterForm />
-                    : <SignInForm handleSubmit={this.handleSignInSubmit}/>
+                    : <SignInForm />
                 }
             </Container>
         );

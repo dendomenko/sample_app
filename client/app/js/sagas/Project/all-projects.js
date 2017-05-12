@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga';
-import { take, call, put, fork, race, takeLatest } from 'redux-saga/effects';
+import { take, call, put, fork, takeLatest, select } from 'redux-saga/effects';
 import formSaga from './../Form';
 import { SubmissionError } from 'redux-form';
 import { push } from 'react-router-redux';
@@ -20,10 +19,18 @@ import {
 function *fetchProjects() {
 
     try {
-        yield delay( 500 );
-        const response = yield call( apiProject.fetchALL );
+
+
+        const token = yield select( state => state.getIn( [ 'user', 'token' ] ) );
+
+        const response = yield call( apiProject.fetchALL, {
+            headers: {
+                Authorization: token || Session.getToken()
+            }
+        } );
 
         yield put( fetchProjectsSuccsess( response ) );
+
         return true;
     }
     catch ( e ) {
@@ -44,11 +51,11 @@ function* createProject( { payload: { values, resolve, reject } } ) {
 
         const response = yield call( apiProject.create, values );
 
-        if (response.error) {
+        if (response.errors) {
 
             yield call(
                 reject,
-                new SubmissionError( response.error )
+                new SubmissionError( response.errors )
             );
         }
         else {
@@ -65,10 +72,6 @@ function* createProject( { payload: { values, resolve, reject } } ) {
     }
 }
 
-function* submitCreateProject( { payload } ) {
-
-    yield call( formSaga, 'newProject', createProject, payload );
-}
 
 /**
  *

@@ -8,16 +8,16 @@ import Api from 'api';
  * @param pwd
  * @param confirm_pwd
  */
-const registerRequest = ({name, email, pwd, confirm_pwd}) => Api.post('/users', {
+const registerRequest = ( { name, email, password, confirm_pwd } ) => Api.post( '/users', {
     "user": {
-        "name": name,
-        "email": email,
-        "password": pwd,
-        "password_confirmation": confirm_pwd
+        "name"                 : name || null,
+        "email"                : email || null,
+        "password"             : password || null,
+        "password_confirmation": confirm_pwd || null,
     }
-}).then(res => res.status).catch(error => {
-    throw error;
-});
+} ).then( res => res ).catch( error => {
+    throw  new Error( error );
+} );
 
 
 /**
@@ -25,31 +25,31 @@ const registerRequest = ({name, email, pwd, confirm_pwd}) => Api.post('/users', 
  * @param email
  * @param pwd
  */
-const loginRequest = ({email, pwd}) => Api
-    .post('/login', {
-        'email': email,
-        'password': pwd
-    })
-    .then(res => res.data)
-    .catch(error => {
-        throw  error;
-    });
+const loginRequest = ( { email, password } ) => Api
+    .post( '/login', {
+        'email'   : email || null,
+        'password': password || null
+    } )
+    .then( res => res.data )
+    .catch( error => {
+        throw  new Error( error );
+    } );
 
 /**
  *
  */
-const logoutRequest = () => Api.get('/logout')
-    .then(res => res.status)
-    .catch(error => {
+const logoutRequest = () => Api.get( '/logout' )
+    .then( res => res.status )
+    .catch( error => {
         throw error;
-    });
+    } );
 /**
  *
  * @param token
  */
-const checkToken = () => Api.get('/isAuth').then(res => {
+const checkToken = () => Api.get( '/isAuth' ).then( res => {
     return res.data;
-});
+} );
 /**
  *
  * @type {{register: ((p1:{name?: *, email?: *, pwd?: *, confirm_pwd?: *})=>(*)), login: ((p1:{email?: *, pwd?:
@@ -57,8 +57,8 @@ const checkToken = () => Api.get('/isAuth').then(res => {
  */
 
 export const apiUser = {
-    register: registerRequest,
-    login: loginRequest,
-    logout: logoutRequest,
+    register  : registerRequest,
+    login     : loginRequest,
+    logout    : logoutRequest,
     checkToken: checkToken
 };
