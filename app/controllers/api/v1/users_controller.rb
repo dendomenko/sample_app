@@ -30,10 +30,18 @@ module Api
 
       end
 
+      def update
+        user = load_current_user!
+        if user.update user_params
+          render json: user, status: :accepted
+        else
+          render json: {errors: user.errors}, status: :ok
+        end
+      end
+
       def is_auth
         @user = load_current_user!
         render status: :ok
-
       end
 
       def login
@@ -46,12 +54,6 @@ module Api
           render json: {error: 'Invalid username / password'}, status: :ok
         end
 
-        # if @user && @user.authenticate(params[:password])
-        #   sign_in @user
-        #   render status: :ok
-        # else
-        #   render json: {message: "Something goes wrong"}, status: :bad_request
-        # end
       end
 
       def logout
@@ -65,13 +67,12 @@ module Api
       private
       def user_params
         params.require(:user).permit(:name, :email, :password,
-                                     :password_confirmation)
+                                     :password_confirmation,:avatar)
       end
 
       def inspect_params
         puts params.inspect
       end
-
 
       # def sign_in(user)
       #   remember_token = User.new_remember_token
