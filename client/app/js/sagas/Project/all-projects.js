@@ -1,6 +1,7 @@
+import { delay } from 'redux-saga';
 import { take, call, put, fork, race, takeLatest } from 'redux-saga/effects';
 import formSaga from './../Form';
-import { SubmissionError} from 'redux-form';
+import { SubmissionError } from 'redux-form';
 import { push } from 'react-router-redux';
 import { apiProject } from 'api/Project/';
 import * as types from 'constants/project/all-projects';
@@ -19,6 +20,7 @@ import {
 function *fetchProjects() {
 
     try {
+        yield delay( 500 );
         const response = yield call( apiProject.fetchALL );
 
         yield put( fetchProjectsSuccsess( response ) );

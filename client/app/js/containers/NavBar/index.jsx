@@ -29,7 +29,7 @@ class NavBar extends React.PureComponent<Props> {
      * @returns {XML}
      */
     render() {
-        const { username, token, handleLogout } = this.props;s
+        const { username, token, handleLogout } = this.props;
         return (
             <Segment inverted>
                 <Menu inverted pointing secondary>
