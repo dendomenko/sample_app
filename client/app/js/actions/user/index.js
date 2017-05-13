@@ -1,5 +1,5 @@
 import * as types from "constants/user";
-
+import { Map } from 'immutable';
 
 /**
  *
@@ -8,13 +8,14 @@ export const checkAuth = () => ({ type: types.CHECK_AUTH });
 /**
  *
  */
-export const authSuccess = ( { name, email, id } ) => ({
+export const authSuccess = ( { name, email, id, avatar } ) => ({
     type   : types.USER_AUTH,
-    payload: {
-        'name' : name,
-        'uid'  : id,
-        'email': email
-    }
+    payload: Map( {
+        'name'  : name,
+        'uid'   : id,
+        'email' : email,
+        'avatar': Map( avatar )
+    } )
 });
 /**
  *
@@ -24,12 +25,6 @@ export const notAuth = () => ({
 });
 
 
-export const authFailure = ( error ) => ({
-    type   : types.AUTH_FAILURE,
-    paylaod: {
-        error: new Error( error )
-    }
-});
 /**
  *
  */
@@ -42,16 +37,7 @@ export const registerUser = ( payload ) => ({
  *
  */
 export const registerUserSuccess = () => ({ type: types.REGISTER_USER_SUCCESS });
-/**
- *
- * @param error
- */
-export const registerUserFailure = ( error ) => ({
-    type   : types.REGISTER_USER_FAILURE,
-    payload: {
-        error: new Error( error )
-    }
-});
+
 /**
  *
  */
@@ -62,49 +48,65 @@ export const loginUser = ( payload ) => ({ type: types.USER_LOGIN, payload });
  */
 
 
-export const userLoginSuccess = ( { name, email, id } ) => ({
+export const userLoginSuccess = ( { name, email, id, access_token, avatar } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
-    payload: {
-        'name' : name,
-        'uid'  : id,
-        'email': email
-    }
+    payload: Map( {
+        'name'  : name,
+        'uid'   : id,
+        'email' : email,
+        'token' : access_token,
+        'avatar': Map( avatar )
+    } )
 });
 
 /**
  *
- * @param error
  */
-export const userLoginFailure = ( error ) => (
+
+export const userLogout = () => (
     {
-        type   : types.USER_LOGIN_FAILURE,
-        payload: {
-            error: new Error( error.statusText )
-        }
+        type   : types.USER_LOGOUT,
+        payload: Map( {
+            'name'  : null,
+            'uid'   : null,
+            'email' : null,
+            'token' : null,
+            'avatar': null
+        } )
     });
-
-/**
- *
- */
-
-export const userLogout = () => ({ type: types.USER_LOGOUT });
 
 /**
  *
  */
 export const userLogoutSuccess = () => ({
     type   : types.USER_LOGOUT_SUCCESS,
-    payload: {
-        uid  : null,
-        name : null,
-        email: null
-    }
+    payload: Map( {
+        uid         : null,
+        name        : null,
+        email       : null,
+        access_token: null
+    } )
 });
 
-export const userLogoutFailure = ( err ) => (
-    {
-        type   : types.USER_LOGIN_FAILURE,
-        payload: {
-            error: new Error( err.statusText )
-        }
-    });
+
+/**
+ *
+ * @param paylaod
+ */
+export const updateUser = ( payload ) => ({
+    type: types.USER_UPDATE,
+    payload
+});
+
+/**
+ *
+ * @param payload
+ */
+export const updateUserSuccess = ( { name, email, id } ) => ({
+    type   : types.USER_UPDATE_SUCCESS,
+    payload: Map( {
+        'name' : name,
+        'uid'  : id,
+        'email': id,
+    } )
+});

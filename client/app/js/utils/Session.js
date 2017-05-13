@@ -7,6 +7,7 @@ export class Session {
      */
     static getToken() {
         return localStorage.getItem( 'jwt' );
+
     }
 
     /**

@@ -1,14 +1,19 @@
 import Api from 'api';
-
+import { Session } from 'utils/Session';
 const apiPath = '/projects';
 
 /**
  *  GET ALL PROJECTS
  */
-const fetchProjects = () => Api.get( apiPath )
+
+/**
+ *
+ * @param config
+ */
+const fetchProjects = ( config ) => Api.get( apiPath, config )
     .then( res => res.data )
     .catch( error => {
-        throw error;
+        throw new Error( error );
     } );
 
 
@@ -25,15 +30,24 @@ const createProject = ( { name, task_name, description } ) => Api.post( apiPath,
 } )
     .then( res => res.data )
     .catch( error => {
-        throw error;
+        throw new Error( error );
     } );
+
+
+const fetchSingleProject = ( slug ) =>
+    Api.get( `${apiPath}/${slug}` )
+        .then( res => res.data )
+        .catch( error => {
+            throw new Error( error );
+        } );
 
 /**
  *
  * @type {{fetchALL: (()=>Promise.<T>), create: ((p1:{name?: *, task_name?: *, description?: *})=>(*)), remove: string}}
  */
 export const apiProject = {
-    fetchALL: fetchProjects,
-    create  : createProject,
-    remove  : ''
+    fetchALL   : fetchProjects,
+    create     : createProject,
+    remove     : '',
+    fetchSingle: fetchSingleProject
 };
