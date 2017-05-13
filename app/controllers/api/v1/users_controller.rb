@@ -20,12 +20,12 @@ module Api
       end
 
       def create
-        user = User.new(user_params)
+        @user = User.new(user_params)
         # user.save!
-        if user.save
+        if @user.save
           render json: {message: 'User created'}, status: :created
         else
-          render json: {errors: user.errors}, status: :ok
+          render json: {errors: @user.errors}, status: :ok
         end
 
       end
