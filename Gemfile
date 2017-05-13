@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'rubocop', require: false
 gem 'rack-cors'
 gem 'jwt'
+gem 'unidecoder'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 gem 'byebug', platform: :mri

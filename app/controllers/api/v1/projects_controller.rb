@@ -2,10 +2,6 @@ module Api
   module V1
     class ProjectsController < ApplicationController
       before_action :authenticate_request!
-      # def new
-      #   user = User.find(params[:user_id])
-      #   @project = user.projects.build
-      # end
 
       def index
         @projects = load_current_user!.projects
@@ -14,9 +10,8 @@ module Api
       end
 
       def create
-        # user = User.find(params[:user_id])
         project = load_current_user!.projects.create(project_params)
-
+        project.slug = params[:name].to_ascii.parameterize
         if project.save
           render json: {id: project.id}, status: :created
         else
@@ -26,23 +21,18 @@ module Api
 
       def show
         user = load_current_user!
-        @project = user.projects.find(params[:id])
+        @project = user.projects.find_by slug: params[:id]
         @role = @project.roles.find_by_user_id(load_current_user!.id).role
       end
 
       def update
         project = load_current_user!.projects.find(params[:id])
-        # project.name = params[:name] unless params[:name].blank?
-        # project.description = params[:description] unless params[:description].blank?
-
-        # project.update project_params
-
+        project.slug = params[:name].to_ascii.parameterize unless params[:name].blank?
         if project.update project_params
           render json: {message: 'Project updated'}, status: :accepted
         else
           render json: {errors: project.errors}, status: :ok
         end
-
       end
 
       def add_user
