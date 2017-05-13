@@ -33,7 +33,7 @@ module Api
       def update
         user = load_current_user!
         if user.update user_params
-          render json: user, status: :accepted
+          render 'api/v1/users/show', status: :accepted
         else
           render json: {errors: user.errors}, status: :ok
         end
@@ -41,7 +41,7 @@ module Api
 
       def is_auth
         @user = load_current_user!
-        render status: :ok
+        render 'api/v1/users/show', status: :ok
       end
 
       def login
