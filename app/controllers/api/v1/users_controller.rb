@@ -1,9 +1,9 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      # before_action :restrict_access
-      before_action :inspect_params, :authenticate_request!
-      skip_before_action :authenticate_request!, only: [:login, :create]
+
+      before_action :inspect_params, :authenticate_request!, except: [:login, :create]
+      # skip_before_action :authenticate_request!, only: [:login, :create]
 
       def index
         users = User.all
@@ -59,9 +59,6 @@ module Api
       def logout
         sign_out
         render json: {message: "Logout"}, status: :ok
-      end
-
-      def postback
       end
 
       private

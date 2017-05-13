@@ -12,7 +12,14 @@ module SimpleApp
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     # config.authoload_paths << Rails.root.join('lib')
-    config.middleware.use ActionDispatch::Cookies
-    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+    # config.middleware.use ActionDispatch::Cookies
+    # config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => :any
+      end
+    end
+    config.api_only = true
   end
 end
