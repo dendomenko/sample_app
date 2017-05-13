@@ -72,10 +72,10 @@ const editSubmit = ( values, dispatch ) => {
 
 const EditUserForm = ( { userProps, error, handleSubmit, submitting, handleCancel } ) => (
     <Segment color="green">
-        <Form as="form" onSubmit={handleSubmit( editSubmit )} encType="multipart/form-data">
+        <Form as="form" onSubmit={handleSubmit( editSubmit )}>
             <Field type="text" name="name" label="Name" component={InputField}/>
             <Field type="email" name="email" label="Email" component={InputField}/>
-            <Field type="password" name="label" label="password" component={InputField}/>
+            <Field type="password" name="password" label="password" component={InputField}/>
             <Field name="avatar" component="input" type="file"/>
             <Button.Group>
                 <Button type="submit" positive loading={submitting} disabled={submitting}>
