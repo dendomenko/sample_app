@@ -26,13 +26,10 @@ POST:
 ```http://localhost:3000/api/v1/users/```
 ```
  {
-  "user":
-   { 
-                   "name":"name",
-                    "email":"te3st@323mail.com",
-                    "password":"12345678",
-                    "password_confirmation":"12345678"
-  }
+    "name":"name",
+    "email":"te3st@323mail.com",
+    "password":"12345678",
+    "password_confirmation":"12345678"
 }
 ```
 if success return 201 Created

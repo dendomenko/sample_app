@@ -14,7 +14,10 @@ const initialState = {
     name  : null,
     error : null,
     token : Session.getToken(),
-    avatar: defaultAvatar
+    avatar: Map( {
+            'thumb': defaultAvatar
+        }
+    )
 
 };
 

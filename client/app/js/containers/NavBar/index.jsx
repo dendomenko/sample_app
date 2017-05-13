@@ -53,7 +53,7 @@ const mapStateToProps = state => (
     {
         username: state.getIn( [ 'user', 'name' ] ),
         token   : state.getIn( [ 'user', 'token' ] ),
-        avatar  : state.getIn( [ 'user', 'avatar' ] )
+        avatar  : state.getIn( [ 'user', 'avatar', [ 'thumb' ] ] )
     });
 /**
  *
