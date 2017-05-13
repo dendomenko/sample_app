@@ -1,18 +1,17 @@
 // @flow
 import React from 'react';
 import { Button, Image, Item } from 'semantic-ui-react';
-
+import  { Link } from 'react-router-dom';
 
 /**
  *
  */
 type Props = {
-    id: number,
+    slug: string,
     name: string,
     description: string,
     task_name: string,
-    handleEdit: void,
-    handleClick: void,
+    handleEdit: void
 }
 /**
  *
@@ -22,8 +21,8 @@ type Props = {
  * @param handleEdit
  * @param handleClick
  */
-export default ( { id, name, description, task_name, handleEdit, handleClick }: Props ) => (
-    <Item onClick={() => handleClick( id )}>
+export default ( { slug, name, description, task_name, handleEdit, handleClick }: Props ) => (
+    <Item as={Link} to={`projects/${slug}`}>
         <Item.Content verticalAlign='middle'>
             <Item.Header>{name}</Item.Header>
             <Item.Meta>{task_name}</Item.Meta>

@@ -12,7 +12,6 @@ type Props = {
 
     items: array<Object>,
     handleEdit: void,
-    handleClick: void
 };
 /**
  *
@@ -20,12 +19,11 @@ type Props = {
  * @param handleEdit
  * @param handleClick
  */
-export default ( { items, handleEdit, handleClick }: Props ) =>
+export default ( { items, handleEdit }: Props ) =>
     (
         <Item.Group relaxed>
             {items.map( item => <ProjectItem
                 key={generate()}
-                handleClick={ handleClick}
                 handleEdit={handleEdit}
                 {...item}
             /> )}

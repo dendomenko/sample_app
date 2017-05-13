@@ -3,25 +3,25 @@ import { call, put, take, fork } from 'redux-saga/effects';
 import { apiProject } from './../../api/Project';
 import * as types  from './../../constants/project/single';
 import { push } from 'react-router-redux';
-import { fetchProjectFailure, fetchProjectSuccess } from './../../actions/project/single';
-import slugify from './../../utils/slugify';
+import { fetchProjectSuccess } from './../../actions/project/single';
+import { handleRequestFailure } from './../../actions/common';
 
 /**
  *
  * @param id
  * @returns {boolean}
  */
-function* fetch( { id } ) {
+function* fetch( { slug } ) {
 
     try {
 
-        const response = yield call( apiProject.fetchSingle, id );
+        const response = yield call( apiProject.fetchSingle, slug );
         console.log( 'RESPONSE', response );
         yield put( fetchProjectSuccess( response ) );
         return response.name;
     }
     catch ( e ) {
-        yield put( fetchProjectFailure( e ) );
+        yield put( handleRequestFailure( types.FETCH_PROJECT_FAILURE, e ) );
         return true;
     }
 }
@@ -31,16 +31,10 @@ function* singleFlow() {
 
     while ( true ) {
 
-        const id = yield  take( types.FETCH_PROJECT );
+        const slug = yield  take( types.FETCH_PROJECT );
 
-        const name = yield  call( fetch, id );
+        yield  call( fetch, slug );
 
-        if (name) {
-
-            const slug = slugify( name );
-
-            yield put( push( `projects/${slug}` ) );
-        }
 
     }
 }

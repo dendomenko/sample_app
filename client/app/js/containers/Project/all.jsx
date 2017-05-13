@@ -7,7 +7,6 @@ import ProjectList  from 'components/Project/List';
 import PreloaderBlock from 'components/Preloader/Segment';
 import Modal from 'components/Modal';
 import bindFunc from 'utils/bind-functions';
-import { fetchProject } from './../../actions/project/single';
 /**
  *
  */
@@ -28,7 +27,7 @@ class Project extends React.PureComponent<State> {
         /**
          *
          */
-        bindFunc.call( this, [ 'handleEditProject', 'handleTriggerModal', 'handleClick' ] );
+        bindFunc.call( this, [ 'handleEditProject', 'handleTriggerModal' ] );
     }
 
     componentWillMount() {
@@ -52,7 +51,6 @@ class Project extends React.PureComponent<State> {
                     <ProjectList
                         items={items.toArray()}
                         handleEdit={this.handleTriggerModal}
-                        handleClick={this.handleClick}
                     />
                 </PreloaderBlock>
 
@@ -78,14 +76,6 @@ class Project extends React.PureComponent<State> {
          * TODO: should to pass id and then give data
          */
         console.info( 'Edit' );
-    }
-
-    handleClick( id_project ) {
-
-
-        const { fetchProjectById } = this.props;
-
-        fetchProjectById( id_project );
     }
 
     /**
@@ -119,10 +109,7 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = ( dispatch ) =>
     ( {
-        fetchProjectById: ( id ) => {
-            dispatch( fetchProject( id ) );
-        },
-        fetchAll        : () => {
+        fetchAll: () => {
             dispatch( fetchProjects() );
         }
 

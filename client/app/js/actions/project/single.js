@@ -5,9 +5,9 @@ import { Map } from 'immutable';
  *
  * @param id
  */
-export const fetchProject = ( id ) => ({
+export const fetchProjectBySlug = ( slug ) => ({
     type: types.FETCH_PROJECT,
-    id
+    slug
 });
 
 /**
@@ -19,16 +19,5 @@ export const fetchProjectSuccess = ( payload ) => ({
     payload: Map( {
         ...payload,
         isFetching: true
-    } )
-});
-
-/**
- *
- * @param error
- */
-export const fetchProjectFailure = ( error ) => ({
-    type   : types.FETCH_PROJECT_FAILURE,
-    payload: Map( {
-        error: new Error( error )
     } )
 });

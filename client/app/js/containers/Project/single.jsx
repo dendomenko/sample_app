@@ -1,13 +1,22 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import FeedList from './../../components/Task/FeedList';
 import Content from './../../components/Project/ItemOfList';
-class SingleProject extends React.PureComponent {
+import TestForm from './../../components/Task/Create';
+import { fetchProjectBySlug } from './../../actions/project/single';
+
+type Props = {
+    slug: string,
+    project: object,
+    project_id: number
+}
+class SingleProject extends React.PureComponent<Props> {
 
     componentDidMount() {
-
-        console.log( 'WILL' );
+        const { slug, fetchProject } = this.props;
+        fetchProject( slug );
     }
 
     shouldComponentUpdate() {
@@ -16,7 +25,8 @@ class SingleProject extends React.PureComponent {
 
     render() {
         console.info( this.props );
-        const { project } = this.props;
+        const { project, project_id } = this.props;
+
         return (
             <Grid container doubling>
                 <Grid.Row>
@@ -27,16 +37,25 @@ class SingleProject extends React.PureComponent {
                         list of tasks
                     </Grid.Column>
                 </Grid.Row>
+                <TestForm project_id={project_id}/>
             </Grid>
         );
     }
 }
 
 const mapStateToProps = ( state ) => ({
-    project: state.get( 'single' )
+    project   : state.get( 'single' ),
+    slug      : state.getIn( [ 'routing', 'last' ] ),
+    project_id: state.getIn( [ 'single', 'id' ] )
 });
 
-const mapDispatchToProps = ( dispatch ) => ({ dispatch });
+const mapDispatchToProps = ( dispatch ) =>
+    ( {
+        fetchProject: ( slug ) => {
+            dispatch( fetchProjectBySlug( slug ) );
+        }
+
+    });
 
 /**
  *

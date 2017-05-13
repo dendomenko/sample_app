@@ -34,8 +34,8 @@ const createProject = ( { name, task_name, description } ) => Api.post( apiPath,
     } );
 
 
-const fetchSingleProject = ( id ) =>
-    Api.get( `${apiPath}/${id}` )
+const fetchSingleProject = ( slug ) =>
+    Api.get( `${apiPath}/${slug}` )
         .then( res => res.data )
         .catch( error => {
             throw new Error( error );
