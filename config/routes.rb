@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       get '/logout' => 'users#logout'
       put '/update' => 'users#update'
       patch '/update' => 'users#update'
+
+
       resources :users
       resources :projects do
         resources :tasks
