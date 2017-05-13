@@ -22,7 +22,9 @@ module Api
       def show
         user = load_current_user!
         @project = user.projects.find_by slug: params[:id]
+        @project ||= user.projects.find params[:id] #.find_by slug: params[:id]
         @role = @project.roles.find_by_user_id(load_current_user!.id).role
+        @tasks = Task.all.where(:project_id=>@project.id)
       end
 
       def update
