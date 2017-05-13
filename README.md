@@ -74,3 +74,26 @@ PATCH/PUT:<br>
 ```
 if success return 202 Accepted
 if error return 200 OK and errors array
+
+### TASK requests
+
+GET:<br>
+Get all tasks
+```/api/v1/projects/:project_id/tasks```
+
+POST:<br>
+```/api/v1/projects/:project_id/tasks```
+```
+{
+        "name":"<name>",
+        "description":"<description>",
+        "time":"time",
+        "project_id":"",
+        "status":"",
+        "creator_id":"",
+        "executor_id":"",
+        "time_do":"",
+        "time_done":""
+}
+```
+
