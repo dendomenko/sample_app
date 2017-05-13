@@ -47,37 +47,15 @@ const logoutRequest = () => Api.get( '/logout' )
 
 const updateRequest = ( { name, email, password, avatar } ) => {
 
-    let data = new FormData();
-    console.log( avatar || '' );
+    const data = new FormData();
+    /**
+     * TODO: SHOULD TO REVIEW
+     */
     data.append( 'name', name || '' );
     data.append( 'email', email || '' );
     data.append( 'password', password || '' );
     data.append( 'avatar', typeof avatar !== 'undefined' ? avatar[ 0 ] : '' );
-//    data.append( 'avatar', new Blob( [ 'test payload' ], { type: 'text/csv' } ) );
-    const config = {
-        headers: { 'Content-Type': 'multipart/form-data' }
-    };
-
-    const a = avatar[ 0 ];
-    const body = new FormData();
-//    body.append( 'user', {
-//        name, email, password, a
-//    } );
-
-    for ( var key of data.entries() ) {
-        console.log( key[ 0 ] + ', ' + key[ 1 ] );
-    }
-
-//    {
-//        'user': {
-//        name, email, password, avatar
-//    }
-    console.info( body );
-    const opts = {
-        transformRequest: function ( data ) {
-            return data;
-        }
-    };
+    
     return Api.patch( '/update', data )
         .then( res => res.data )
         .catch( error => {

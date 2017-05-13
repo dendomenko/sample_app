@@ -59,10 +59,10 @@ const renderDropzoneInput = ( field ) => {
 
 const editSubmit = ( values, dispatch ) => {
 
-    console.info( values );
+    console.info( arguments );
     return asyncSubmit( values, dispatch, updateUser )
         .then( ( res ) => {
-            console.log( 'RES', res );
+
         } ).catch( e => {
             console.log( e );
             throw new SubmissionError( e.errors );

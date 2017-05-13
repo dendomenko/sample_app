@@ -133,9 +133,9 @@ function* logout() {
 function* update( { payload: { values, resolve, reject } } ) {
 
     try {
-        debugger;
+
         const response = yield call( apiUser.update, values );
-        debugger;
+
         if (response.errors) {
 
             yield call(
@@ -145,12 +145,12 @@ function* update( { payload: { values, resolve, reject } } ) {
         else {
 
             yield call( resolve );
-
+            debugger;
             yield put( updateUserSuccess( response ) );
         }
     }
     catch ( e ) {
-        debugger;
+
         yield put( handleRequestFailure( types.USER_UPDATE_FAILURE, e ) );
 
         return false;
@@ -220,12 +220,15 @@ function* registerFlow() {
 
 function* updateFlow() {
 
+
     while ( true ) {
 
         const request = yield take( types.USER_UPDATE );
-        debugger;
-        const response = yield call( update, request );
+
+        yield call( update, request );
+
     }
+
 }
 /**
  *

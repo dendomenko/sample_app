@@ -47,13 +47,14 @@ export const loginUser = ( payload ) => ({ type: types.USER_LOGIN, payload });
  */
 
 
-export const userLoginSuccess = ( { name, email, id, access_token } ) => ({
+export const userLoginSuccess = ( { name, email, id, access_token, avatar } ) => ({
     type   : types.USER_LOGIN_SUCCESS,
     payload: Map( {
-        'name' : name,
-        'uid'  : id,
-        'email': email,
-        'token': access_token,
+        'name'  : name,
+        'uid'   : id,
+        'email' : email,
+        'token' : access_token,
+        'avatar': avatar
     } )
 });
 
@@ -100,7 +101,11 @@ export const updateUser = ( payload ) => ({
  *
  * @param payload
  */
-export const updateUserSuccess = ( payload ) => ({
-    types  : types.USER_UPDATE_SUCCESS,
-    payload: Map( payload )
+export const updateUserSuccess = ( { name, email, id } ) => ({
+    type   : types.USER_UPDATE_SUCCESS,
+    payload: Map( {
+        'name' : name,
+        'uid'  : id,
+        'email': id,
+    } )
 });
