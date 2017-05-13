@@ -17,7 +17,7 @@ module Api
         if task.save!
           render json: {id: task}, status: :created
         else
-          render json: {error: task.errors}, status: :ok
+          render json: {err: task.errors}, status: :ok
         end
       end
 
