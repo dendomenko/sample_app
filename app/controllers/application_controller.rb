@@ -2,7 +2,7 @@ include ActionController::HttpAuthentication::Token::ControllerMethods
 include ActionController::MimeResponds
 include ActionController::Cookies
 
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   require 'json_web_token'
   # protect_from_forgery with: :null
   include SessionsHelper
