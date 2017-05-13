@@ -14,12 +14,14 @@ module SimpleApp
     # config.authoload_paths << Rails.root.join('lib')
     # config.middleware.use ActionDispatch::Cookies
     # config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => :any
-      end
-    end
-    config.api_only = true
+
+    # config.middleware.insert_before 0, "Rack::Cors" do
+    #   allow do
+    #     origins '*'
+    #     resource '*', :headers => :any, :methods => [:get]
+    #   end
+    # end
+    # config.api_only = true
+
   end
 end
