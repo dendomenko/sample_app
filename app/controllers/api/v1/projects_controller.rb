@@ -40,7 +40,7 @@ module Api
         if project.update project_params
           render json: {message: 'Project updated'}, status: :accepted
         else
-          render json: {error: project.errors}, status: :ok
+          render json: {errors: project.errors}, status: :ok
         end
 
       end
