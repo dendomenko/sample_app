@@ -8,12 +8,13 @@ export const checkAuth = () => ({ type: types.CHECK_AUTH });
 /**
  *
  */
-export const authSuccess = ( { name, email, id } ) => ({
+export const authSuccess = ( { name, email, id, avatar } ) => ({
     type   : types.USER_AUTH,
     payload: Map( {
-        'name' : name,
-        'uid'  : id,
-        'email': email
+        'name'  : name,
+        'uid'   : id,
+        'email' : email,
+        'avatar': avatar
     } )
 });
 /**
