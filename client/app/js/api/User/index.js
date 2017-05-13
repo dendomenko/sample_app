@@ -47,14 +47,26 @@ const logoutRequest = () => Api.get( '/logout' )
 
 const updateRequest = ( { name, email, password, avatar } ) => {
 
-    const data = new FormData();
+    let data = new FormData();
+    console.log( avatar );
     data.append( 'name', name );
     data.append( 'email', email );
     data.append( 'password', password );
-    data.append( 'avatar', avatar );
-    return Api.put( '/update', {
-        "user": data
-    } )
+    data.append( 'avatar', avatar[ 0 ] );
+
+    const config = {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    };
+
+
+    for ( var key of data.entries() ) {
+        console.log( key[ 0 ] + ', ' + key[ 1 ] );
+    }
+    const body = {
+        user: data
+    };
+    console.info( body );
+    return Api.put( '/update', body, config )
         .then( res => res.data )
         .catch( error => {
             throw  new Error( error );

@@ -15,39 +15,59 @@ const FILE_FIELD_NAME = 'avatar';
  * @param dispatch
  */
 
-class FileInput extends React.Component {
-    constructor( props ) {
-        super( props );
-        this.onChange = this.onChange.bind( this );
-    }
+const ReduxFormDropzone = ( field ) => {
+    const {
+              input,
+              meta,
+              dropzoneOnDrop,
+              ...props
+          } = field;
 
-    onChange( e ) {
-        const { input: { onChange } } = this.props;
-        onChange( e.target.files[ 0 ] );
-    }
+    return (
+        <Dropzone
+            onDrop={( acceptedFiles, rejectedFiles, e ) => {
+                field.input.onChange( acceptedFiles );
+                field.dropzoneOnDrop && field.dropzoneOnDrop( acceptedFiles, rejectedFiles, e );
+            }}
+            {...props}
+        />
+    );
+};
 
-    render() {
-        const { input: { value } } = this.props;
+const renderDropzoneInput = ( field ) => {
+    const files = field.input.value;
+    return (
+        <div>
+            <Dropzone
+                name={field.name}
+                onDrop={( filesToUpload, e ) => field.input.onChange( filesToUpload )}
+            >
+                <div>Try dropping some files here, or click to select files to upload.</div>
+            </Dropzone>
+            {field.meta.touched &&
+            field.meta.error &&
+            <span className="error">{field.meta.error}</span>}
+            {files && Array.isArray( files ) && (
+                <ul>
+                    { files.map( ( file, i ) => <li key={i}>{file.name}</li> ) }
+                </ul>
+            )}
+        </div>
+    );
+};
 
-        return (<input
-            type="file"
-            name="avatar"
-            value={value}
-            onChange={this.onChange}
-        />);
-    }
-}
 
+const editSubmit = ( values, dispatch ) => {
 
-
-const editSubmit = ( values, dispatch ) =>
-    asyncSubmit( values, dispatch, updateUser )
+    console.info( values );
+    return asyncSubmit( values, dispatch, updateUser )
         .then( ( res ) => {
             console.log( 'RES', res );
         } ).catch( e => {
-        console.log( e );
-        throw new SubmissionError( e.errors );
-    } );
+            console.log( e );
+            throw new SubmissionError( e.errors );
+        } );
+};
 
 
 const EditUserForm = ( { userProps, error, handleSubmit, submitting, handleCancel } ) => (
@@ -57,10 +77,6 @@ const EditUserForm = ( { userProps, error, handleSubmit, submitting, handleCance
             <Field type="email" name="email" label="Email" component={InputField}/>
             <Field type="password" name="label" label="password" component={InputField}/>
             <Field name="avatar" component="input" type="file"/>
-            <Field
-                name={FILE_FIELD_NAME}
-                component={renderDropzoneInput}
-            />
             <Button.Group>
                 <Button type="submit" positive loading={submitting} disabled={submitting}>
                     Update
