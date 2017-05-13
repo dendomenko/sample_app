@@ -20,22 +20,22 @@ module Api
       end
 
       def create
-        @user = User.new(user_params)
+        user = User.new(user_params)
         # user.save!
-        if @user.save
+        if user.save
           render json: {message: 'User created'}, status: :created
         else
-          render json: {errors: @user.errors}, status: :ok
+          render json: {errors: user.errors}, status: :ok
         end
 
       end
 
       def update
-        user = load_current_user!
-        if user.update user_params
+        @user = load_current_user!
+        if @user.update user_params
           render 'api/v1/users/show', status: :accepted
         else
-          render json: {errors: user.errors}, status: :ok
+          render json: {errors: @user.errors}, status: :ok
         end
       end
 
@@ -51,7 +51,7 @@ module Api
           @auth_token = JsonWebToken.encode({user_id: @user.id})
           render status: :ok
         else
-          render json: {error: 'Invalid username / password'}, status: :ok
+          render json: {errors: 'Invalid username / password'}, status: :ok
         end
 
       end

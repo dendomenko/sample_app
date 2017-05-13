@@ -14,7 +14,7 @@ export const authSuccess = ( { name, email, id, avatar } ) => ({
         'name'  : name,
         'uid'   : id,
         'email' : email,
-        'avatar': avatar
+        'avatar': Map( avatar )
     } )
 });
 /**
@@ -55,7 +55,7 @@ export const userLoginSuccess = ( { name, email, id, access_token, avatar } ) =>
         'uid'   : id,
         'email' : email,
         'token' : access_token,
-        'avatar': avatar
+        'avatar': Map( avatar )
     } )
 });
 

@@ -21,8 +21,8 @@ class NavBar extends React.PureComponent<Props> {
      * @returns {boolean}
      */
     shouldComponentUpdate( nextProps ) {
-        return true;
-//        return this.props.username !== nextProps.username;
+//        return true;
+        return this.props.username !== nextProps.username;
     }
 
     /**

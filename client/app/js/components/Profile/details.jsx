@@ -11,7 +11,7 @@ type Props = {
 };
 export default ( { avatar, name, email, role, handleClick }: Props ) => (
     <Item onClick={handleClick}>
-        <Item.Image size='tiny' src={avatar}/>
+        <Item.Image size='tiny' src={avatar.get( 'medium' )}/>
         <Item.Content>
             <Item.Header>{name}</Item.Header>
             <Item.Meta>{email}</Item.Meta>

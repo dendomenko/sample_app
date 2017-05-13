@@ -9,7 +9,8 @@ const initialState = {
     role       : null,
     tasks      : List( [] ),
     error      : null,
-    isFetching : false
+    isFetching : false,
+    slug       : null
 };
 
 

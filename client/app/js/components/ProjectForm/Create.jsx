@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { SubmissionError, reset } from 'redux-form';
+import { SubmissionError, reset, touch, getFormSyncErrors,getFormNames } from 'redux-form';
 import { Button, Message, Form } from 'semantic-ui-react';
 import { createProject } from './../../actions/project/all-projects';
 import { InputField, TextareaField } from './../FormFileds';
@@ -12,14 +12,17 @@ import asyncSubmit from './../../utils/async-validate';
  * @param values
  * @param dispatch
  */
-const syncSubmit = ( values, dispatch ) =>
-    asyncSubmit( values, dispatch, createProject )
+const syncSubmit = ( values, dispatch ) => {
+
+//    console.log( 's', getFormSyncErrors( values ) );
+    return asyncSubmit( values, dispatch, createProject )
         .then( ( res ) => {
             dispatch( reset( 'ProjectCreate' ) );
         } ).catch( e => {
-        console.log( e );
-        throw new SubmissionError( e.errors );
-    } );
+            console.log( e );
+            throw new SubmissionError( e.errors );
+        } );
+};
 
 /**
  *
@@ -30,7 +33,7 @@ const syncSubmit = ( values, dispatch ) =>
  * @constructor
  */
 const CreateForm = ( { error, handleSubmit, submitting } ) => {
-
+    console.log( arguments );
     return (
         <div>
 
@@ -51,6 +54,15 @@ const CreateForm = ( { error, handleSubmit, submitting } ) => {
     );
 };
 
+
+const validate = values => {
+    const errors = {};
+    if (!values.get( 'name' )) {
+        errors.name = 'Required';
+    }
+
+    return errors;
+};
 
 export default reduxForm( {
     form: 'ProjectCreate',
