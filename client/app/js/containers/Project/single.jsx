@@ -7,6 +7,10 @@ import Content from './../../components/Project/ItemOfList';
 import TestForm from './../../components/Task/Create';
 import { fetchProjectBySlug } from './../../actions/project/single';
 
+
+/**
+ * TODO: SHOULD TO REVIEW AND REFACTORING
+ */
 type Props = {
     slug: string,
     project: object,
@@ -14,9 +18,10 @@ type Props = {
 }
 class SingleProject extends React.PureComponent<Props> {
 
-    componentDidMount() {
+    componentWillMount() {
         const { slug, fetchProject } = this.props;
         fetchProject( slug );
+
     }
 
     shouldComponentUpdate() {
@@ -24,8 +29,9 @@ class SingleProject extends React.PureComponent<Props> {
     }
 
     render() {
-        console.info( this.props );
+
         const { project, project_id } = this.props;
+
 
         return (
             <Grid container doubling>
@@ -37,7 +43,10 @@ class SingleProject extends React.PureComponent<Props> {
                         list of tasks
                     </Grid.Column>
                 </Grid.Row>
-                <TestForm project_id={project_id}/>
+                {
+                    project_id && <TestForm project_id={project_id}/>
+                }
+
             </Grid>
         );
     }
