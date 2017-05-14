@@ -9,10 +9,12 @@ import { SubmissionError } from 'redux-form';
 
 function* create( { payload: { values, resolve, reject } } ) {
 
+
     try {
 
-        const response = yield call( apiTask.create( values ) );
-
+        const response = yield call( apiTask.create, values );
+        debugger;
+        console.info( 'Response taSK', response );
         if (response.errors) {
 
             yield call(
@@ -38,7 +40,7 @@ function* create( { payload: { values, resolve, reject } } ) {
 }
 function* createFlow() {
 
-    takeLatest( types.CREATE_TASK, create );
+    yield takeLatest( types.CREATE_TASK, create );
 
 }
 

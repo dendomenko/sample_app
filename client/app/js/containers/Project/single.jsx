@@ -32,6 +32,7 @@ class SingleProject extends React.PureComponent<Props> {
 
         const { project, project_id } = this.props;
 
+        console.log( 'RENDER' );
 
         return (
             <Grid container doubling>

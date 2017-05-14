@@ -24,17 +24,15 @@ class CreateTaskForm extends React.PureComponent {
         } );
     }
 
-    syncSubmit = ( values, dispatch ) => {
-
-
-        return asyncSubmit( values, dispatch, createTask )
+    syncSubmit = ( values, dispatch ) =>
+        asyncSubmit( values, dispatch, createTask )
             .then( res => {
                 console.info( 'RES', res );
             } )
             .catch( e => {
                 throw SubmissionError( e.errors );
             } );
-    };
+
 
     render() {
 
