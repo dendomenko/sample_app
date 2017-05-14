@@ -17,11 +17,11 @@ module Api
         team.users << load_current_user!.id
         team.save
 
-        @project = Project.find params[:project_id]
-        @project.team_id = team.id
-        @project.save!
+        project = Project.find params[:project_id]
+        project.team_id = team.id
+        project.save!
 
-        render json: @project
+        render json: {team: team}
       end
 
       def update
