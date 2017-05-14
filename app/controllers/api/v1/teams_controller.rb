@@ -13,13 +13,15 @@ module Api
       end
 
       def create
-        team = Team.new team_params
+        team = Team.new(team_params)
         team.users << load_current_user!.id
         team.save
-        project = Project.find params[:project_id]
-        project.team_id = team.id
-        project.save
-        render json: team
+
+        @project = Project.find params[:project_id]
+        @project.team_id = team.id
+        @project.save!
+
+        render json: @project
       end
 
       def update
@@ -32,8 +34,10 @@ module Api
 
       private
       def team_params
-        params.permit(:name, :projects,:users)
+        params.permit(:name,:users)
       end
+
+
 
     end
   end
