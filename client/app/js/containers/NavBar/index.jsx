@@ -21,7 +21,6 @@ class NavBar extends React.PureComponent<Props> {
      * @returns {boolean}
      */
     shouldComponentUpdate( nextProps ) {
-//        return true;
         return this.props.username !== nextProps.username;
     }
 
@@ -31,7 +30,7 @@ class NavBar extends React.PureComponent<Props> {
      */
     render() {
         const { username, token, avatar, handleLogout } = this.props;
-        console.log( 'AVATAR', avatar );
+
         return (
             <Segment inverted>
                 <Menu inverted pointing secondary>
