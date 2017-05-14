@@ -1,14 +1,14 @@
 // @flow
 import React from 'react';
 import Task  from './Feed';
-import { Feed } from 'semantic-ui-react';
+import { Item } from 'semantic-ui-react';
 import  { generate } from 'shortid';
 type Props = {
     tasks: array<Object>,
 };
 
 export default ( { tasks }: { tasks: array<object> } ) => (
-    <Feed>
+    <Item.Group relaxed divided link>
         { tasks.map( task => <Task key={generate()} {...task} /> ) }
-    </Feed>
+    </Item.Group>
 );

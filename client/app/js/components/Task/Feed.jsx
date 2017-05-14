@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { Feed } from 'semantic-ui-react';
+import { Item } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 
 type Props = {
@@ -14,15 +15,29 @@ type Props = {
     resolution: string
 };
 
-
-export default ( { title, name, description, assignee, reporter, priority, status, resolution }: Props ) => (
-    <Feed.Event
-        content={title}
-        meta={name}
-        summary={description}
-        extraText={extraText}
-    />
-
+/**
+ *  TODO:SHOULD REWORK TO LINKED
+ * @param title
+ * @param name
+ * @param description
+ * @param time_do
+ * @param assignee
+ * @param reporter
+ * @param priority
+ * @param status
+ * @param resolution
+ */
+export default ( { title, name, description, time_do, assignee, reporter, priority, status, resolution }: Props ) => (
+    <Item as={Link} replace={true} to="">
+        <Item.Content>
+            <Item.Header>{title}</Item.Header>
+            <Item.Meta>
+                <div>{name}</div>
+                <div>{time_do}</div>
+            </Item.Meta>
+            <Item.Description>{description}</Item.Description>
+        </Item.Content>
+    </Item>
 );
 
 

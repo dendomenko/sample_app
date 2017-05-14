@@ -22,7 +22,7 @@ type Props = {
  * @param handleClick
  */
 export default ( { slug, name, description, task_name, handleEdit, handleClick }: Props ) => (
-    <Item as={Link} to={`projects/${slug}`}>
+    <Item as={Link} to={`/projects/${slug}`}>
         <Item.Content verticalAlign='middle'>
             <Item.Header>{name}</Item.Header>
             <Item.Meta>{task_name}</Item.Meta>
