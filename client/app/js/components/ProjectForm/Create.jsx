@@ -32,6 +32,8 @@ const syncSubmit = ( values, dispatch ) => {
  * @returns {XML}
  * @constructor
  */
+
+
 const CreateForm = ( { error, handleSubmit, submitting } ) => {
     console.log( arguments );
     return (

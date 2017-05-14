@@ -44,9 +44,9 @@ class SingleProject extends React.PureComponent<Props> {
 
     render() {
 
-        const { project, project_id, tasks } = this.props;
+        const { project, project_id, tasks, team } = this.props;
 
-
+        const { users } = team;
         return (
             <Grid container doubling>
                 <Grid.Row>
@@ -57,9 +57,10 @@ class SingleProject extends React.PureComponent<Props> {
                             <TeamActions
                                 onCreate={this.handleCreateTeam}
                                 onSelect={this.handleSelectTeam}/>
-                        </Container>
-                    </Grid.Column>
-                    <Grid.Column width={6} floated="right">
+                            <TeamList items={users || []}/>
+                        </ Container >
+                    </ Grid.Column >
+                    < Grid.Column width={6} floated="right">
                         <FeedList tasks={tasks}/>
                     </Grid.Column>
                 </Grid.Row>
@@ -78,7 +79,7 @@ class SingleProject extends React.PureComponent<Props> {
             values : {
                 name      : 'First TEAM',
                 project_id: 1,
-                users     : [ 2, 3, 4, 5 ],
+                users     : '[ 2,3,4,5]'
             },
             resolve: () => ({}),
             reject : () => ({}),
@@ -96,7 +97,8 @@ const mapStateToProps = ( state ) => ({
     project   : state.get( 'single' ),
     slug      : state.getIn( [ 'routing', 'last' ] ),
     project_id: state.getIn( [ 'single', 'id' ] ),
-    tasks     : state.getIn( [ 'single', 'tasks' ] )
+    tasks     : state.getIn( [ 'single', 'tasks' ] ),
+    team      : state.getIn( [ 'single', 'team' ] )
 });
 
 const mapDispatchToProps = ( dispatch ) =>
@@ -105,7 +107,7 @@ const mapDispatchToProps = ( dispatch ) =>
             dispatch( fetchProjectBySlug( slug ) );
         },
         createTeam  : ( payload ) => {
-            dispatch( createTeam( CREATE_TEAM, payload ));
+            dispatch( createTeam( CREATE_TEAM, payload ) );
         }
 
     });

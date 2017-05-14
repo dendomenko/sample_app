@@ -15,7 +15,7 @@ type Props = {
 export default ( { id, avatar, name, role }: Props ) => (
     <Feed.Event>
         <Feed.Label>
-            <img src={avatar}/>
+            <img src={avatar.thumb}/>
         </Feed.Label>
         <Feed.Content>
             {name}

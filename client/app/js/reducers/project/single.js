@@ -8,6 +8,7 @@ const initialState = {
     description: null,
     role       : null,
     tasks      : List( [] ),
+    team       : List( [] ),
     error      : null,
     isFetching : false,
     slug       : null

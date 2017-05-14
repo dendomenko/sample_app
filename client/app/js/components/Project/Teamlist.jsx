@@ -16,7 +16,7 @@ export  default ( { items }: Props ) => (
 
     <Feed>
         {
-            items.map( item => <Item {...item}/> )
+            items.map( item => <Item key={generate()}{...item}/> )
         }
     </Feed>
 );
