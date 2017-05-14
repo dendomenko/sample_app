@@ -5,12 +5,12 @@ import Routing from './routes';
 import createBrowserHistory from 'history/createBrowserHistory';
 import sagas from './sagas/';
 import { checkAuth } from 'actions/user';
-import {Session} from 'utils/Session';
+import { Session } from 'utils/Session';
 
 const renderToDomElement = document.getElementById( 'app' );
 
 const history = createBrowserHistory();
-const store   = configureStore( {}, history );
+const store = configureStore( {}, history );
 
 /**
  *
@@ -18,10 +18,14 @@ const store   = configureStore( {}, history );
 store.runSaga( sagas );
 
 
-if ( Session.getToken() !== null ) {
+if (Session.getToken() !== null) {
     store.dispatch( checkAuth() );
 }
 
+
+/**
+ *
+ */
 
 render(
     <Routing history={history} store={store}/>, renderToDomElement );

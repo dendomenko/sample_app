@@ -1,17 +1,31 @@
 // @flow
 import React from 'react';
-import Item from  './ItemOfList';
-import { List } from 'semantic-ui-react';
+import ProjectItem from  './ItemOfList';
+import { Item } from 'semantic-ui-react';
 import { generate } from 'shortid';
 
 
 /**
  *
- * @param props
  */
-export default ( { items, handleEdit }: { items: Array<Object>, handleEdit: void } ) =>
+type Props = {
+
+    items: array<Object>,
+    handleEdit: void,
+};
+/**
+ *
+ * @param items
+ * @param handleEdit
+ * @param handleClick
+ */
+export default ( { items, handleEdit }: Props ) =>
     (
-        <List verticalAlign='middle'>
-            {items.map( item => <Item key={generate()} {...item} handleEdit={handleEdit}/> )}
-        </List>
+        <Item.Group relaxed>
+            {items.map( item => <ProjectItem
+                key={generate()}
+                handleEdit={handleEdit}
+                {...item}
+            /> )}
+        </Item.Group>
     );

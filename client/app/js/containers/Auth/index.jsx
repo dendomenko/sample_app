@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
 import SignInForm from '../../components/SignIn';
-import RegisterForm from '../../components/registerForm';
+import RegisterForm from '../../components/RegisterForm';
 import {registerUser, loginUser, userLogout} from "./../../actions/user";
 
 /**
