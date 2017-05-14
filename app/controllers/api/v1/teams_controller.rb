@@ -18,14 +18,18 @@ module Api
         team.save
 
         project = Project.find params[:project_id]
-        project.team_id = team.id
-        project.save!
+        project.update(team_id: team.id)
 
         render json: {team: team}
       end
 
       def update
-        Team.update team_params
+        team = Team.find params[:id]
+        users = team.users
+        team.name= team_params[:name]
+        team.users += users
+        team.users.uniq!
+        team.save
       end
 
       def destroy
