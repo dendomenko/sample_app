@@ -10,9 +10,9 @@ Rails.application.routes.draw do
       patch '/update' => 'users#update'
 
 
-      resources :users, :teams
-      resources :projects do
-        resources :tasks
+      resources :users, :teams, :except => [:new, :edit]
+      resources :projects, :except => [:new, :edit] do
+        resources :tasks, :except => [:new, :edit]
       end
 
 
