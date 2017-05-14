@@ -5,7 +5,7 @@ module Api
 
       def index
         @projects = load_current_user!.projects
-        render(json: {message: "You haven't projects"}, status: :ok) unless @projects.any?
+        return render(json: {message: "You haven't projects"}, status: :no_content) unless @projects.any?
         render status: :ok
       end
 

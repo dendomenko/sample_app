@@ -8,7 +8,6 @@ module Api
 
       def show
         @team = Team.find(params[:id])
-        @projects = Project.find(@team.projects)
         @users = User.find(@team.users)
         render status: :ok
       end
