@@ -25,7 +25,7 @@ function* create( { payload: { values, resolve, reject } } ) {
         else {
 
             yield call( resolve );
-            yield put( createTaskSuccess( response ) );
+            yield put( createTaskSuccess( response.task ) );
         }
 
 
