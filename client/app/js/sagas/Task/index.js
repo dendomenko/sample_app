@@ -11,18 +11,18 @@ function* create( { payload: { values, resolve, reject } } ) {
 
 
     try {
-
-        const response = yield call( apiTask.create, values );
+        debugger;
+        const { task, errors } = yield call( apiTask.create, values );
         debugger;
         console.info( 'Response taSK', response );
-        if (response.errors) {
+        if (errors) {
 
             yield call(
                 reject,
                 new SubmissionError( response.errors )
             );
         }
-        else {
+        if (task) {
 
             yield call( resolve );
             yield put( createTaskSuccess( response.task ) );
@@ -32,7 +32,7 @@ function* create( { payload: { values, resolve, reject } } ) {
         return true;
     }
     catch ( e ) {
-
+        
         yield put( handleRequestFailure( types.CREATE_TASK_FAILURE, e ) );
         return false;
     }
