@@ -19,8 +19,8 @@ const path = project_id => (`projects/${project_id}/tasks`);
  * @param status
  * @param executor_id
  */
-const create = ( { id, name, description, status, executor_id } ) => Api.post( path( id ), {
-    name,
+const create = ( { id, title, description, status, executor_id } ) => Api.post( path( id ), {
+    title,
     description,
     status,
     executor_id
