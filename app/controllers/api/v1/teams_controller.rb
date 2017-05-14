@@ -2,15 +2,18 @@ module Api
   module V1
     class TeamsController < ApplicationController
       def index
-        Team.all
+        render json: Team.all, status: :ok
       end
 
       def show
         Team.find(params[:id])
+        
       end
 
       def create
-        Team.new team_params
+        team = Team.new team_params
+        team.save
+        render json: team
       end
 
       def update
