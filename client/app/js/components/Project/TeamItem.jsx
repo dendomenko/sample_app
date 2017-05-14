@@ -8,6 +8,7 @@ type Props = {
     avatar: string,
     name: string,
     role: string,
+    email: string
 };
 
 

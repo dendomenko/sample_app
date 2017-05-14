@@ -2,15 +2,20 @@ module Api
   module V1
     class TeamsController < ApplicationController
       def index
-        Team.all
+        @teams = Team.where("#{load_current_user!.id} = ANY (users)")
+        render  status: :ok
       end
 
       def show
-        Team.find(params[:id])
+        @team = Team.find(params[:id])
+        @users = User.find(@team.users)
+        render status: :ok
       end
 
       def create
-        Team.new team_params
+        team = Team.new team_params
+        team.save
+        render json: team
       end
 
       def update

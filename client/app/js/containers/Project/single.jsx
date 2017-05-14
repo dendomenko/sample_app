@@ -1,13 +1,14 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Divider, Container } from 'semantic-ui-react';
+import { Grid, Divider, Container, Modal } from 'semantic-ui-react';
 import FeedList from './../../components/Task/FeedList';
 import Content from './../../components/Project/ItemOfList';
 import TestForm from './../../components/Task/Create';
 import { fetchProjectBySlug } from './../../actions/project/single';
 import TeamList from  './../../components/Project/Teamlist';
-
+import TeamActions from  './../../components/Project/HandleTeam';
+import bindFunc from './../../utils/bind-functions';
 /**
  * TODO: SHOULD TO REVIEW AND REFACTORING
  */
@@ -17,6 +18,17 @@ type Props = {
     project_id: number
 }
 class SingleProject extends React.PureComponent<Props> {
+
+
+    constructor() {
+        super();
+
+        this.state = {
+            modalIsOpen: false,
+            children   : null,
+        };
+        bindFunc.call( this, [ 'handleCreateTeam', 'handleSelectTeam' ] );
+    }
 
     componentWillMount() {
         const { slug, fetchProject } = this.props;
@@ -40,7 +52,9 @@ class SingleProject extends React.PureComponent<Props> {
                         <Content {...project.toObject()} />
                         <Divider horizontal/>
                         <Container fluid>
-
+                            <TeamActions
+                                onCreate={this.handleCreateTeam}
+                                onSelect={this.handleSelectTeam}/>
                         </Container>
                     </Grid.Column>
                     <Grid.Column width={6} floated="right">
@@ -51,9 +65,19 @@ class SingleProject extends React.PureComponent<Props> {
                 {/*project_id && <TestForm project_id={project_id}/>*/}
                 {/*}*/}
 
+
             </Grid>
         );
     }
+
+    handleCreateTeam() {
+
+    }
+
+    handleSelectTeam() {
+
+    }
+
 }
 
 const mapStateToProps = ( state ) => ({
