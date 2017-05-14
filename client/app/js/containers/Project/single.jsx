@@ -9,6 +9,8 @@ import { fetchProjectBySlug } from './../../actions/project/single';
 import TeamList from  './../../components/Project/Teamlist';
 import TeamActions from  './../../components/Project/HandleTeam';
 import bindFunc from './../../utils/bind-functions';
+import { handleRequest as createTeam } from './../../actions/common';
+import { CREATE_TEAM } from './../../constants/Team';
 /**
  * TODO: SHOULD TO REVIEW AND REFACTORING
  */
@@ -71,7 +73,17 @@ class SingleProject extends React.PureComponent<Props> {
     }
 
     handleCreateTeam() {
-
+        const { createTeam } = this.props;
+        const data = {
+            values : {
+                name      : 'First TEAM',
+                project_id: 1,
+                users     : [ 2, 3, 4, 5 ],
+            },
+            resolve: () => ({}),
+            reject : () => ({}),
+        };
+        createTeam( data );
     }
 
     handleSelectTeam() {
@@ -91,6 +103,9 @@ const mapDispatchToProps = ( dispatch ) =>
     ( {
         fetchProject: ( slug ) => {
             dispatch( fetchProjectBySlug( slug ) );
+        },
+        createTeam  : ( payload ) => {
+            dispatch( createTeam( CREATE_TEAM, payload ));
         }
 
     });

@@ -10,3 +10,13 @@ export const handleRequestFailure = ( type, error ) => ({
         error: new Error( error )
     } )
 });
+
+/**
+ *  Common action for all requests
+ * @param type
+ * @param payload
+ */
+export const handleRequest = ( type, payload ) => ({
+    type,
+    payload
+});
