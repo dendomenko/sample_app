@@ -52,16 +52,18 @@ export const TextareaField = ( { input, label, type, meta: { touched, error, war
  * @param error
  * @param warning
  */
-export const SelectField = ( { input, label, options, meta: { touched, error, warning } } ) => (
-    <div>
-        <Form.Field
-            error={ !!error }
-            control={Dropdown}
-            label={label}
-            options={options}
-            placeholder={label}/>
-        {     error &&
-        <Label basic color='red' pointing>{error}</Label>
-        }
-    </div>
-);
+export const SelectField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => {
+
+    console.log( 'RRRRR', name );
+
+    return (
+        <Form.Field>
+            <Dropdown
+                error={ !!error }
+                name={name}
+                label={label}
+                options={options}
+                placeholder={label}/>
+        </Form.Field>
+    );
+};

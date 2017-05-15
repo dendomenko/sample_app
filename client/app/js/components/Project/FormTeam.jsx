@@ -16,6 +16,9 @@ const createSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, crea
     .then()
     .catch();
 
+const creates = ( values ) => {
+    console.info( values );
+};
 const inviteSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
     .then()
     .catch();
@@ -31,7 +34,11 @@ const roles = [
     { key: 2, text: 'SEO', value: 3 },
     { key: 3, text: 'Lead', value: 4 },
 ];
-
+//            values : {
+//                name      : 'First TEAM',
+//                project_id: 1,
+//                users     : '[ 2,3,4,5]'
+//            },
 
 const renderMembers = ( { roles, members, fields } ) => (
     <div>
@@ -50,39 +57,36 @@ const renderMembers = ( { roles, members, fields } ) => (
             />
 
         </Form.Field>
-        {fields.map( ( member, index ) =>
-            <Form.Group key={index}>
+        {fields.map( ( member, index ) => {
 
-                <Form.Field>
-                    <Field
-                        name={`${member}.member_id`}
-                        component={SelectField}
-                        options={members}
-                        label="Member"/>
-                </Form.Field>
+                console.log( member );
+                return (
+                    <Form.Group key={index}>
+                        <Field
+                            name={`${member}.id`}
+                            component={SelectField}
+                            options={members}
+                            label="Member"/>
 
-                <Form.Field>
+                        <Field
+                            name={`${member}.role`}
+                            component={SelectField}
+                            options={roles}
+                            label="Role"/>
 
-                    <Field
-                        name={`${member}.role`}
-                        component={SelectField}
-                        options={roles}
-                        label="Role"/>
-                </Form.Field>
-
-
-                <Form.Field>
-                    <Popup
-                        trigger={<Button
-                            circular
-                            icon='remove'
-                            type="button"
-                            negative
-                            onClick={() => fields.remove( index )}/>}
-                        content='Remove member'
-                    />
-                </Form.Field>
-            </Form.Group>
+                        <Form.Field>
+                            <Popup
+                                trigger={<Button
+                                    circular
+                                    icon='remove'
+                                    type="button"
+                                    negative
+                                    onClick={() => fields.remove( index )}/>}
+                                content='Remove member'
+                            />
+                        </Form.Field>
+                    </Form.Group>);
+            }
         )}
     </div>
 
@@ -90,8 +94,14 @@ const renderMembers = ( { roles, members, fields } ) => (
 
 
 const TeamForm = ( props ) => {
-    const { handleSubmit, pristine, reset, submitting, members } = props;
-    console.warn( members );
+    const { project_id, handleSubmit, initialized, submitting, members, initialize } = props;
+
+    if (!initialized) {
+        initialize( {
+            'project_id': project_id
+        } );
+    }
+
 //    members.map( ( member, index ) => ({
 //        key  : member.id,
 //        text : member.name,
@@ -99,13 +109,16 @@ const TeamForm = ( props ) => {
 ////                    image:
 //    }) )
     return (
-        <Form as="form" loading={submitting} onSubmit={handleSubmit}>
+        <Form as="form" loading={submitting} onSubmit={handleSubmit( creates )}>
             <Field name="name" type="text" component={InputField} label="Team name"/>
             <FieldArray
                 roles={roles}
                 members={members1}
-                name="members"
+                name="users"
                 component={renderMembers}/>
+
+            <Field name="project_id" type="hidden" component="input"/>
+
             <Form.Field>
                 <Button type="submit" loading={submitting} disabled={submitting}>Create</Button>
             </Form.Field>
@@ -116,6 +129,7 @@ const TeamForm = ( props ) => {
 
 export default reduxForm( {
         form: 'Team',
+
     }
 )( TeamForm );
 

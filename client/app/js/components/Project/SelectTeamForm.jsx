@@ -5,13 +5,22 @@ import { reduxForm, Field, FieldArray } from 'redux-form/immutable';
 import { InputField, SelectField } from './../FormFileds';
 import asyncSubmit from './../../utils/async-validate';
 import { Button, Message, Form, Popup, Label } from 'semantic-ui-react';
-import { handleRequest as createTeam } from './../../actions/common';
+import { createRequest } from './../../actions/common';
 import { SELECT_TEAM } from './../../constants/Team';
 import { fromJS } from 'immutable';
 
 
+/**
+ *
+ * @param values
+ */
 const create = ( values ) => createTeam( SELECT_TEAM, values );
 
+/**
+ *
+ * @param values
+ * @param dispatch
+ */
 const createSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
     .then()
     .catch();
@@ -23,7 +32,14 @@ const members1 = [
 
 
 const SelectTeamForm = ( props ) => {
-    const { handleSubmit, pristine, submitting, members } = props;
+    const { project_id, initialize, initialized, handleSubmit, submitting, teams } = props;
+
+    if (!initialized) {
+        initialize( {
+            'project_id': project_id
+        } );
+    }
+
     console.warn( members );
 //    members.map( ( member, index ) => ({
 //        key  : member.id,
@@ -34,7 +50,7 @@ const SelectTeamForm = ( props ) => {
     return (
         <Form as="form" loading={submitting} onSubmit={handleSubmit}>
             <Field name="name" type="text" component={SelectField} options={members1} label="Team name"/>
-
+            <Field name="project_id" type="hidden" component="input"/>
             <Form.Field>
                 <Button type="submit" loading={submitting} disabled={submitting}>Apply</Button>
             </Form.Field>
@@ -42,7 +58,9 @@ const SelectTeamForm = ( props ) => {
     );
 };
 
-
+/**
+ *
+ */
 export default reduxForm( {
         form: 'selectTeam',
     }

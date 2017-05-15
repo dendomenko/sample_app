@@ -10,7 +10,6 @@ import TeamList from  './../../components/Project/Teamlist';
 import TeamActions from  './../../components/Project/HandleTeam';
 import bindFunc from './../../utils/bind-functions';
 import { createRequest } from './../../actions/common';
-import { CREATE_TEAM } from './../../constants/Team';
 import FormTeam from './../../components/Project/FormTeam';
 import SelectTeamForm from './../../components/Project/SelectTeamForm';
 
@@ -60,7 +59,7 @@ class SingleProject extends React.PureComponent<Props, State> {
 
         const { users } = team;
 
-        console.log( 'RENDERRRRRR ========================' );
+        console.log( 'RENDERRRRRR ========================',project_id );
         return (
             <Grid container doubling>
                 <Grid.Row>
@@ -71,7 +70,7 @@ class SingleProject extends React.PureComponent<Props, State> {
                             onSelect={this.handleSelectTeam}/>
 
                         <Divider/>
-                        {this.renderForm( this.state.teamForm )}
+                        {this.renderForm( this.state.teamForm, project_id )}
                         <Divider/>
                         <Container fluid>
 
@@ -116,12 +115,12 @@ class SingleProject extends React.PureComponent<Props, State> {
         } );
     }
 
-    renderForm( type ) {
+    renderForm( type, project_id ) {
         switch ( type ) {
             case 'create':
-                return <FormTeam/>;
+                return <FormTeam project_id={project_id}/>;
             case 'select':
-                return <SelectTeamForm/>;
+                return <SelectTeamForm project_id={project_id}/>;
             default:
                 return false;
         }
@@ -143,9 +142,6 @@ const mapDispatchToProps = ( dispatch ) =>
     ( {
         fetchProject: ( slug ) => {
             dispatch( fetchProjectBySlug( slug ) );
-        },
-        createTeam  : ( payload ) => {
-            dispatch( createRequest( CREATE_TEAM, payload ) );
         },
         fetchMembers: () => {
             dispatch( createRequest( 'FETCH_USERS' ) );
