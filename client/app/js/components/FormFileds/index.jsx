@@ -41,3 +41,25 @@ export const TextareaField = ( { input, label, type, meta: { touched, error, war
         </div>
     </Form.Field>
 );
+
+
+/**
+ *
+ * @param input
+ * @param label
+ * @param options
+ * @param touched
+ * @param error
+ * @param warning
+ */
+export const SelectField = ( { input, label, options, meta: { touched, error, warning } } ) => (
+    <div>
+        <Form.Select
+            label={label}
+            options={options}
+            placeholder={label}/>
+        {     error &&
+        <Label basic color='red' pointing>{error}</Label>
+        }
+    </div>
+);

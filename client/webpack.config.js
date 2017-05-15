@@ -1,14 +1,14 @@
 require( 'babel-polyfill' );
 
-var fs = require( 'fs' );
-var webpack = require( 'webpack' );
-var WebpackNotifierPlugin = require( 'webpack-notifier' );
-var path = require( 'path' );
-var ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
-var ProgressPlugin = require( 'webpack/lib/ProgressPlugin' );
-var nodeModulesPath = path.resolve( __dirname, 'node_modules' );
-var mainPath = path.resolve( __dirname, 'app', 'bundle.js' );
-var publicPath = path.resolve( __dirname, 'dist' );
+const fs = require( 'fs' );
+const webpack = require( 'webpack' );
+const WebpackNotifierPlugin = require( 'webpack-notifier' );
+const path = require( 'path' );
+const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const ProgressPlugin = require( 'webpack/lib/ProgressPlugin' );
+const nodeModulesPath = path.resolve( __dirname, 'node_modules' );
+const mainPath = path.resolve( __dirname, 'app', 'bundle.js' );
+const publicPath = path.resolve( __dirname, 'dist' );
 
 
 var config = {
@@ -19,6 +19,7 @@ var config = {
     entry: {
 
         vendor: [
+            'prop-types',
             'react',
             'react-dom',
             'react-redux',

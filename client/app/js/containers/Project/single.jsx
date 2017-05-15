@@ -11,6 +11,7 @@ import TeamActions from  './../../components/Project/HandleTeam';
 import bindFunc from './../../utils/bind-functions';
 import { handleRequest as createTeam } from './../../actions/common';
 import { CREATE_TEAM } from './../../constants/Team';
+import FormTeam from './../../components/Project/FormTeam';
 /**
  * TODO: SHOULD TO REVIEW AND REFACTORING
  */
@@ -57,6 +58,7 @@ class SingleProject extends React.PureComponent<Props> {
                             <TeamActions
                                 onCreate={this.handleCreateTeam}
                                 onSelect={this.handleSelectTeam}/>
+                            <FormTeam/>
                             <TeamList items={users || []}/>
                         </ Container >
                     </ Grid.Column >
