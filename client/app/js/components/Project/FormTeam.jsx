@@ -21,7 +21,7 @@ const inviteSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, crea
     .catch();
 
 
-const members = [
+const members1 = [
     { key: 'm', text: 'Male', value: 'male' },
     { key: 'f', text: 'Female', value: 'female' },
 ];
@@ -90,18 +90,25 @@ const renderMembers = ( { roles, members, fields } ) => (
 
 
 const TeamForm = ( props ) => {
-    const { handleSubmit, pristine, reset, submitting } = props;
+    const { handleSubmit, pristine, reset, submitting, members } = props;
+    console.warn( members );
+//    members.map( ( member, index ) => ({
+//        key  : member.id,
+//        text : member.name,
+//        value: member.id,
+////                    image:
+//    }) )
     return (
         <Form as="form" loading={submitting} onSubmit={handleSubmit}>
             <Field name="name" type="text" component={InputField} label="Team name"/>
             <FieldArray
                 roles={roles}
-                members={members}
+                members={members1}
                 name="members"
                 component={renderMembers}/>
-            <div>
+            <Form.Field>
                 <Button type="submit" loading={submitting} disabled={submitting}>Create</Button>
-            </div>
+            </Form.Field>
         </Form>
     );
 };

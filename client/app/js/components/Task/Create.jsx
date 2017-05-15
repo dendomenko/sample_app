@@ -4,7 +4,7 @@ import  { SubmissionError, change } from  'redux-form';
 import { Button, Message, Form } from 'semantic-ui-react';
 import asyncSubmit from './../../utils/async-validate';
 import { InputField, TextareaField } from './../FormFileds';
-import { createTask } from './../../actions/Task';
+import { createTask } from '../../actions/task';
 const { DOM: { input } } = React;
 
 

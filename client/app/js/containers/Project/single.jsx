@@ -9,9 +9,11 @@ import { fetchProjectBySlug } from './../../actions/project/single';
 import TeamList from  './../../components/Project/Teamlist';
 import TeamActions from  './../../components/Project/HandleTeam';
 import bindFunc from './../../utils/bind-functions';
-import { handleRequest as createTeam } from './../../actions/common';
+import { createRequest } from './../../actions/common';
 import { CREATE_TEAM } from './../../constants/Team';
 import FormTeam from './../../components/Project/FormTeam';
+import SelectTeamForm from './../../components/Project/SelectTeamForm';
+
 /**
  * TODO: SHOULD TO REVIEW AND REFACTORING
  */
@@ -20,22 +22,31 @@ type Props = {
     project: object,
     project_id: number
 }
-class SingleProject extends React.PureComponent<Props> {
+
+type State = {
+    teamForm: string,
+};
+
+
+class SingleProject extends React.PureComponent<Props, State> {
 
 
     constructor() {
         super();
 
         this.state = {
-            modalIsOpen: false,
-            children   : null,
+            teamForm: null,
         };
         bindFunc.call( this, [ 'handleCreateTeam', 'handleSelectTeam' ] );
     }
 
     componentWillMount() {
-        const { slug, fetchProject } = this.props;
+
+
+        const { slug, fetchProject, fetchMembers } = this.props;
         fetchProject( slug );
+
+        fetchMembers();
 
     }
 
@@ -45,20 +56,26 @@ class SingleProject extends React.PureComponent<Props> {
 
     render() {
 
-        const { project, project_id, tasks, team } = this.props;
+        const { project, project_id, tasks, team, members } = this.props;
 
         const { users } = team;
+
+        console.log( 'RENDERRRRRR ========================' );
         return (
             <Grid container doubling>
                 <Grid.Row>
                     <Grid.Column width={10}>
                         <Content {...project.toObject()} />
-                        <Divider horizontal/>
+                        <TeamActions
+                            onCreate={this.handleCreateTeam}
+                            onSelect={this.handleSelectTeam}/>
+
+                        <Divider/>
+                        {this.renderForm( this.state.teamForm )}
+                        <Divider/>
                         <Container fluid>
-                            <TeamActions
-                                onCreate={this.handleCreateTeam}
-                                onSelect={this.handleSelectTeam}/>
-                            <FormTeam/>
+
+                            {/*<FormTeam members={members.toArray()}/>*/}
                             <TeamList items={users || []}/>
                         </ Container >
                     </ Grid.Column >
@@ -76,22 +93,40 @@ class SingleProject extends React.PureComponent<Props> {
     }
 
     handleCreateTeam() {
-        const { createTeam } = this.props;
-        const data = {
-            values : {
-                name      : 'First TEAM',
-                project_id: 1,
-                users     : '[ 2,3,4,5]'
-            },
-            resolve: () => ({}),
-            reject : () => ({}),
-        };
-        createTeam( data );
+
+        this.setState( {
+            teamForm: 'create'
+        } );
+//        const { createTeam } = this.props;
+//        const data = {
+//            values : {
+//                name      : 'First TEAM',
+//                project_id: 1,
+//                users     : '[ 2,3,4,5]'
+//            },
+//            resolve: () => ({}),
+//            reject : () => ({}),
+//        };
+//        createTeam( data );
     }
 
     handleSelectTeam() {
-
+        this.setState( {
+            teamForm: 'select'
+        } );
     }
+
+    renderForm( type ) {
+        switch ( type ) {
+            case 'create':
+                return <FormTeam/>;
+            case 'select':
+                return <SelectTeamForm/>;
+            default:
+                return false;
+        }
+    }
+
 
 }
 
@@ -100,7 +135,8 @@ const mapStateToProps = ( state ) => ({
     slug      : state.getIn( [ 'routing', 'last' ] ),
     project_id: state.getIn( [ 'single', 'id' ] ),
     tasks     : state.getIn( [ 'single', 'tasks' ] ),
-    team      : state.getIn( [ 'single', 'team' ] )
+    team      : state.getIn( [ 'single', 'team' ] ),
+    members   : state.getIn( [ 'members', 'list' ] )
 });
 
 const mapDispatchToProps = ( dispatch ) =>
@@ -109,7 +145,10 @@ const mapDispatchToProps = ( dispatch ) =>
             dispatch( fetchProjectBySlug( slug ) );
         },
         createTeam  : ( payload ) => {
-            dispatch( createTeam( CREATE_TEAM, payload ) );
+            dispatch( createRequest( CREATE_TEAM, payload ) );
+        },
+        fetchMembers: () => {
+            dispatch( createRequest( 'FETCH_USERS' ) );
         }
 
     });

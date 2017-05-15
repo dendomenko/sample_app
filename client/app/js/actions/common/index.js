@@ -16,7 +16,7 @@ export const handleRequestFailure = ( type, error ) => ({
  * @param type
  * @param payload
  */
-export const handleRequest = ( type, payload ) => ({
+export const createRequest = ( type, payload = {} ) => ({
     type,
     payload
 });

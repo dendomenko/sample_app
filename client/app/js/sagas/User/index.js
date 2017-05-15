@@ -1,10 +1,12 @@
 import { take, call, put, fork, race, takeLatest, select } from 'redux-saga/effects';
-import { push, } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 import { apiUser } from 'api/User/';
 import * as types from './../../constants/user';
+
 import { Session } from 'utils/Session';
-import { handleRequestFailure } from './../../actions/common';
+import { handleRequestFailure, } from './../../actions/common';
+import * as actionMember from './../../actions/members';
 import {
     userLoginSuccess,
     registerUserSuccess,
@@ -12,8 +14,15 @@ import {
     authSuccess,
     notAuth,
     updateUserSuccess
-} from './../../actions/user/';
+} from './../../actions/user';
 
+
+/**
+ *
+ * TODO: SHOULD TO REVIEW AND REFACTORING LOGIN/LOGOUT FLOW
+ *
+ *
+ */
 
 /**
  *
@@ -129,7 +138,13 @@ function* logout() {
 
 }
 
-
+/**
+ *
+ * @param values
+ * @param resolve
+ * @param reject
+ * @returns {boolean}
+ */
 function* update( { payload: { values, resolve, reject } } ) {
 
     try {
@@ -157,9 +172,27 @@ function* update( { payload: { values, resolve, reject } } ) {
     }
 
 }
-/**
- *
- */
+
+
+function * fetchUsers() {
+
+    try {
+        
+        const response = yield call( apiUser.fetch );
+
+        console.info( 'RESPONSE INFO USERS', response );
+
+
+        yield put( actionMember.fetchSuccess( response ) );
+    }
+    catch ( e ) {
+
+        yield put( handleRequestFailure( types.FETCH_USERS_FAILURE, e ) );
+    }
+}
+
+
+/* =============================================================================== */
 function* loginFlow() {
 
     while ( true ) {
@@ -237,6 +270,14 @@ function* checkTokenFlow() {
     yield takeLatest( types.CHECK_AUTH, checkAuth );
 
 }
+
+/**
+ *
+ */
+
+function* fetchFlow() {
+    yield takeLatest( types.FETCH_USERS, fetchUsers );
+}
 /**
  *
  */
@@ -246,7 +287,8 @@ function * rootUserSagas() {
         fork( logoutFlow ),
         fork( registerFlow ),
         fork( checkTokenFlow ),
-        fork( updateFlow )
+        fork( updateFlow ),
+        fork( fetchFlow )
     ];
 }
 /**
