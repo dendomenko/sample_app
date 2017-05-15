@@ -44,7 +44,14 @@ const logoutRequest = () => Api.get( '/logout' )
         throw  new Error( error );
     } );
 
-
+/**
+ *
+ * @param name
+ * @param email
+ * @param password
+ * @param avatar
+ * @returns {Promise.<T>|*}
+ */
 const updateRequest = ( { name, email, password, avatar } ) => {
 
     const data = new FormData();
@@ -55,13 +62,24 @@ const updateRequest = ( { name, email, password, avatar } ) => {
     data.append( 'email', email || '' );
     data.append( 'password', password || '' );
     data.append( 'avatar', typeof avatar !== 'undefined' ? avatar[ 0 ] : '' );
-    
+
     return Api.patch( '/update', data )
         .then( res => res.data )
         .catch( error => {
             throw  new Error( error );
         } );
 };
+
+
+const fetch = () => Api
+    .get( '/users' )
+    .then( res => res.data )
+    .catch( e => {
+        console.log( 'EEEE', e );
+        throw new Error( e );
+    } );
+
+
 /**
  *
  * @param token
@@ -80,5 +98,6 @@ export const apiUser = {
     login     : loginRequest,
     logout    : logoutRequest,
     update    : updateRequest,
-    checkToken: checkToken
+    checkToken: checkToken,
+    fetch     : fetch
 };

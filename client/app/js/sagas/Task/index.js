@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga';
 import { call, take, fork, put } from 'redux-saga/effects';
 import { apiTask } from './../../api/Task';
 import { handleRequestFailure } from './../../actions/common';
-import { createTaskSuccess, updateTaskSuccess } from './../../actions/Task';
+import { createTaskSuccess, updateTaskSuccess } from '../../actions/task';
 import * as types from './../../constants/Task';
 import { SubmissionError } from 'redux-form';
 

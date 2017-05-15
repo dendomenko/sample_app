@@ -38,6 +38,8 @@ const fetch = () => Api.get( '/teams' )
  * @type {{create: ((p1:Props)=>(*))}}
  */
 export const apiTeam = {
-    create: create
+    create: create,
+    fetch : fetch,
+    update: update
 };
 

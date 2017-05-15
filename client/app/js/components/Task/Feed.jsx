@@ -27,7 +27,11 @@ type Props = {
  * @param status
  * @param resolution
  */
-export default ( { title, name, description, time_do, assignee, reporter, priority, status, resolution }: Props ) => (
+export default ( {
+                     title, name, description,
+                     time_do, assignee, reporter,
+                     priority, status, resolution
+                 }: Props ) => (
     <Item as={Link} replace={true} to="">
         <Item.Content>
             <Item.Header>{title}</Item.Header>
