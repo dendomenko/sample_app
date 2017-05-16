@@ -1,4 +1,4 @@
-import * as types from './../../constants/project/single';
+import * as types from './../constants';
 import { Map, List } from 'immutable';
 
 const initialState = {

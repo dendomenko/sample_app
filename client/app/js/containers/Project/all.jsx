@@ -47,7 +47,8 @@ class Project extends React.PureComponent<State> {
             <div>
                 <h1>'Projects Container'</h1>
 
-                <PreloaderBlock active={!isFetching} preloadText="Preparing Files">
+                <PreloaderBlock active={!isFetching}
+                                preloadText="Preparing Files">
                     <ProjectList
                         items={items.toArray()}
                         handleEdit={this.handleTriggerModal}

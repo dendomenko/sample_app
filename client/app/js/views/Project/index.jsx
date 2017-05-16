@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
-
+import { Container } from 'semantic-ui-react';
+import ListContainer  from './containers/ListContainer';
 
 export default class ProjectView extends React.PureComponent {
 
     render() {
         return (
-            <div>Project Page</div>
+            <Container fluid>
+                <ListContainer/>
+            </Container>
         );
     }
 }

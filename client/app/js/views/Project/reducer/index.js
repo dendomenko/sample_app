@@ -1,5 +1,5 @@
 import { Map, List } from 'immutable';
-import  * as types  from 'constants/project/all-projects';
+import  * as types  from './../constants';
 
 
 const initialState = {

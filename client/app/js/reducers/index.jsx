@@ -3,8 +3,8 @@ import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form';
 import userReducer from './user';
 import routeReducer from './routing';
-import projectsReducer from './project/all-projects';
-import singleProjectReducer from './project/single';
+import projectsReducer from './../views/Project/reducer';
+import singleProjectReducer from './../views/SingleProject/reducer';
 import memberReducer  from './members';
 
 const rootReducer = combineReducers( {

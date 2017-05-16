@@ -64,6 +64,7 @@ var config = {
         ],
         alias             : {
             images     : path.resolve( __dirname, 'app/assets/img' ),
+            views      : path.resolve( __dirname, 'app/js/views' ),
             utils      : path.resolve( __dirname, 'app/js/utils' ),
             api        : path.resolve( __dirname, 'app/js/api' ),
             components : path.resolve( __dirname, 'app/js/components' ),
