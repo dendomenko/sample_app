@@ -40,9 +40,6 @@ module Api
       def team_params
         params.permit(:name,:users)
       end
-
-
-
     end
   end
 end
