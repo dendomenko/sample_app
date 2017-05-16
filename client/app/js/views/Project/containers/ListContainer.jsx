@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createRequest } from 'actions/common';
 import  { CREATE_PROJECT, FETCH_PROJECTS } from './../constants';
@@ -12,7 +12,7 @@ import { Loader } from 'semantic-ui-react';
 //import bindFunc from 'utils/bind-functions';
 
 
-class ListContainer extends React.PureComponent {
+class ListContainer extends React.Component {
 
 
     componentDidMount() {
