@@ -1,12 +1,12 @@
 import React from 'react';
-import { Field, reduxForm, } from 'redux-form';
+import { Field, reduxForm, } from 'redux-form/immutable';
 import { SubmissionError, reset } from 'redux-form';
 import { Button, Message, Form } from 'semantic-ui-react';
 import  { createRequest } from 'actions/common';
 import { CREATE_PROJECT } from './../../constants/';
-import { InputField, TextareaField } from 'components/FormFileds';
+import { InputField, TextAreaField } from 'components/FormFileds';
 import asyncSubmit from 'utils/async-validate';
-import { fromJS } from 'immutable';
+import validate  from './helpers/wizard-validation';
 
 const createProject = ( payload ) => createRequest( CREATE_PROJECT, payload );
 /**
@@ -46,47 +46,24 @@ const renderField = ( { input, label, type, meta: { touched, error } } ) => (
     </div>
 );
 
-const CreateForm = ( { error, handleSubmit } ) => {
-    console.log( arguments );
+const CreateForm = ( props ) => {
+    console.log( 'form PROPS', props );
     return (
-        <div>
-
-            <Form
-                className='attached fluid segment'
-                onSubmit={handleSubmit}>
-                <Field name="name" label="Name" component={renderField}/>
-                <Field name="task_name" label="Task Name" component={renderField}/>
-                <Field name="description" label="Description" component={TextareaField}/>
-                <Button fluid type="submit"
-                        inverted color='blue'
-                >
-                    Next
-                </Button>
-            </Form>
-
-            {
-                error && <Message attached='bottom' error>
-                    {error}
-                </Message>
-            }
-        </div>
+        <Form
+            className='attached fluid segment'
+            onSubmit={props.handleSubmit}>
+            <Field name="name" label="Name" component={InputField}/>
+            <Field name="task_name" label="Task Name" component={InputField}/>
+            <Field name="description" label="Description" component={TextAreaField}/>
+            <Button fluid type="submit"
+                    inverted color='blue'
+            >
+                Next
+            </Button>
+        </Form>
     );
 };
 
-
-const validate = ( values ) => {
-    const errors = {};
-    console.info( 'VALUES', values );
-    if (!values.name) {
-        errors.name = 'Required';
-    }
-    if (!values.task_name) {
-        errors.task_name = 'Required';
-    }
-
-
-    return errors;
-};
 
 export default reduxForm( {
     form                    : 'projectWizard',

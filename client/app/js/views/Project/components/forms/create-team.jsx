@@ -7,7 +7,7 @@ import asyncSubmit from 'utils/async-validate';
 import { Button, Message, Form, Popup, Label } from 'semantic-ui-react';
 import { handleRequest } from 'actions/common';
 import { CREATE_TEAM } from 'constants/Team';
-import { fromJS } from 'immutable';
+import validate  from './helpers/wizard-validation';
 
 
 const create = ( values ) => handleRequest( CREATE_TEAM, values );
@@ -99,6 +99,7 @@ const TeamForm = ( props ) => {
               previousPage,
               handleSubmit,
               submitting,
+              pristine,
               members,
           } = props;
 
@@ -130,8 +131,10 @@ const TeamForm = ( props ) => {
 
 
 export default reduxForm( {
-        form: 'projectWizard',
-
+        form                    : 'projectWizard',
+        destroyOnUnmount        : false,
+        forceUnregisterOnUnmount: true,
+        validate
     }
 )( TeamForm );
 
