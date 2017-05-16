@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       put '/update' => 'users#update'
       patch '/update' => 'users#update'
 
+      get '/roles' => 'projects#roles'
+
       resources :users, :teams, :except => [:new, :edit]
       resources :projects, :except => [:new, :edit] do
         resources :tasks, :except => [:new, :edit]

@@ -9,6 +9,12 @@ module Api
         render status: :ok
       end
 
+      def roles
+        roles = Role.pluck(:role).uniq
+        render json: {roles: roles}, status: :created
+
+      end
+
       def create
         project = load_current_user!.projects.create(project_params)
         project.slug = params[:name].to_ascii.parameterize
