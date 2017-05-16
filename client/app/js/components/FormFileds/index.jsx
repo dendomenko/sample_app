@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextArea, Form, Label } from 'semantic-ui-react';
+import { TextArea, Form, Label, Dropdown } from 'semantic-ui-react';
 /**
  * TODO: should add requered field
  * @param input
@@ -41,3 +41,29 @@ export const TextareaField = ( { input, label, type, meta: { touched, error, war
         </div>
     </Form.Field>
 );
+
+
+/**
+ *
+ * @param input
+ * @param label
+ * @param options
+ * @param touched
+ * @param error
+ * @param warning
+ */
+export const SelectField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => {
+
+    console.log( 'RRRRR', name );
+
+    return (
+        <Form.Field>
+            <Dropdown
+                error={ !!error }
+                name={name}
+                label={label}
+                options={options}
+                placeholder={label}/>
+        </Form.Field>
+    );
+};

@@ -3,9 +3,15 @@ import { push, } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 import { apiTeam } from './../../api/Team';
 import { handleRequestFailure, handleRequest } from './../../actions/common';
-import { createTeam } from './../../actions/Team';
+import { createTeam } from '../../actions/team';
 import * as types from  './../../constants/Team';
 
+/**
+ *
+ * @param values
+ * @param resolve
+ * @param reject
+ */
 function * create( { payload: { values, resolve, reject } } ) {
 
     try {
@@ -31,6 +37,20 @@ function * create( { payload: { values, resolve, reject } } ) {
 }
 
 
+function *fecthTeam() {
+    try {
+
+        const response = yield call( apiTeam.fetch );
+        console.log( 'RESPONSE FETCH TEAM', response );
+    }
+    catch ( e ) {
+
+    }
+
+}
+
+
+/* =======================================================================  */
 function* teamCreateFlow() {
     yield takeLatest( types.CREATE_TEAM, create );
 }
