@@ -54,8 +54,6 @@ export const TextAreaField = ( { input, label, type, meta: { touched, error, war
  */
 export const SelectField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => {
 
-    console.log( 'RRRRR', name );
-
     return (
         <Form.Field>
             <Dropdown
@@ -67,3 +65,5 @@ export const SelectField = ( { input: { name }, label, options, meta: { touched,
         </Form.Field>
     );
 };
+
+

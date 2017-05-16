@@ -1,27 +1,12 @@
 // @flow
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form/immutable';
-//import { FieldArray } from 'redux-form';
 import { InputField, SelectField } from 'components/FormFileds';
 import asyncSubmit from 'utils/async-validate';
-import { Button, Message, Form, Popup, Label } from 'semantic-ui-react';
+import { Button, Message, Form, Popup, Label, Dropdown } from 'semantic-ui-react';
 import { handleRequest } from 'actions/common';
 import { CREATE_TEAM } from 'constants/Team';
 import validate  from './helpers/wizard-validation';
-
-
-const create = ( values ) => handleRequest( CREATE_TEAM, values );
-
-const createSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
-    .then()
-    .catch();
-
-const creates = ( values ) => {
-    console.info( values );
-};
-const inviteSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
-    .then()
-    .catch();
 
 
 const members1 = [
@@ -34,100 +19,143 @@ const roles = [
     { key: 2, text: 'SEO', value: 3 },
     { key: 3, text: 'Lead', value: 4 },
 ];
+
+const options = [
+    { key: 'English', text: 'English', value: 'English' },
+    { key: 'French', text: 'French', value: 'French' },
+    { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
+    { key: 'German', text: 'German', value: 'German' },
+    { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
+]
+
+class CreateTeamForm extends React.PureComponent {
+
+    state = { options };
+
+    handleAddition = ( e, { value } ) => {
+        this.setState( {
+            options: [ { text: value, value }, ...this.state.options ],
+        } );
+    };
+
+    handleChange = ( e, { value } ) => this.setState( { currentValue: value } );
+
+
+    render() {
+        const { submitting, handleSubmit, previousPage } = this.props;
+        return (
+            <Form as="form" loading={submitting} onSubmit={handleSubmit}>
+
+                <FieldArray
+                    roles={roles}
+                    members={members1}
+                    name="users"
+                    component={this.renderMembers}/>
+
+                <Form.Field>
+                    <Button.Group>
+                        <Button onClick={previousPage} inverted color='blue'>Back</Button>
+                        {/*<Button type="submit" loading={submitting} disabled={submitting}>Create</Button>*/}
+                    </Button.Group>
+
+                </Form.Field>
+            </Form>
+        );
+    }
+    ;
+
+
+    renderMembers = ( { roles, members, fields } ) => (
+        <div>
+            <Form.Field width="16">
+                <Popup
+                    trigger={
+                        <Button
+                            circular
+                            icon='add user'
+                            type="button"
+                            positive
+
+                            onClick={() => fields.push( {} )}/>
+                    }
+                    content='Add new member'
+                />
+
+            </Form.Field>
+            {fields.map( ( member, index ) => {
+
+                    console.log( member );
+                    return (
+                        <Form.Group key={index}>
+                            <Field
+                                name={`${member}.id`}
+                                component={SelectField}
+                                options={members}
+                                label="Member"/>
+
+                            <Field
+                                name={`${member}.role`}
+                                component={this.renderRoleField}
+                                options={roles}
+                                label="Role"/>
+
+                            <Form.Field>
+                                <Popup
+                                    trigger={<Button
+                                        circular
+                                        icon='remove'
+                                        type="button"
+                                        negative
+                                        onClick={() => fields.remove( index )}/>}
+                                    content='Remove member'
+                                />
+                            </Form.Field>
+                        </Form.Group>);
+                }
+            )}
+        </div>
+
+    );
+
+    renderRoleField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => (
+        <Form.Field>
+            <Dropdown
+                error={ !!error }
+                name={name}
+                search
+                allowAdditions
+                selection
+                additionLabel={<i style={{ color: 'red' }}>Custom role: </i>}
+                label={label}
+                options={options}
+                placeholder={label}/>
+            onAddItem={this.handleAddition}
+            onChange={this.handleChange}
+        </Form.Field>
+    );
+
+}
+
+
+//const create = ( values ) => handleRequest( CREATE_TEAM, values );
+//
+//const createSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
+//    .then()
+//    .catch();
+//
+//const creates = ( values ) => {
+//    console.info( values );
+//};
+//const inviteSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
+//    .then()
+//    .catch();
+
+
 //            values : {
 //                name      : 'First TEAM',
 //                project_id: 1,
 //                users     : '[ 2,3,4,5]'
 //            },
-
-const renderMembers = ( { roles, members, fields } ) => (
-    <div>
-        <Form.Field width="16">
-            <Popup
-                trigger={
-                    <Button
-                        circular
-                        icon='add user'
-                        type="button"
-                        positive
-
-                        onClick={() => fields.push( {} )}/>
-                }
-                content='Add new member'
-            />
-
-        </Form.Field>
-        {fields.map( ( member, index ) => {
-
-                console.log( member );
-                return (
-                    <Form.Group key={index}>
-                        <Field
-                            name={`${member}.id`}
-                            component={SelectField}
-                            options={members}
-                            label="Member"/>
-
-                        <Field
-                            name={`${member}.role`}
-                            component={SelectField}
-                            options={roles}
-                            label="Role"/>
-
-                        <Form.Field>
-                            <Popup
-                                trigger={<Button
-                                    circular
-                                    icon='remove'
-                                    type="button"
-                                    negative
-                                    onClick={() => fields.remove( index )}/>}
-                                content='Remove member'
-                            />
-                        </Form.Field>
-                    </Form.Group>);
-            }
-        )}
-    </div>
-
-);
-
-
-const TeamForm = ( props ) => {
-    const {
-              project_id,
-              previousPage,
-              handleSubmit,
-              submitting,
-              pristine,
-              members,
-          } = props;
-
-//    members.map( ( member, index ) => ({
-//        key  : member.id,
-//        text : member.name,
-//        value: member.id,
-////                    image:
-//    }) )
-    return (
-        <Form as="form" loading={submitting} onSubmit={handleSubmit}>
-            <Field name="team_name" type="text" component={InputField} label="Team name"/>
-            <FieldArray
-                roles={roles}
-                members={members1}
-                name="users"
-                component={renderMembers}/>
-
-            <Form.Field>
-                <Button.Group>
-                    <Button onClick={previousPage} inverted color='blue'>Back</Button>
-                    {/*<Button type="submit" loading={submitting} disabled={submitting}>Create</Button>*/}
-                </Button.Group>
-
-            </Form.Field>
-        </Form>
-    );
-};
 
 
 export default reduxForm( {
@@ -136,6 +164,6 @@ export default reduxForm( {
         forceUnregisterOnUnmount: true,
         validate
     }
-)( TeamForm );
+)( CreateTeamForm );
 
 

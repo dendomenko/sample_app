@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import FormCreateTeam from './../components/forms/create-team';
 import FormCreateProject from './../components/forms/create-project';
-import FormSelectTeam from './../components/forms/select-team';
 import bindFunc  from 'utils/bind-functions';
 
 
