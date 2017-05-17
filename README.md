@@ -62,6 +62,16 @@ POST:<br>
 if success return 201 Created
 if error return 200 OK and errors array
 
+**ADD USER TO PROJECT** ```http://localhost:3000/api/v1/projects/:project_id/adduser```
+```
+{
+    "user_id":"<user_id>",
+    "project_id":"<project_id>",
+    "role":"<role>"
+}
+```
+
+
 PATCH/PUT:<br>
 **UPDATE PROJECT**
 

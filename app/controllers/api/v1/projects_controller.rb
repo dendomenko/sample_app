@@ -42,10 +42,10 @@ module Api
         end
       end
 
-      def add_user_create
+      def add_user
         @role = Role.new(user_id: params[:user_id], project_id: params[:project_id], role: params[:role])
         @role.save
-        render json: @role
+        render json: {role: 'Created'}, status: :created
       end
 
       def destroy
