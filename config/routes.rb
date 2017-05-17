@@ -2,17 +2,19 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
-      get '/isAuth' => 'users#is_auth'
-      post '/login' => 'users#login'
-      post '/postback' => 'users#postback'
-      get '/logout' => 'users#logout'
-      put '/update' => 'users#update'
-      patch '/update' => 'users#update'
+      get 'isAuth', to: 'users#is_auth'
+      post 'login', to: 'users#login'
+      post 'postback', to: 'users#postback'
+      get 'logout', to: 'users#logout'
+      put 'update', to: 'users#update'
+      patch 'update', to: 'users#update'
 
-      get '/roles' => 'projects#roles'
+      get 'roles', to:'projects#roles'
 
       resources :users, :teams, :except => [:new, :edit]
+
       resources :projects, :except => [:new, :edit] do
+        post 'adduser', to:'projects#add_user_create'
         resources :tasks, :except => [:new, :edit]
       end
 
