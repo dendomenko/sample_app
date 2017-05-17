@@ -5,8 +5,13 @@ module Api
 
       def index
         @projects = load_current_user!.projects
-        return render(json: {message: "You haven't projects"}, status: :no_content) unless @projects.any?
+        return render(json: {message: 'No projects'}, status: :no_content) unless @projects.any?
         render status: :ok
+      end
+
+      def roles
+        roles = Role.pluck(:role).uniq
+        render json: {roles: roles}, status: :created
       end
 
       def create
@@ -23,13 +28,8 @@ module Api
         user = load_current_user!
         @project = user.projects.find_by slug: params[:id]
         @project ||= user.projects.find params[:id]
-        @role = @project.roles.find_by_user_id(load_current_user!.id).role
-        @tasks = Task.all.where(:project_id=>@project.id)
-        unless @project.team_id.blank?
-          @team = Team.find(@project.team_id) unless @project.team_id.blank?
-          @users = User.find(@team.users)
-        end
-
+        @tasks = Task.all.where(project_id: @project.id)
+        @team = @project.roles
       end
 
       def update
@@ -43,23 +43,13 @@ module Api
       end
 
       def add_user
-        @users = User.all
-        @roles = Role.all
-      end
-
-      def add_user_create
-        @role = Role.create(user_id: params[:user], project_id: params[:project_id], role: params[:role])
-
-        if @role.save
-          redirect_to user_projects_path(params[:user_id])
-        else
-          render 'show'
-        end
+        @role = Role.new(user_id: params[:user_id], project_id: params[:project_id], role: params[:role])
+        @role.save
+        render json: {role: 'Created'}, status: :created
       end
 
       def destroy
         if Project.find(params[:id]).destroy
-          redirect_to user_projects_path(params[:user_id])
         end
       end
 

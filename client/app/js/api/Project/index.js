@@ -1,6 +1,7 @@
 import Api from 'api';
 import { Session } from 'utils/Session';
 const apiPath = '/projects';
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 
 /**
  *  GET ALL PROJECTS
@@ -11,10 +12,8 @@ const apiPath = '/projects';
  * @param config
  */
 const fetchProjects = ( config ) => Api.get( apiPath, config )
-    .then( res => res.data )
-    .catch( error => {
-        throw new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 /**
@@ -28,18 +27,26 @@ const createProject = ( { name, task_name, description } ) => Api.post( apiPath,
     "task_name"  : task_name,
     "description": description
 } )
-    .then( res => res.data )
-    .catch( error => {
-        throw new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 const fetchSingleProject = ( slug ) =>
     Api.get( `${apiPath}/${slug}` )
-        .then( res => res.data )
-        .catch( error => {
-            throw new Error( error );
-        } );
+        .then( SuccessRequest )
+        .catch( FailueRequest );
+
+
+const fetchUsers = () =>
+    Api.get( '/users' )
+        .then( SuccessRequest )
+        .catch( FailueRequest );
+
+
+const fetchRoles = () =>
+    Api.get( '/roles' )
+        .then( SuccessRequest )
+        .catch( FailueRequest );
 
 /**
  *
@@ -49,5 +56,9 @@ export const apiProject = {
     fetchALL   : fetchProjects,
     create     : createProject,
     remove     : '',
-    fetchSingle: fetchSingleProject
+    fetchSingle: fetchSingleProject,
+    members    : {
+        getRoles: fetchRoles,
+        getUsers: fetchUsers
+    }
 };

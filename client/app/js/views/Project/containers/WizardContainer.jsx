@@ -1,16 +1,18 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createRequest } from 'actions/common';
 import { Container } from 'semantic-ui-react';
 import FormCreateTeam from './../components/forms/create-team';
 import FormCreateProject from './../components/forms/create-project';
 import bindFunc  from 'utils/bind-functions';
-
+import { FETCH_MEMBERS_AND_ROLES } from './../constants';
 
 type State = {
     step: number
 }
 
-export default class WizardContainer extends React.Component<State> {
+class WizardContainer extends React.Component<State> {
 
     constructor( props ) {
         super( props );
@@ -19,8 +21,12 @@ export default class WizardContainer extends React.Component<State> {
         };
 
         bindFunc.call( this, [ 'nextStep', 'prevStep' ] );
+    }
 
+    componentDidMount() {
+        const { fetchMemberAndRoles } = this.props;
 
+        fetchMemberAndRoles();
     }
 
     render() {
@@ -48,3 +54,33 @@ export default class WizardContainer extends React.Component<State> {
         } );
     }
 }
+
+
+/**
+ *
+ * @param state
+ */
+const mapStateToProps = state => {
+    return {
+        members: state.getIn( [ 'members', 'list' ] ),
+        roles  : state.getIn( [ 'members', 'roles' ] ),
+    };
+};
+/**
+ *
+ * @param dispatch
+ * @returns {{mapActions: (A|B|M|N)}}
+ */
+const mapDispatchToProps = ( dispatch ) =>
+    ( {
+        fetchMemberAndRoles: () => {
+            dispatch( createRequest( FETCH_MEMBERS_AND_ROLES ) );
+        }
+
+    });
+/**
+ *
+ */
+
+export  default connect( mapStateToProps, mapDispatchToProps )( WizardContainer );
+

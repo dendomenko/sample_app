@@ -4,6 +4,7 @@ import { Map, List } from 'immutable';
 
 const initialState = Map( {
     list : List( [] ),
+    roles: List( [] ),
     error: null
 } );
 
@@ -16,6 +17,10 @@ const reducer = ( state = initialState, { type, payload } ) => {
             return state.merge( payload );
         case FETCH_USERS_FAILURE:
             return state.merge( payload );
+//        case FETCH_USER_ROLES_SUCCESS:
+//            return state.merge( payload );
+//        case FETCH_USER_ROLES_FAILURE:
+//            return state.merge( payload );
         default:
             return state;
     }

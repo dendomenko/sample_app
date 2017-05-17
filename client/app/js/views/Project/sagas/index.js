@@ -1,4 +1,5 @@
-import { take, call, put, fork, takeLatest, select } from 'redux-saga/effects';
+import { actionChannel, take, call, put, fork, takeLatest, select, all } from 'redux-saga/effects';
+import {} from 'redux-saga/';
 import { SubmissionError } from 'redux-form';
 import { push } from 'react-router-redux';
 import { apiProject } from 'api/Project/';
@@ -24,7 +25,7 @@ function *fetchProjects() {
             }
         } );
 
-        yield put( Actions.fetchSuccsess( response ) );
+        yield put( Actions.fetchSuccess( response ) );
 
         return true;
     }
@@ -68,6 +69,27 @@ function* createProject( { payload: { values, resolve, reject } } ) {
 }
 
 
+function* fetchMembersAndRoles() {
+
+    try {
+
+        const { getUsers, getRoles } = apiProject.members;
+
+        const { members, roles } = yield all( {
+            members: call( getUsers ),
+            roles  : call( getRoles )
+        } );
+
+        console.log( 'RESPONSE', members, roles );
+        return true;
+    }
+    catch ( e ) {
+        console.error( e );
+        return false;
+    }
+
+}
+
 /**
  *
  */
@@ -83,13 +105,22 @@ function* flowCreateProject() {
     yield takeLatest( types.CREATE_PROJECT, createProject );
 }
 
+
+/**
+ *
+ */
+function* flowMembersAndRoles() {
+    yield takeLatest( types.FETCH_MEMBERS_AND_ROLES, fetchMembersAndRoles );
+}
 /**
  *
  */
 function* rootProjectsSaga() {
     yield[
         fork( flowProjects ),
-        fork( flowCreateProject )
+        fork( flowCreateProject ),
+        fork( flowMembersAndRoles )
+
     ];
 }
 
