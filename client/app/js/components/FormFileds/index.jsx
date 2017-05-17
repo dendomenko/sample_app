@@ -52,18 +52,21 @@ export const TextAreaField = ( { input, label, type, meta: { touched, error, war
  * @param error
  * @param warning
  */
-export const SelectField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => {
+export const SelectField = ( { input, label, options, meta: { touched, error, warning } } ) => {
+
+    console.log( 'RRRRR', name );
 
     return (
         <Form.Field>
-            <Dropdown
-                error={ !!error }
-                name={name}
-                label={label}
-                options={options}
-                placeholder={label}/>
+            <div>
+                <select {...input}>
+                    <option value="">{label}</option>
+                    {options.map( otp => <option value={otp.value} key={otp.key}>{otp.text}</option> )}
+                </select>
+                {touched && error && <span>{error}</span>}
+            </div>
         </Form.Field>
     );
-};
 
+};
 

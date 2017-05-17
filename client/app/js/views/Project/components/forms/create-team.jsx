@@ -7,7 +7,7 @@ import { Button, Message, Form, Popup, Label, Dropdown } from 'semantic-ui-react
 import { handleRequest } from 'actions/common';
 import { CREATE_TEAM } from 'constants/Team';
 import validate  from './helpers/wizard-validation';
-
+import  { Map } from 'immutable';
 
 const members1 = [
     { key: 'm', text: 'Male', value: 'male' },
@@ -26,7 +26,7 @@ const options = [
     { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
     { key: 'German', text: 'German', value: 'German' },
     { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
-]
+];
 
 class CreateTeamForm extends React.PureComponent {
 
@@ -40,11 +40,12 @@ class CreateTeamForm extends React.PureComponent {
 
     handleChange = ( e, { value } ) => this.setState( { currentValue: value } );
 
+    onSubmit = ( values ) => console.log( 'VALUES', values.toJS() );
 
     render() {
         const { submitting, handleSubmit, previousPage } = this.props;
         return (
-            <Form as="form" loading={submitting} onSubmit={handleSubmit}>
+            <Form as="form" loading={submitting} onSubmit={handleSubmit( this.onSubmit )}>
 
                 <FieldArray
                     roles={roles}
@@ -55,47 +56,43 @@ class CreateTeamForm extends React.PureComponent {
                 <Form.Field>
                     <Button.Group>
                         <Button onClick={previousPage} inverted color='blue'>Back</Button>
-                        {/*<Button type="submit" loading={submitting} disabled={submitting}>Create</Button>*/}
+                        <Button type="submit" loading={submitting} disabled={submitting}>Create</Button>
                     </Button.Group>
 
                 </Form.Field>
             </Form>
         );
     }
-    ;
 
 
     renderMembers = ( { roles, members, fields } ) => (
         <div>
-            <Form.Field width="16">
-                <Popup
-                    trigger={
-                        <Button
-                            circular
-                            icon='add user'
-                            type="button"
-                            positive
+            <Form.Field width={2}>
 
-                            onClick={() => fields.push( {} )}/>
-                    }
-                    content='Add new member'
+
+                <Button
+                    icon='add user'
+                    type="button"
+                    positive
+                    content="Add new member"
+                    onClick={() => fields.push( Map( {} ) )}
                 />
-
             </Form.Field>
+
             {fields.map( ( member, index ) => {
 
-                    console.log( member );
                     return (
-                        <Form.Group key={index}>
+                        <Form.Group widths='equal' key={index}>
                             <Field
                                 name={`${member}.id`}
                                 component={SelectField}
                                 options={members}
-                                label="Member"/>
+                                label="Member"
+                            />
 
                             <Field
                                 name={`${member}.role`}
-                                component={this.renderRoleField}
+                                component={SelectField}
                                 options={roles}
                                 label="Role"/>
 
@@ -110,29 +107,36 @@ class CreateTeamForm extends React.PureComponent {
                                     content='Remove member'
                                 />
                             </Form.Field>
-                        </Form.Group>);
+                        </Form.Group>
+                    )
+                        ;
                 }
             )}
         </div>
 
     );
 
-    renderRoleField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => (
-        <Form.Field>
-            <Dropdown
-                error={ !!error }
-                name={name}
-                search
-                allowAdditions
-                selection
-                additionLabel={<i style={{ color: 'red' }}>Custom role: </i>}
-                label={label}
-                options={options}
-                placeholder={label}/>
-            onAddItem={this.handleAddition}
-            onChange={this.handleChange}
-        </Form.Field>
-    );
+    renderRoleField = ( { input, options, label, meta: { touched, error, warning } } ) => {
+
+
+        return (
+            <Form.Field>
+                <Dropdown
+                    error={ !!error }
+                    search
+                    allowAdditions
+                    selection
+                    options={options}
+                    placeholder={label}
+                    additionLabel={<i style={{ color: 'red' }}>Custom role: </i>}
+                    onAddItem={this.handleAddition}
+                    onChange={this.handleChange}
+                    {...input}
+                />
+
+            </Form.Field>
+        );
+    };
 
 }
 
