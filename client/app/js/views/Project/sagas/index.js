@@ -2,7 +2,8 @@ import { actionChannel, take, call, put, fork, takeLatest, select, all } from 'r
 import {} from 'redux-saga/';
 import { SubmissionError } from 'redux-form';
 import { push } from 'react-router-redux';
-import { apiProject } from 'api/Project/';
+import { apiProject } from 'api/Project';
+import { apiTeam } from './../../../api/Team';
 import * as types from './../constants';
 import { Session } from 'utils/Session';
 import * as Actions from './../actions';
@@ -41,26 +42,39 @@ function *fetchProjects() {
  * @param payload
  * @returns {boolean}
  */
-function* createProject( { payload: { values, resolve, reject } } ) {
+function* createProject( data ) {
 
     try {
 
-        const response = yield call( apiProject.create, values );
 
-        if (response.errors) {
+        const response = yield call( apiProject.create, data );
+        return response;
+//        if (response.errors) {
+//
+//            yield call(
+//                reject,
+//                new SubmissionError( response.errors )
+//            );
+//        }
+//        else {
+//
+//        }
+//            const { users } = data;
+//            const project = ( current, newData ) => ({ ...current, ...newData });
+//
+//            const user_len = users.length;
+//
+//            for ( let i = user_len; i-- ) {
+//                const response = yield call( apiTeam.addMember, );
+//            }
 
-            yield call(
-                reject,
-                new SubmissionError( response.errors )
-            );
-        }
-        else {
-            const project = ( current, newData ) => ({ ...current, ...newData });
-            yield call( resolve );
-            yield put( Actions.createSuccess( project( values, response ) ) );
-        }
+//            const response = yield call( apiTeam.addMember, );
+//            if ()
+//                yield call( resolve );
+//            yield put( Actions.createSuccess( project( data, response ) ) );
+//        }
 
-        return true;
+
     }
     catch ( e ) {
         yield  put( handleRequestFailure( types.CREATE_PROJECT_FAILURE, e ) );
@@ -68,6 +82,20 @@ function* createProject( { payload: { values, resolve, reject } } ) {
     }
 }
 
+
+function* addMember( params ) {
+    try {
+
+        yield call( apiTeam.addMember, params );
+
+        return true;
+    }
+    catch ( e ) {
+        yield  put( handleRequestFailure( types.CREATE_PROJECT_FAILURE, e ) );
+        return false;
+    }
+
+}
 
 function* fetchMembersAndRoles() {
 
@@ -111,7 +139,36 @@ function* flowProjects() {
  */
 function* flowCreateProject() {
 //    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
-    yield takeLatest( types.CREATE_PROJECT, createProject );
+
+    while ( true ) {
+        const { payload: { data, resolve, reject } } = yield take( types.CREATE_PROJECT );
+
+        debugger;
+        const response = yield  call( createProject, data );
+        debugger;
+
+        if (response.errors) {
+            yield call(
+                reject,
+                new SubmissionError( response.errors )
+            );
+        }
+        else {
+
+            const { users } = data;
+            let users_len = users.length;
+            const project_id = response;
+
+            while ( users_len-- )
+
+                apiTeam.addMember( { ...users[ i ], project_id } );
+
+        }
+//        const id = yield call( createProject, response )
+
+
+    }
+//    yield takeLatest( types.CREATE_PROJECT, createProject );
 }
 
 

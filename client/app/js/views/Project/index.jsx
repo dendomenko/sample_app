@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Container } from 'semantic-ui-react';
 import ListContainer  from './containers/ListContainer';
 import WizardContainer from './containers/WizardContainer';
-import Nabar  from './components/navbar';
+import Navbar  from './components/navbar';
 export default class ProjectView extends React.PureComponent {
     state = { activeTab: 'projects' };
 
@@ -12,8 +12,9 @@ export default class ProjectView extends React.PureComponent {
 
         return (
             <div>
-                <Nabar
-                    handleTrigger={this.handleToggle.bind( this )} activeTab={activeTab}/>
+                <Navbar
+                    handleTrigger={this.handleToggle.bind( this )} activeTab={activeTab}
+                />
                 <Container>
                     {this.renderTabs()}
                 </Container>

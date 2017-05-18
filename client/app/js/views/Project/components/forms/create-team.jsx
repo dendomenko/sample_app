@@ -1,20 +1,21 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { reduxForm, Field, FieldArray } from 'redux-form/immutable';
+import { reduxForm, Field, FieldArray, SubmissionError } from 'redux-form/immutable';
 import { InputField, SelectField } from 'components/FormFileds';
 import asyncSubmit from 'utils/async-validate';
 import { Button, Message, Form, Popup, Label, Dropdown } from 'semantic-ui-react';
-import { handleRequest } from 'actions/common';
-import { CREATE_TEAM } from 'constants/Team';
+import { createRequest } from 'actions/common';
+import { CREATE_PROJECT } from './../../constants';
 import validate  from './helpers/wizard-validation';
 import  { Map } from 'immutable';
 
+const create = ( values ) => createRequest( CREATE_PROJECT, values );
 
 const roles = [
-    { key: 0, text: 'Developer', value: 1 },
-    { key: 1, text: 'QA', value: 2 },
-    { key: 2, text: 'SEO', value: 3 },
-    { key: 3, text: 'Lead', value: 4 },
+    { key: 0, text: 'Developer', value: 'Developer' },
+    { key: 1, text: 'QA', value: 'QA' },
+    { key: 2, text: 'SEO', value: 'SEO' },
+    { key: 3, text: 'Lead', value: 'LEAD' },
 ];
 
 
@@ -30,17 +31,19 @@ class CreateTeamForm extends React.PureComponent {
 
     handleChange = ( e, { value } ) => this.setState( { currentValue: value } );
 
-    onSubmit = ( values ) => console.log( 'VALUES', values.toJS() );
+    onSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
+        .then( ( res ) => {
+            console.info( 'Error', res );
+//            dispatch( reset( 'ProjectCreate' ) );
+        } ).catch( e => {
+            console.log( e );
+            throw new SubmissionError( e.errors );
+        } );
 
     render() {
-        const { members, roles, submitting, handleSubmit, previousPage } = this.props;
+        const { members, submitting, handleSubmit, previousPage } = this.props;
 
 
-        console.log( members );
-        console.log( roles );
-        /**
-         *
-         */
         return (
             <Form as="form" loading={submitting} onSubmit={handleSubmit( this.onSubmit )}>
 

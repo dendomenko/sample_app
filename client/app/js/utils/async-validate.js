@@ -7,7 +7,7 @@
  */
 export default function ( values, dispatch, action ) {
     return new Promise( ( resolve, reject ) => {
-        const data = values.toObject();
+        const data = values.toJS();
 
         dispatch( action( {
             data,

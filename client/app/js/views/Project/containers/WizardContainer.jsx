@@ -55,7 +55,12 @@ class WizardContainer extends React.Component<State, Props> {
         return (
             <Container>
                 {step === 1 && <FormCreateProject onSubmit={this.nextStep}/>}
-                {step === 2 && <FormCreateTeam members={members} roles={roles} previousPage={this.prevStep}/>}
+                {step === 2 &&
+                <FormCreateTeam
+                    members={members.toJS()}
+                    roles={roles.toJS()}
+                    previousPage={this.prevStep}/>
+                }
             </Container>
         );
     }

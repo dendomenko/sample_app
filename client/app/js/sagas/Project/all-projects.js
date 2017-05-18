@@ -16,7 +16,7 @@ import {
  *
  * @returns {boolean}
  */
-function *fetchProjects() {
+function* fetchProjects() {
 
     try {
 
@@ -45,32 +45,32 @@ function *fetchProjects() {
  * @param payload
  * @returns {boolean}
  */
-function* createProject( { payload: { values, resolve, reject } } ) {
-
-    try {
-
-        const response = yield call( apiProject.create, values );
-
-        if (response.errors) {
-
-            yield call(
-                reject,
-                new SubmissionError( response.errors )
-            );
-        }
-        else {
-            const project = ( current, newData ) => ({ ...current, ...newData });
-            yield call( resolve );
-            yield put( createProjectSuccess( project( values, response ) ) );
-        }
-
-        return true;
-    }
-    catch ( e ) {
-        yield  put( createProjectFailure( e ) );
-        return false;
-    }
-}
+//function* createProject( { payload: { values, resolve, reject } } ) {
+//
+//    try {
+//
+//        const response = yield call( apiProject.create, values );
+//
+//        if (response.errors) {
+//
+//            yield call(
+//                reject,
+//                new SubmissionError( response.errors )
+//            );
+//        }
+//        else {
+//            const project = ( current, newData ) => ({ ...current, ...newData });
+//            yield call( resolve );
+//            yield put( createProjectSuccess( project( values, response ) ) );
+//        }
+//
+//        return true;
+//    }
+//    catch ( e ) {
+//        yield  put( createProjectFailure( e ) );
+//        return false;
+//    }
+//}
 
 
 /**
@@ -85,7 +85,7 @@ function* flowProjects() {
  */
 function* flowCreateProject() {
 //    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
-    yield takeLatest( types.CREATE_PROJECT, createProject );
+//    yield takeLatest( types.CREATE_PROJECT, createProject );
 }
 
 /**

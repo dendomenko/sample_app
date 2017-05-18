@@ -3,7 +3,7 @@ import rootUserSagas  from './User';
 import rootProjectsSagas from './../views/Project/sagas';
 import rootSingleProjectSagas from './../views/SingleProject/sagas';
 import rootTaskSaga from './Task';
-import rootTeamSaga from './Team';
+//import rootTeamSaga from './Team';
 
 /**
  *
@@ -14,7 +14,7 @@ function* root() {
         fork( rootProjectsSagas ),
         fork( rootSingleProjectSagas ),
         fork( rootTaskSaga ),
-        fork( rootTeamSaga )
+//        fork( rootTeamSaga )
     ];
 }
 
