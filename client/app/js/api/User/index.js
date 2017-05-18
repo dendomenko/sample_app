@@ -1,5 +1,5 @@
 import Api from 'api';
-
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 
 /**
  *
@@ -15,9 +15,9 @@ const registerRequest = ( { name, email, password, confirm_pwd } ) => Api.post(
         "email"                : email || null,
         "password"             : password || null,
         "password_confirmation": confirm_pwd || null,
-    } ).then( res => res ).catch( error => {
-    throw  new Error( error );
-} );
+    } )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 /**
@@ -30,19 +30,17 @@ const loginRequest = ( { email, password } ) => Api
         'email'   : email || null,
         'password': password || null
     } )
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 
 /**
  *
  */
 const logoutRequest = () => Api.get( '/logout' )
-    .then( res => res.status )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 
 /**
  *
@@ -64,29 +62,26 @@ const updateRequest = ( { name, email, password, avatar } ) => {
     data.append( 'avatar', typeof avatar !== 'undefined' ? avatar[ 0 ] : '' );
 
     return Api.patch( '/update', data )
-        .then( res => res.data )
-        .catch( error => {
-            throw  new Error( error );
-        } );
+        .then( SuccessRequest )
+        .catch( FailueRequest );
+
 };
 
 
 const fetch = () => Api
     .get( '/users' )
-    .then( res => res.data )
-    .catch( e => {
-        console.log( 'EEEE', e );
-        throw new Error( e );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 /**
  *
  * @param token
  */
-const checkToken = () => Api.get( '/isAuth' ).then( res => {
-    return res.data;
-} );
+const checkToken = () => Api.get( '/isAuth' )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 /**
  *
  * @type {{register: ((p1:{name?: *, email?: *, pwd?: *, confirm_pwd?: *})=>(*)), login: ((p1:{email?: *, pwd?:

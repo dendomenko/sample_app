@@ -1,5 +1,5 @@
 import Api from 'api';
-
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 
 /**
  *
@@ -25,29 +25,23 @@ const create = ( { id, title, description, status, executor_id } ) => Api.post( 
     status,
     executor_id
 } )
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 /**
  *
  */
 const update = () => Api.put()
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 /**
  *
  * @param id
  */
 const remove = ( id ) => Api.delete()
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 export const apiTask = {

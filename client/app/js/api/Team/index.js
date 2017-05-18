@@ -1,5 +1,7 @@
 // @flow
 import Api from 'api';
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
+
 
 type Props = {
     name: string,
@@ -12,26 +14,25 @@ const create = ( { name, project_id, users }: Props ) =>
         project_id,
         users
     } )
-        .then( res => res.data )
-        .catch( e => {
-            throw new Error( e );
-        } );
+        .then( SuccessRequest )
+        .catch( FailueRequest );
+
+
 
 const update = ( { name, project_id, users }: Props ) =>
     Api.put( '/team' )
-        .then( res => res.data )
-        .catch( e => {
-            throw new Error( e );
-        } );
+        .then( SuccessRequest )
+        .catch( FailueRequest );
+
 
 
 /**
  *
  */
 const fetch = () => Api.get( '/teams' )
-    .then( res => res.data ).catch( e => {
-        throw  new Error( e );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 
 /**
  *
