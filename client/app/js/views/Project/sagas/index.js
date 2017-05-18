@@ -7,7 +7,7 @@ import * as types from './../constants';
 import { Session } from 'utils/Session';
 import * as Actions from './../actions';
 import { handleRequestFailure } from './../../../actions/common';
-
+import { normalizeRoles, normalizeUsers } from './../../../utils/normalizr-select';
 /**
  *
  * @returns {boolean}
@@ -75,16 +75,25 @@ function* fetchMembersAndRoles() {
 
         const { getUsers, getRoles } = apiProject.members;
 
+        const current_user_id = yield select( state => state.getIn( [ 'user', 'uid' ] ) );
+
         const { members, roles } = yield all( {
             members: call( getUsers ),
             roles  : call( getRoles )
         } );
 
-        console.log( 'RESPONSE', members, roles );
+
+        yield put( Actions.fetchRolesAndUsersSuccess( {
+                list : normalizeUsers( members, current_user_id ),
+                roles: normalizeRoles( roles )
+            } )
+        );
+
+
         return true;
     }
     catch ( e ) {
-        console.error( e );
+        yield put( handleRequestFailure( types.FETCH_MEMBERS_AND_ROLES_FAILURE, e ) );
         return false;
     }
 

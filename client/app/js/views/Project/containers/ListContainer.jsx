@@ -16,9 +16,16 @@ class ListContainer extends React.Component {
 
 
     componentDidMount() {
-        const { fetchAll } = this.props;
+        const { isFetching, fetchAll } = this.props;
 
-        fetchAll();
+        /**
+         *
+         */
+        if (!isFetching) {
+            fetchAll();
+        }
+
+
     }
 
     render() {

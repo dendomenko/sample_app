@@ -16,7 +16,7 @@ export const createTask = ( payload ) => ({
  */
 export const createTaskSuccess = ( response ) => ({
     type   : types.CREATE_TASK_SUCCESS,
-    payload: Map( response )
+    payload: fromJS( response )
 });
 
 

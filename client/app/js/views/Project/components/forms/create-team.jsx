@@ -9,10 +9,7 @@ import { CREATE_TEAM } from 'constants/Team';
 import validate  from './helpers/wizard-validation';
 import  { Map } from 'immutable';
 
-const members1 = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-];
+
 const roles = [
     { key: 0, text: 'Developer', value: 1 },
     { key: 1, text: 'QA', value: 2 },
@@ -20,17 +17,10 @@ const roles = [
     { key: 3, text: 'Lead', value: 4 },
 ];
 
-const options = [
-    { key: 'English', text: 'English', value: 'English' },
-    { key: 'French', text: 'French', value: 'French' },
-    { key: 'Spanish', text: 'Spanish', value: 'Spanish' },
-    { key: 'German', text: 'German', value: 'German' },
-    { key: 'Chinese', text: 'Chinese', value: 'Chinese' },
-];
 
 class CreateTeamForm extends React.PureComponent {
 
-    state = { options };
+    state = { roles };
 
     handleAddition = ( e, { value } ) => {
         this.setState( {
@@ -43,13 +33,20 @@ class CreateTeamForm extends React.PureComponent {
     onSubmit = ( values ) => console.log( 'VALUES', values.toJS() );
 
     render() {
-        const { submitting, handleSubmit, previousPage } = this.props;
+        const { members, roles, submitting, handleSubmit, previousPage } = this.props;
+
+
+        console.log( members );
+        console.log( roles );
+        /**
+         *
+         */
         return (
             <Form as="form" loading={submitting} onSubmit={handleSubmit( this.onSubmit )}>
 
                 <FieldArray
                     roles={roles}
-                    members={members1}
+                    members={members}
                     name="users"
                     component={this.renderMembers}/>
 

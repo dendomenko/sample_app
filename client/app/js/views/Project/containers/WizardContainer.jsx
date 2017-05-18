@@ -12,7 +12,14 @@ type State = {
     step: number
 }
 
-class WizardContainer extends React.Component<State> {
+type Props = {
+    members: array<object>,
+    roles: array<object>,
+    isFetching: boolean
+};
+
+
+class WizardContainer extends React.Component<State, Props> {
 
     constructor( props ) {
         super( props );
@@ -24,17 +31,31 @@ class WizardContainer extends React.Component<State> {
     }
 
     componentDidMount() {
-        const { fetchMemberAndRoles } = this.props;
+        /**
+         *
+         */
 
-        fetchMemberAndRoles();
+        const { isFetching, fetchMemberAndRoles } = this.props;
+
+        /**
+         * Check of if store have roles and member then skip new request
+         */
+        if (!isFetching) {
+            fetchMemberAndRoles();
+        }
+
     }
 
     render() {
         const { step } = this.state;
+        const { members, roles } = this.props;
+        /**
+         *
+         */
         return (
             <Container>
                 {step === 1 && <FormCreateProject onSubmit={this.nextStep}/>}
-                {step === 2 && <FormCreateTeam previousPage={this.prevStep}/>}
+                {step === 2 && <FormCreateTeam members={members} roles={roles} previousPage={this.prevStep}/>}
             </Container>
         );
     }
@@ -62,8 +83,9 @@ class WizardContainer extends React.Component<State> {
  */
 const mapStateToProps = state => {
     return {
-        members: state.getIn( [ 'members', 'list' ] ),
-        roles  : state.getIn( [ 'members', 'roles' ] ),
+        members   : state.getIn( [ 'members', 'list' ] ),
+        roles     : state.getIn( [ 'members', 'roles' ] ),
+        isFetching: state.getIn( [ 'members', 'isFetching' ] )
     };
 };
 /**

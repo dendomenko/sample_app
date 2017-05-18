@@ -1,5 +1,5 @@
 import * as types from './../constants';
-import { Map, List } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 /**
  *
  */
@@ -24,6 +24,17 @@ export const fetchSuccess = ( data ) => (
 );
 
 
+export const fetchRolesAndUsersSuccess = ( data ) => (
+    {
+        type   : types.FETCH_MEMBERS_AND_ROLES_SUCCESS,
+        payload: fromJS( {
+            isFetching: true,
+            ...data
+        } )
+    }
+);
+
+
 //export const fe
 
 /**
@@ -42,7 +53,7 @@ export const fetchSuccess = ( data ) => (
 export const createSuccess = ( payload ) => ({
     type   : types.CREATE_PROJECT_SUCCESS,
     payload: {
-        item: payload
+        item: Map( payload )
     }
 });
 

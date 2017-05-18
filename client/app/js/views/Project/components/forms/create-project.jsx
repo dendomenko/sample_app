@@ -47,7 +47,6 @@ const renderField = ( { input, label, type, meta: { touched, error } } ) => (
 );
 
 const CreateForm = ( props ) => {
-    console.log( 'form PROPS', props );
     return (
         <Form
             className='attached fluid segment'
