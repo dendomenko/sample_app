@@ -1,5 +1,5 @@
 import * as types from './../constants';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 /**
  *
@@ -16,7 +16,7 @@ export const fetchProjectBySlug = ( slug ) => ({
  */
 export const fetchSuccess = ( payload ) => ({
     type   : types.FETCH_PROJECT_SUCCESS,
-    payload: Map( {
+    payload: fromJS( {
         ...payload,
         isFetching: true
     } )

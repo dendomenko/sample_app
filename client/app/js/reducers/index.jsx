@@ -1,4 +1,3 @@
-// import { routerReducer } from "react-router-redux";
 import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form/immutable';
 import userReducer from './user';

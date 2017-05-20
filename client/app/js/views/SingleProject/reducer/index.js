@@ -1,21 +1,21 @@
 import * as types from './../constants';
-import { Map, List } from 'immutable';
+import { fromJS, Map } from 'immutable';
 
 const initialState = {
     id         : null,
     name       : null,
     task_name  : null,
     description: null,
-    role       : null,
-    tasks      : List( [] ),
-    team       : List( [] ),
+    tasks      : [],
+    team       : [],
     error      : null,
     isFetching : false,
     slug       : null
 };
 
 
-export default ( state = Map( initialState ), { type, payload } ) => {
+export default ( state = fromJS( initialState ),
+                 { type, payload } ) => {
     switch ( type ) {
         case types.FETCH_PROJECT:
             return state.merge( Map( {
