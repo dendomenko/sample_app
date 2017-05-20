@@ -14,7 +14,6 @@ function* create( { payload: { data, resolve, reject } } ) {
 
         const { task, errors } = yield call( apiTask.create, data );
 
-        debugger;
 
         if (errors) {
 
@@ -24,7 +23,6 @@ function* create( { payload: { data, resolve, reject } } ) {
             );
         }
         if (task) {
-            console.log( "NEW TASK", task );
             yield call( resolve );
             yield put( createTaskSuccess( task ) );
         }

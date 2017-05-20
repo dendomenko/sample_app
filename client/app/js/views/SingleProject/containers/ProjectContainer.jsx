@@ -6,6 +6,7 @@ import { fetchProjectBySlug } from './../actions';
 import  TeamList  from './../components/Teamlist';
 import Explore from './../components/ProjectExplore';
 import CreateTask from 'containers/TaskForm';
+import TaskList from './../../../components/Task/FeedList';
 
 
 /**
@@ -22,21 +23,21 @@ class ProjectContainer extends React.Component {
     }
 
 
-
     render() {
 
-        const { team, project } = this.props;
+        const { team, project, tasks } = this.props;
         return (
-            <Grid relaxed divided doubling>
+            <Grid stackable relaxed divided doubling>
                 <Grid.Row columns={2}>
                     <Grid.Column>
                         <Explore {...project.toJS()}/>
                         <Divider/>
                         <TeamList items={team.toJS()}/>
                     </Grid.Column>
-                    <Grid.Column>
-                        <span>For card</span>
-                        <CreateTask/>
+                    <Grid.Column className="tm-scrolable">
+
+                        <TaskList tasks={tasks}/>
+                        {/*<CreateTask/>*/}
                     </Grid.Column>
                 </Grid.Row>
 

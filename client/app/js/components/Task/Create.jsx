@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import { reduxForm, Field } from 'redux-form/immutable';
-import  { SubmissionError, change } from  'redux-form';
+import { reduxForm, Field, reset, SubmissionError } from 'redux-form/immutable';
+
 import { Button, Message, Form } from 'semantic-ui-react';
+
 import asyncSubmit from './../../utils/async-validate';
 import { InputField, TextAreaField, SelectField } from './../FormFileds';
 
@@ -32,8 +33,8 @@ class CreateTaskForm extends React.PureComponent {
 
     syncSubmit = ( values, dispatch ) =>
         asyncSubmit( values, dispatch, createTask )
-            .then( res => {
-                console.info( 'RES', res );
+            .then( () => {
+                dispatch( reset( 'createTask' ) );
             } )
             .catch( e => {
                 throw SubmissionError( e.errors );
@@ -54,7 +55,7 @@ class CreateTaskForm extends React.PureComponent {
                       className='attached fluid segment'
                       onSubmit={handleSubmit( this.syncSubmit.bind( this ) )}>
 
-                    <Field name="name" label="Summary" component={InputField}/>
+                    <Field name="title" label="Summary" component={InputField}/>
                     <Field name="executor_id" label="Executor" options={
                         executors.toJS().map( exec => ({
                             key  : exec.id,

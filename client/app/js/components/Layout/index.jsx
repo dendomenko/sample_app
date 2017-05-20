@@ -2,9 +2,9 @@ import React from 'react';
 // import 'semantic-ui-less/semantic.less';
 
 const Layout = ({children}) => (
-    <div>
+    <main>
         {children}
-    </div>
+    </main>
 );
 
 export default Layout;
