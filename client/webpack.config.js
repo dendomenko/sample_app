@@ -19,7 +19,9 @@ var config = {
     entry: {
 
         vendor: [
-            'prop-types',
+            'babel-polyfill',
+            'es5-shim',
+            'es6-shim',
             'react',
             'react-dom',
             'react-redux',
@@ -38,8 +40,7 @@ var config = {
             'semantic-ui-react'
         ],
 
-        bundle: [ 'babel-polyfill',
-            'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr',
+        bundle: [ 'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr',
             './app/js/index.js' ],
         styles: './app/assets/less/main.less'
 

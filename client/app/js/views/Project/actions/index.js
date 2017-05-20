@@ -57,6 +57,10 @@ export const createSuccess = ( payload ) => ({
     }
 });
 
+
+export const addMemberSuccess = ( payload ) => ({
+    type   : types.ADD_MEMBER_SUCCESS,
+});
 /**
  *
  * @param error

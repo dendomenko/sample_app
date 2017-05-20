@@ -19,20 +19,29 @@ const create = ( { name, project_id, users }: Props ) =>
 
 
 const update = ( { name, project_id, users }: Props ) =>
-    Api.put( '/team' )
+    Api.put( '/team', { name, project_id, users } )
         .then( SuccessRequest )
         .catch( FailueRequest );
 
 
 const add = ( { user_id, project_id, role } ) =>
-    Api.post( `projects/${project_id}/adduser` )
+    Api.post( `projects/${project_id}/adduser`, { user_id, project_id, role } )
         .then( SuccessRequest )
         .catch( FailueRequest );
 
-const add_members = ( { user_id, project_id, role } ) =>
-    Api.post( `projects/${project_id}/adduser` )
+/**
+ *
+ * @param user_id
+ * @param role
+ * @param project_id
+ * @returns {*|Promise.<T>}
+ */
+const add_members = ( { user_id, role, project_id } ) => {
+    debugger;
+    return Api.post( `/projects/${project_id}/adduser`, { user_id, role, project_id } )
         .then( SuccessRequest )
         .catch( FailueRequest );
+};
 /**
  *
  */

@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { reduxForm, Field, FieldArray, SubmissionError } from 'redux-form/immutable';
+import { reduxForm, Field, FieldArray, SubmissionError, reset } from 'redux-form/immutable';
 import { InputField, SelectField } from 'components/FormFileds';
 import asyncSubmit from 'utils/async-validate';
 import { Button, Message, Form, Popup, Label, Dropdown } from 'semantic-ui-react';
@@ -32,11 +32,9 @@ class CreateTeamForm extends React.PureComponent {
     handleChange = ( e, { value } ) => this.setState( { currentValue: value } );
 
     onSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
-        .then( ( res ) => {
-            console.info( 'Error', res );
-//            dispatch( reset( 'ProjectCreate' ) );
+        .then( () => {
+            dispatch( reset( 'projectWizard' ) );
         } ).catch( e => {
-            console.log( e );
             throw new SubmissionError( e.errors );
         } );
 
@@ -139,29 +137,9 @@ class CreateTeamForm extends React.PureComponent {
     };
 
 }
-
-
-//const create = ( values ) => handleRequest( CREATE_TEAM, values );
-//
-//const createSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
-//    .then()
-//    .catch();
-//
-//const creates = ( values ) => {
-//    console.info( values );
-//};
-//const inviteSubmit = ( values, dispatch ) => asyncSubmit( values, dispatch, create )
-//    .then()
-//    .catch();
-
-
-//            values : {
-//                name      : 'First TEAM',
-//                project_id: 1,
-//                users     : '[ 2,3,4,5]'
-//            },
-
-
+/**
+ *
+ */
 export default reduxForm( {
         form                    : 'projectWizard',
         destroyOnUnmount        : false,

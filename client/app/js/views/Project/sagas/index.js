@@ -1,5 +1,4 @@
-import { actionChannel, take, call, put, fork, takeLatest, select, all } from 'redux-saga/effects';
-import {} from 'redux-saga/';
+import { take, call, put, fork, takeLatest, select, all } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 import { push } from 'react-router-redux';
 import { apiProject } from 'api/Project';
@@ -8,7 +7,7 @@ import * as types from './../constants';
 import { Session } from 'utils/Session';
 import * as Actions from './../actions';
 import { handleRequestFailure } from './../../../actions/common';
-import { normalizeRoles, normalizeUsers } from './../../../utils/normalizr-select';
+import { normalizeRoles, normalizeUsers } from 'utils/normalizr-select';
 /**
  *
  * @returns {boolean}
@@ -48,32 +47,8 @@ function* createProject( data ) {
 
 
         const response = yield call( apiProject.create, data );
+
         return response;
-//        if (response.errors) {
-//
-//            yield call(
-//                reject,
-//                new SubmissionError( response.errors )
-//            );
-//        }
-//        else {
-//
-//        }
-//            const { users } = data;
-//            const project = ( current, newData ) => ({ ...current, ...newData });
-//
-//            const user_len = users.length;
-//
-//            for ( let i = user_len; i-- ) {
-//                const response = yield call( apiTeam.addMember, );
-//            }
-
-//            const response = yield call( apiTeam.addMember, );
-//            if ()
-//                yield call( resolve );
-//            yield put( Actions.createSuccess( project( data, response ) ) );
-//        }
-
 
     }
     catch ( e ) {
@@ -91,7 +66,7 @@ function* addMember( params ) {
         return true;
     }
     catch ( e ) {
-        yield  put( handleRequestFailure( types.CREATE_PROJECT_FAILURE, e ) );
+        yield put( handleRequestFailure( types.ADD_MEMBER_FAILURE, e ) );
         return false;
     }
 
@@ -138,37 +113,50 @@ function* flowProjects() {
  *
  */
 function* flowCreateProject() {
-//    yield takeLatest( types.CREATE_PROJECT, submitCreateProject );
 
     while ( true ) {
         const { payload: { data, resolve, reject } } = yield take( types.CREATE_PROJECT );
 
-        debugger;
-        const response = yield  call( createProject, data );
-        debugger;
 
-        if (response.errors) {
+        const { errors, id } = yield  call( createProject, data );
+
+
+        if (errors) {
             yield call(
                 reject,
-                new SubmissionError( response.errors )
+                new SubmissionError( errors )
             );
         }
         else {
 
             const { users } = data;
             let users_len = users.length;
-            const project_id = response;
+            const project_id = id;
 
-            while ( users_len-- )
+            for ( let i = users_len; i--; ) {
 
-                apiTeam.addMember( { ...users[ i ], project_id } );
+
+                const user = {
+                    user_id: users[ i ].id,
+                    role   : users[ i ].role
+                };
+
+                const isCreated = yield call( addMember, { ...user, project_id } );
+
+                if (isCreated) {
+
+                    yield put( Actions.addMemberSuccess() );
+                }
+
+            }
+
+            yield call( resolve );
+
 
         }
-//        const id = yield call( createProject, response )
-
 
     }
-//    yield takeLatest( types.CREATE_PROJECT, createProject );
+
 }
 
 
