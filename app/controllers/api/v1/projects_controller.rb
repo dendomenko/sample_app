@@ -28,7 +28,8 @@ module Api
         user = load_current_user!
         @project = user.projects.find_by slug: params[:id]
         @project ||= user.projects.find params[:id]
-        @tasks = Task.all.where(project_id: @project.id)
+        # @tasks = Task.all.where(project_id: @project.id)
+        @tasks = @project.tasks
         @team = @project.roles
       end
 
@@ -44,13 +45,16 @@ module Api
 
       def add_user
         @role = Role.new(user_id: params[:user_id], project_id: params[:project_id], role: params[:role])
-        @role.save
-        render json: {role: 'Created'}, status: :created
+        if @role.save
+          render json: {role: 'Created'}, status: :created
+        else
+          render json: {role: 'No content'}, status: :no_content
+        end
+
       end
 
       def destroy
-        if Project.find(params[:id]).destroy
-        end
+        Project.find(params[:id]).destroy
       end
 
 

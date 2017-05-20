@@ -12,8 +12,7 @@ module Api
         task = Task.create(task_params)
         task.user = load_current_user!
         task.project = Project.find(params[:project_id])
-        count = Task.where(:project_id => params[:project_id]).count
-        task.name= "#{task.project.task_name}-#{count+1}"
+        task.name= "#{task.project.task_name}-#{task_number+1}"
         if task.save!
           render json: {task: task}, status: :created
         else
@@ -22,9 +21,12 @@ module Api
       end
 
       private
-
+      def task_number
+        Task.where(:project_id => params[:project_id]).count
+      end
+      
       def task_params
-        params.permit( :title, :description, :time, :status,:executor_id, :time_do,:time_done);
+        params.permit( :title, :description, :time,:executor_id, :time_do,:time_done, :status_id, :priority_id, :type_id);
       end
 
     end

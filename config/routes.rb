@@ -11,6 +11,13 @@ Rails.application.routes.draw do
 
       get 'roles', to:'projects#roles'
 
+      post 'status', to: 'help#create_status'
+      post 'type', to: 'help#create_type'
+      post 'priority', to: 'help#create_priority'
+
+      get 'all', to: 'help#all_meta'
+
+
       resources :users, :teams, :except => [:new, :edit]
 
       resources :projects, :except => [:new, :edit] do

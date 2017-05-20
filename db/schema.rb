@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514141018) do
+ActiveRecord::Schema.define(version: 20170520100327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "priorities", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "projects", id: :serial, force: :cascade do |t|
     t.string "name"
@@ -35,24 +39,31 @@ ActiveRecord::Schema.define(version: 20170514141018) do
     t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
-  create_table "tasks", id: :serial, force: :cascade do |t|
+  create_table "statuses", force: :cascade do |t|
     t.string "name"
-    t.time "time"
-    t.text "description"
-    t.integer "project_id"
-    t.integer "user_id"
-    t.integer "executor_id"
-    t.time "time_do"
-    t.time "time_done"
-    t.string "status"
-    t.string "title"
   end
 
-  create_table "teams", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.integer "users", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "description"
+    t.bigint "project_id"
+    t.bigint "user_id"
+    t.bigint "executor_id"
+    t.time "time_do"
+    t.time "time_done"
+    t.bigint "status_id"
+    t.bigint "type_id"
+    t.bigint "priority_id"
+    t.index ["priority_id"], name: "index_tasks_on_priority_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["status_id"], name: "index_tasks_on_status_id"
+    t.index ["type_id"], name: "index_tasks_on_type_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
