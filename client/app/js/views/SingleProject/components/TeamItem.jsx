@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import { Feed } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Feed, Button, Popup } from 'semantic-ui-react';
+//import { Link } from 'react-router-dom';
 
 type Props = {
     id: number,
@@ -23,6 +23,18 @@ export default ( { id, avatar, name, role }: Props ) => (
         <Feed.Meta>
             {role}
         </Feed.Meta>
+        <Feed.Extra>
+            <Popup
+                trigger={
+                    <Button
+                        size='tiny'
+                        negative
+                        circular
+                        icon='remove circle'/>}
+                content='Remove member'
+            />
+
+        </Feed.Extra>
     </Feed.Event>
 );
 
