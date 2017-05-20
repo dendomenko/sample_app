@@ -28,7 +28,6 @@ module Api
         user = load_current_user!
         @project = user.projects.find_by slug: params[:id]
         @project ||= user.projects.find params[:id]
-        # @tasks = Task.all.where(project_id: @project.id)
         @tasks = @project.tasks
         @team = @project.roles
       end
