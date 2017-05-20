@@ -33,7 +33,7 @@ export const InputField = ( { input, required, label, type, meta: { touched, err
  * @constructor
  */
 export const TextAreaField = ( { input, label, type, meta: { touched, error, warning } } ) => (
-    <Form.Field>
+    <Form.Field error={ touched && !!error }>
         <label>{label}</label>
         <div>
             <TextArea {...input} placeholder={label} type={type}/>
@@ -55,13 +55,14 @@ export const TextAreaField = ( { input, label, type, meta: { touched, error, war
 export const SelectField = ( { input, label, options, meta: { touched, error, warning } } ) => {
 
     return (
-        <Form.Field>
+        <Form.Field error={ touched && !!error }>
             <div>
                 <select {...input}>
                     <option value="">{label}</option>
                     {options.map( otp => <option value={otp.value} key={otp.key}>{otp.text}</option> )}
                 </select>
-                {touched && error && <span>{error}</span>}
+                {    touched && error && <Label basic color='red' pointing>{error}</Label>
+                }
             </div>
         </Form.Field>
     );

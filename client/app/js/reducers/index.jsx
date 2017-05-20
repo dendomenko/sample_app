@@ -5,6 +5,7 @@ import routeReducer from './routing';
 import projectsReducer from './../views/Project/reducer';
 import singleProjectReducer from './../views/SingleProject/reducer';
 import memberReducer  from './members';
+import metaReducer from './meta-data';
 
 const rootReducer = combineReducers( {
     user    : userReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers( {
     routing : routeReducer,
     projects: projectsReducer,
     single  : singleProjectReducer,
-    members : memberReducer
+    members : memberReducer,
+    meta    : metaReducer
 } );
 
 export default rootReducer;

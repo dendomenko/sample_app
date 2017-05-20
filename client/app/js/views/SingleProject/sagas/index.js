@@ -16,8 +16,9 @@ function* fetch( { slug } ) {
     try {
 
         const response = yield call( apiProject.fetchSingle, slug );
-        console.log( 'RESPONSE', response );
+
         yield put( Actions.fetchSuccess( response ) );
+
         return response.name;
     }
     catch ( e ) {

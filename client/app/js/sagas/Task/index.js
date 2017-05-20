@@ -7,13 +7,14 @@ import * as types from './../../constants/Task';
 import { SubmissionError } from 'redux-form';
 
 
-function* create( { payload: { values, resolve, reject } } ) {
+function* create( { payload: { data, resolve, reject } } ) {
 
 
     try {
 
-        const { task, errors } = yield call( apiTask.create, values );
+        const { task, errors } = yield call( apiTask.create, data );
 
+        debugger;
 
         if (errors) {
 
@@ -23,7 +24,7 @@ function* create( { payload: { values, resolve, reject } } ) {
             );
         }
         if (task) {
-
+            console.log( "NEW TASK", task );
             yield call( resolve );
             yield put( createTaskSuccess( task ) );
         }

@@ -19,14 +19,12 @@ const path = project_id => (`projects/${project_id}/tasks`);
  * @param status
  * @param executor_id
  */
-const create = ( { id, title, description, status, executor_id } ) => Api.post( path( id ), {
-    title,
-    description,
-    status,
-    executor_id
+const create = ( params ) => Api.post( path( params.project_id ), {
+    ...params
 } )
     .then( SuccessRequest )
     .catch( FailueRequest );
+
 
 /**
  *
@@ -47,5 +45,5 @@ const remove = ( id ) => Api.delete()
 export const apiTask = {
     create: create,
     update: update,
-    remove: remove
+    remove: remove,
 };

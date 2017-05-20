@@ -5,6 +5,12 @@ import { Grid, Divider } from 'semantic-ui-react';
 import { fetchProjectBySlug } from './../actions';
 import  TeamList  from './../components/Teamlist';
 import Explore from './../components/ProjectExplore';
+import CreateTask from 'containers/TaskForm';
+
+
+/**
+ *
+ */
 class ProjectContainer extends React.Component {
 
 
@@ -13,17 +19,12 @@ class ProjectContainer extends React.Component {
         const { slug, fetchProject } = this.props;
 
         fetchProject( slug );
-
-
     }
 
-    shouldComponentUpdate() {
-        return true;
-    }
+
 
     render() {
 
-        console.log( 'SINGLE_PROJECT_PROPS', this.props );
         const { team, project } = this.props;
         return (
             <Grid relaxed divided doubling>
@@ -35,6 +36,7 @@ class ProjectContainer extends React.Component {
                     </Grid.Column>
                     <Grid.Column>
                         <span>For card</span>
+                        <CreateTask/>
                     </Grid.Column>
                 </Grid.Row>
 
@@ -56,9 +58,7 @@ const mapDispatchToProps = ( dispatch ) =>
     ( {
         fetchProject: ( slug ) => {
             dispatch( fetchProjectBySlug( slug ) );
-        },
-
-
+        }
     });
 
 

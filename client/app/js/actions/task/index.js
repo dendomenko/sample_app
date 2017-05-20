@@ -1,15 +1,7 @@
 import * as types from './../../constants/Task';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 
-/**
- *
- * @param payload
- */
-export const createTask = ( payload ) => ({
-    type: types.CREATE_TASK,
-    payload
-});
 
 /**
  *
@@ -35,9 +27,8 @@ export const updateTask = ( payload ) => ({
  */
 export const updateTaskSuccess = ( {} ) => ({
     type   : types.CREATE_TASK_SUCCESS,
-    payload: Map( {} )
+    payload: fromJS( {} )
 });
-
 
 
 
