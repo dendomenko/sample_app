@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       post 'type', to: 'help#create_type'
       post 'priority', to: 'help#create_priority'
 
-      get 'all', to: 'help#all_meta'
+      get 'helper/task_meta', to: 'help#all_meta'
 
 
       resources :users, :teams, :except => [:new, :edit]
