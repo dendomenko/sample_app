@@ -21,7 +21,8 @@ Rails.application.routes.draw do
       resources :users, :teams, :except => [:new, :edit]
 
       resources :projects, :except => [:new, :edit] do
-        post 'adduser', to:'projects#add_user'
+        post 'add-user', to:'projects#add_user'
+        delete 'delete-user/:user_id', to: 'projects#delete_user'
         resources :tasks, :except => [:new, :edit]
       end
 

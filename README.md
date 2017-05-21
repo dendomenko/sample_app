@@ -62,7 +62,7 @@ POST:<br>
 if success return 201 Created
 if error return 200 OK and errors array
 
-**ADD USER TO PROJECT** ```http://localhost:3000/api/v1/projects/:project_id/adduser```
+**ADD USER TO PROJECT** ```http://localhost:3000/api/v1/projects/:project_id/add-user```
 ```
 {
     "user_id":"<user_id>",
@@ -70,6 +70,8 @@ if error return 200 OK and errors array
     "role":"<role>"
 }
 ```
+
+**REMOVE USER FROM PROJECT** ```http://localhost:3000/api/v1/projects/:project_id/delete-user/:user_id```
 
 
 PATCH/PUT:<br>
@@ -95,15 +97,15 @@ POST:<br>
 ```/api/v1/projects/:project_id/tasks```
 ```
 {
-        "name":"<name>",
+        "title":"<title>",
         "description":"<description>",
-        "time":"time",
-        "project_id":"",
-        "status":"",
-        "creator_id":"",
         "executor_id":"",
         "time_do":"",
-        "time_done":""
+        "time_done":"",
+        "status_id":"",
+        "type_id":"",
+        "priority_id":""
+
 }
 ```
 
