@@ -13,7 +13,13 @@ const initialState = {
     slug       : null
 };
 
-
+/**
+ * TODO SHOULD REWORK ADD_USER_MEMBER
+ * @param state
+ * @param type
+ * @param payload
+ * @returns {any}
+ */
 export default ( state = fromJS( initialState ),
                  { type, payload } ) => {
     switch ( type ) {
@@ -25,6 +31,9 @@ export default ( state = fromJS( initialState ),
             return state.merge( payload );
         case types.FETCH_PROJECT_FAILURE:
             return state.merge( payload );
+
+//        case types.ADD_MEMBER_SUCCESS:
+//            return state.update( 'team', team => team.push( payload ) );
         default:
             return state;
     }

@@ -28,16 +28,23 @@ class ProjectContainer extends React.Component {
 
     render() {
 
-        const { team, project, tasks, members } = this.props;
+        const { team, project, tasks, members, project_id } = this.props;
 
-
+        console.log( 'PROJECT_ID', project_id );
         return (
             <Grid stackable relaxed divided doubling>
                 <Grid.Row columns={2}>
                     <Grid.Column>
                         <Explore {...project.toJS()}/>
                         <Divider/>
-                        <ActionMemberForm members={ members }/>
+                        {project_id !== null &&
+                        <ActionMemberForm
+                            initialValues={{
+                                'project_id': project_id
+                            }}
+                            members={ members }
+                        />
+                        }
                         <Divider/>
                         <TeamList items={team.toJS()}/>
                     </Grid.Column>
@@ -57,11 +64,12 @@ class ProjectContainer extends React.Component {
 
 
 const mapStateToProps = ( state ) => ({
-    project: state.get( 'single' ),
-    slug   : state.getIn( [ 'routing', 'last' ] ),
-    tasks  : state.getIn( [ 'single', 'tasks' ] ),
-    team   : state.getIn( [ 'single', 'team' ] ),
-    members: state.getIn( [ 'members', 'list' ] )
+    project   : state.get( 'single' ),
+    project_id: state.getIn( [ 'single', 'id' ] ),
+    slug      : state.getIn( [ 'routing', 'last' ] ),
+    tasks     : state.getIn( [ 'single', 'tasks' ] ),
+    team      : state.getIn( [ 'single', 'team' ] ),
+    members   : state.getIn( [ 'members', 'list' ] )
 
 
 });

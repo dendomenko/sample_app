@@ -21,3 +21,9 @@ export const fetchSuccess = ( payload ) => ({
         isFetching: true
     } )
 });
+
+
+export const addMemberSuccess = ( payload ) => ({
+    type   : types.ADD_MEMBER_SUCCESS,
+    payload: fromJS( payload )
+});

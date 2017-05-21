@@ -33,14 +33,15 @@ function* addMember( { payload: { data, resolve, reject } } ) {
 
     try {
 
-        const response = yield call( apiTeam.addMember( data ) );
+        const response = yield call( apiTeam.addMember, data );
 
         yield call( resolve );
 
-        yield put( types.ADD_MEMBER_SUCCESS, data );
+        yield put( Actions.addMemberSuccess( data ) );
 
     }
     catch ( e ) {
+        yield call( reject );
         yield put( handleRequestFailure( types.ADD_MEMBER_FAILURE, e ) );
     }
 

@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { Form, Button, Dropdown, Grid, Header } from 'semantic-ui-react';
-import { Field, reduxForm, SubmissionError, reset } from 'redux-form/immutable';
+import { Field, reduxForm, SubmissionError, reset, initialize, } from 'redux-form/immutable';
 import { SelectField } from 'components/FormFileds';
 import { generate } from 'shortid';
 import asyncSubmit from 'utils/async-validate';
@@ -35,6 +35,7 @@ const MembersForm = ( { members, submitting, handleSubmit } ) => {
             <Form.Group inline>
                 <Field name="user_id" label="Member name" options={members} component={SelectField}/>
                 <Field name="role" label="Role" options={roles} component={SelectField}/>
+                <Field name="project_id" type="hidden" component='input'/>
                 <Button type="submit" disabled={submitting} loading={submitting}>
                     Add
                 </Button>
