@@ -49,7 +49,17 @@ module Api
         else
           render json: {role: 'No content'}, status: :no_content
         end
+      end
 
+      def delete_user
+        project = Project.find(params[:project_id])
+        role = project.roles.find_by(user_id: params[:user_id])
+        if role
+          role.destroy
+          render json: {message: 'User removed from project'}, status: :ok
+        else
+          render json: {message: "User with id:#{params[:user_id]} not found in project with id:#{params[:project_id]} "}, status: :ok
+        end
       end
 
       def destroy
