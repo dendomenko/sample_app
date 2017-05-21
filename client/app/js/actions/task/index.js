@@ -1,7 +1,18 @@
 import * as types from './../../constants/Task';
 import { fromJS } from 'immutable';
+import { createRequest } from './../common';
 
 
+export const fetchAll = () => createRequest( types.FETCH_ALL_TASKS );
+
+
+export const fetchAllSuccess = ( payload ) => ({
+    type   : types.FETCH_ALL_TASKS_SUCCESS,
+    payload: fromJS( {
+        items     : payload,
+        isFetching: true
+    } )
+});
 
 /**
  *

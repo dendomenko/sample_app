@@ -33,27 +33,20 @@ class ProjectContainer extends React.Component {
         console.log( 'PROJECT_ID', project_id );
         return (
             <Grid stackable relaxed divided doubling>
-                <Grid.Row columns={2}>
-                    <Grid.Column>
-                        <Explore {...project.toJS()}/>
-                        <Divider/>
-                        {project_id !== null &&
-                        <ActionMemberForm
-                            initialValues={{
-                                'project_id': project_id
-                            }}
-                            members={ members }
-                        />
-                        }
-                        <Divider/>
-                        <TeamList items={team.toJS()}/>
-                    </Grid.Column>
-                    <Grid.Column className="tm-scrolable">
-
-                        <TaskList tasks={tasks}/>
-                        {/*<CreateTask/>*/}
-                    </Grid.Column>
-                </Grid.Row>
+                <Grid.Column>
+                    <Explore {...project.toJS()}/>
+                    <Divider/>
+                    {project_id !== null &&
+                    <ActionMemberForm
+                        initialValues={{
+                            'project_id': project_id
+                        }}
+                        members={ members }
+                    />
+                    }
+                    <Divider/>
+                    <TeamList items={team.toJS()}/>
+                </Grid.Column>
 
             </Grid>
 

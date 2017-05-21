@@ -7,9 +7,14 @@ type Props = {
     tasks: Array<Object>,
 };
 
-export default ( { tasks }: Props ) => (
-    <Item.Group  relaxed divided link>
-        <Header as="h2" content='Recently activity' textAlign='center'/>
-        { tasks.map( task => <Task key={generate()} {...task} /> ) }
-    </Item.Group>
-);
+export default ( { tasks }: Props ) => {
+
+    console.log( 'tasksks', tasks );
+
+    return (
+        <Item.Group relaxed divided link>
+            <Header as="h2" content='Recently activity' textAlign='center'/>
+            { tasks.map( task => <Task key={generate()} {...task} /> ) }
+        </Item.Group>
+    );
+};

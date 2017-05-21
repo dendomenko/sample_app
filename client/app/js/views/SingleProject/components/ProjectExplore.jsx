@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Item, Header } from 'semantic-ui-react';
-
+import { Link } from 'react-router-dom';
 type Props = {
     description: string,
     id: number,
@@ -20,7 +20,12 @@ export default ( { name, description, task_name }: Props ) => (
             </Item.Meta>
             <Item.Description>{description}</Item.Description>
             <Item.Extra>
-                <span>Should add action like edit,remove</span>
+                <strong>Should add action like edit,remove</strong>
+                <div>
+                    <Link to='board'>
+                        go to board
+                    </Link>
+                </div>
             </Item.Extra>
         </Item.Content>
     </Item>

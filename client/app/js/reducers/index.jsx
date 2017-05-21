@@ -6,6 +6,7 @@ import projectsReducer from './../views/Project/reducer';
 import singleProjectReducer from './../views/SingleProject/reducer';
 import memberReducer  from './members';
 import metaReducer from './meta-data';
+import taskReducer from './task';
 
 const rootReducer = combineReducers( {
     user    : userReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers( {
     projects: projectsReducer,
     single  : singleProjectReducer,
     members : memberReducer,
-    meta    : metaReducer
+    meta    : metaReducer,
+    tasks   : taskReducer
 } );
 
 export default rootReducer;

@@ -103,7 +103,7 @@ function* register( { payload: { data, resolve, reject } } ) {
 function* authorize( { payload: { data, resolve, reject } } ) {
 
     try {
-        debugger;
+
         const response = yield call( apiUser.login, data );
         if (response.errors) {
             yield call(

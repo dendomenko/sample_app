@@ -4,13 +4,22 @@ import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 /**
  *
  */
-const fetchAll = () => ({});
+
 
 /**
  *
  * @param project_id
  */
 const path = project_id => (`projects/${project_id}/tasks`);
+
+/**
+ *
+ */
+const fetchAll = ( project_id ) => Api.get( path( project_id ) )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
+
 /**
  *
  * @param id
@@ -43,7 +52,8 @@ const remove = ( id ) => Api.delete()
 
 
 export const apiTask = {
-    create: create,
-    update: update,
-    remove: remove,
+    fetchAll: fetchAll,
+    create  : create,
+    update  : update,
+    remove  : remove,
 };

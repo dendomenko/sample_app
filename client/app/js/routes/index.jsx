@@ -11,6 +11,7 @@ import Dashboard from './../views/Dashboard';
 import Profile from './../views/Profile';
 import Sign from './../views/Sign';
 import SingleProject from './../views/SingleProject';
+import Board from  './../views/Board';
 import StaticPage from './../views/Static';
 import NotFound from './../views/NotFound';
 import Layout from 'components/Layout';
@@ -48,8 +49,9 @@ const Routing = ( { store, history } ) => (
                                       /**
                                        * Dynamic routes
                                        */
-                                      <Route path='/projects/:projectname' component={SingleProject}/>
-                                      <Route path='/projects/:projectname/board' component={SingleProject}/>
+                                      <Route exact path='/projects/:projectname' component={SingleProject}/>
+                                      <Route exact path='/projects/:projectname/board' component={Board}/>
+
                                   </Switch>
                               </PrivateRoute>
                               <Route path="*" component={NotFound}/>
