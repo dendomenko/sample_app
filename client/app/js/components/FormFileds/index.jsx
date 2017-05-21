@@ -11,11 +11,11 @@ import { TextArea, Form, Label, Dropdown } from 'semantic-ui-react';
  * @constructor
  */
 export const InputField = ( { input, required, label, type, meta: { touched, error, valid } } ) => (
-    <Form.Field error={ !!error }>
+    <Form.Field error={ touched && !!error }>
         <label>{label}</label>
         <div>
             <input {...input} placeholder={label} type={type}/>
-            {     error && <Label basic color='red' pointing>{error}</Label>
+            {    touched && error && <Label basic color='red' pointing>{error}</Label>
             }
         </div>
     </Form.Field>
@@ -32,8 +32,8 @@ export const InputField = ( { input, required, label, type, meta: { touched, err
  * @param warning
  * @constructor
  */
-export const TextareaField = ( { input, label, type, meta: { touched, error, warning } } ) => (
-    <Form.Field>
+export const TextAreaField = ( { input, label, type, meta: { touched, error, warning } } ) => (
+    <Form.Field error={ touched && !!error }>
         <label>{label}</label>
         <div>
             <TextArea {...input} placeholder={label} type={type}/>
@@ -52,18 +52,20 @@ export const TextareaField = ( { input, label, type, meta: { touched, error, war
  * @param error
  * @param warning
  */
-export const SelectField = ( { input: { name }, label, options, meta: { touched, error, warning } } ) => {
-
-    console.log( 'RRRRR', name );
+export const SelectField = ( { input, label, options, meta: { touched, error, warning } } ) => {
 
     return (
-        <Form.Field>
-            <Dropdown
-                error={ !!error }
-                name={name}
-                label={label}
-                options={options}
-                placeholder={label}/>
+        <Form.Field error={ touched && !!error }>
+            <div>
+                <select {...input}>
+                    <option value="">{label}</option>
+                    {options.map( otp => <option value={otp.value} key={otp.key}>{otp.text}</option> )}
+                </select>
+                {    touched && error && <Label basic color='red' pointing>{error}</Label>
+                }
+            </div>
         </Form.Field>
     );
+
 };
+

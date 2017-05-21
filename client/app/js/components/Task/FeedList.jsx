@@ -1,14 +1,20 @@
 // @flow
 import React from 'react';
 import Task  from './Feed';
-import { Item } from 'semantic-ui-react';
+import { Item, Header } from 'semantic-ui-react';
 import  { generate } from 'shortid';
 type Props = {
-    tasks: array<Object>,
+    tasks: Array<Object>,
 };
 
-export default ( { tasks }: { tasks: array<object> } ) => (
-    <Item.Group relaxed divided link>
-        { tasks.map( task => <Task key={generate()} {...task} /> ) }
-    </Item.Group>
-);
+export default ( { tasks }: Props ) => {
+
+    console.log( 'tasksks', tasks );
+
+    return (
+        <Item.Group relaxed divided link>
+            <Header as="h2" content='Recently activity' textAlign='center'/>
+            { tasks.map( task => <Task key={generate()} {...task} /> ) }
+        </Item.Group>
+    );
+};

@@ -1,14 +1,17 @@
 import * as types from './../../constants/Task';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
+import { createRequest } from './../common';
 
 
-/**
- *
- * @param payload
- */
-export const createTask = ( payload ) => ({
-    type: types.CREATE_TASK,
-    payload
+export const fetchAll = () => createRequest( types.FETCH_ALL_TASKS );
+
+
+export const fetchAllSuccess = ( payload ) => ({
+    type   : types.FETCH_ALL_TASKS_SUCCESS,
+    payload: fromJS( {
+        items     : payload,
+        isFetching: true
+    } )
 });
 
 /**
@@ -16,7 +19,7 @@ export const createTask = ( payload ) => ({
  */
 export const createTaskSuccess = ( response ) => ({
     type   : types.CREATE_TASK_SUCCESS,
-    payload: Map( response )
+    payload: fromJS( response )
 });
 
 
@@ -35,9 +38,8 @@ export const updateTask = ( payload ) => ({
  */
 export const updateTaskSuccess = ( {} ) => ({
     type   : types.CREATE_TASK_SUCCESS,
-    payload: Map( {} )
+    payload: fromJS( {} )
 });
-
 
 
 

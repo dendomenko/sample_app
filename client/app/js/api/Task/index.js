@@ -1,16 +1,25 @@
 import Api from 'api';
-
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 
 /**
  *
  */
-const fetchAll = () => ({});
+
 
 /**
  *
  * @param project_id
  */
 const path = project_id => (`projects/${project_id}/tasks`);
+
+/**
+ *
+ */
+const fetchAll = ( project_id ) => Api.get( path( project_id ) )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
+
 /**
  *
  * @param id
@@ -19,39 +28,32 @@ const path = project_id => (`projects/${project_id}/tasks`);
  * @param status
  * @param executor_id
  */
-const create = ( { id, title, description, status, executor_id } ) => Api.post( path( id ), {
-    title,
-    description,
-    status,
-    executor_id
+const create = ( params ) => Api.post( path( params.project_id ), {
+    ...params
 } )
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 
 /**
  *
  */
 const update = () => Api.put()
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 /**
  *
  * @param id
  */
 const remove = ( id ) => Api.delete()
-    .then( res => res.data )
-    .catch( error => {
-        throw  new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 export const apiTask = {
-    create: create,
-    update: update,
-    remove: remove
+    fetchAll: fetchAll,
+    create  : create,
+    update  : update,
+    remove  : remove,
 };

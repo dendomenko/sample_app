@@ -1,16 +1,28 @@
-import { FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS } from './../../constants/user';
-import { Map, List } from 'immutable';
+import {
+    FETCH_MEMBERS_AND_ROLES_FAILURE,
+    FETCH_MEMBERS_AND_ROLES_SUCCESS,
+    FETCH_USERS_SUCCESS,
+    FETCH_USERS_FAILURE
+} from './../../constants/user';
+import { fromJS } from 'immutable';
 
 
-const initialState = Map( {
-    list : List( [] ),
-    error: null
+const initialState = fromJS( {
+    list      : [],
+    roles     : [],
+    isFetching: false,
+    error     : null
 } );
 
 
 const reducer = ( state = initialState, { type, payload } ) => {
 
     switch ( type ) {
+
+        case  FETCH_MEMBERS_AND_ROLES_SUCCESS:
+            return state.merge( payload );
+        case FETCH_MEMBERS_AND_ROLES_FAILURE:
+            return state.merge( payload );
 
         case FETCH_USERS_SUCCESS:
             return state.merge( payload );
