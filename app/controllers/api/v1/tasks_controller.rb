@@ -20,13 +20,19 @@ module Api
         end
       end
 
+      def update
+        task = Task.find params[:id]
+        task.update task_params
+        render json: {task: task}, status: :created
+      end
+
       private
       def task_number
         Task.where(:project_id => params[:project_id]).count
       end
       
       def task_params
-        params.permit( :title, :description, :time,:executor_id, :time_do,:time_done, :status_id, :priority_id, :type_id);
+        params.permit( :title, :description, :executor_id, :time_do,:time_done, :status_id, :priority_id, :type_id);
       end
 
     end

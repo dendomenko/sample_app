@@ -93,7 +93,7 @@ GET:<br>
 Get all tasks
 ```/api/v1/projects/:project_id/tasks```
 
-POST:<br>
+POST: CREATE NEW TASK<br>
 ```/api/v1/projects/:project_id/tasks```
 ```
 {
@@ -109,3 +109,18 @@ POST:<br>
 }
 ```
 
+PUT: UPDATE TASK<br>
+```/api/v1/projects/:project_id/tasks/:id```
+```
+{
+        "title":"<title>",
+        "description":"<description>",
+        "executor_id":"",
+        "time_do":"",
+        "time_done":"",
+        "status_id":"",
+        "type_id":"",
+        "priority_id":""
+
+}
+```
