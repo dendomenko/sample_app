@@ -3,7 +3,6 @@ import React from  'react';
 import { Feed, Header, Icon, Divider } from 'semantic-ui-react';
 import { generate } from 'shortid';
 import Item from './TeamItem';
-import ActionMembers from './ActionMembers';
 
 type Props = {
     items: Array<Object>
@@ -29,8 +28,6 @@ export  default ( { items }: Props ) => (
             items.map( item => <Item key={generate()}{...item}/> )
         }
         <Divider/>
-        <ActionMembers/>
-
     </Feed>
 );
 

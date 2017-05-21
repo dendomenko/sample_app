@@ -7,6 +7,9 @@ import * as types from './../../constants/user';
 import { Session } from 'utils/Session';
 import { handleRequestFailure, } from './../../actions/common';
 import * as actionMember from './../../actions/members';
+
+import { normalizeUsers } from './../../utils/normalizr-select';
+
 import {
     userLoginSuccess,
     registerUserSuccess,
@@ -180,10 +183,8 @@ function * fetchUsers() {
 
         const response = yield call( apiUser.fetch );
 
-        console.info( 'RESPONSE INFO USERS', response );
 
-
-        yield put( actionMember.fetchSuccess( response ) );
+        yield put( actionMember.fetchSuccess( normalizeUsers( response ) ) );
     }
     catch ( e ) {
 

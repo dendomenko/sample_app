@@ -170,6 +170,7 @@ function* flowMembersAndRoles() {
  *
  */
 function* rootProjectsSaga() {
+
     yield[
         fork( flowProjects ),
         fork( flowCreateProject ),

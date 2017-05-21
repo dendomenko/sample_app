@@ -25,7 +25,7 @@ const update = ( { name, project_id, users }: Props ) =>
 
 
 const add = ( { user_id, project_id, role } ) =>
-    Api.post( `projects/${project_id}/adduser`, { user_id, project_id, role } )
+    Api.post( `projects/${project_id}/add-user`, { user_id, project_id, role } )
         .then( SuccessRequest )
         .catch( FailueRequest );
 
@@ -38,7 +38,7 @@ const add = ( { user_id, project_id, role } ) =>
  */
 const add_members = ( { user_id, role, project_id } ) => {
     debugger;
-    return Api.post( `/projects/${project_id}/adduser`, { user_id, role, project_id } )
+    return Api.post( `/projects/${project_id}/add-user`, { user_id, role, project_id } )
         .then( SuccessRequest )
         .catch( FailueRequest );
 };

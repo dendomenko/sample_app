@@ -7,30 +7,37 @@ import  TeamList  from './../components/Teamlist';
 import Explore from './../components/ProjectExplore';
 import CreateTask from 'containers/TaskForm';
 import TaskList from './../../../components/Task/FeedList';
-
+import  ActionMemberForm from './../components/ActionMembers';
+import { fetchMembers } from 'actions/members';
+import { generate } from 'shortid';
 
 /**
- *
+ * TODO should to rework members
  */
 class ProjectContainer extends React.Component {
 
 
     componentWillMount() {
 
-        const { slug, fetchProject } = this.props;
+        const { slug, fetchProject, fetchMembers } = this.props;
 
         fetchProject( slug );
+        fetchMembers();
     }
 
 
     render() {
 
-        const { team, project, tasks } = this.props;
+        const { team, project, tasks, members } = this.props;
+
+
         return (
             <Grid stackable relaxed divided doubling>
                 <Grid.Row columns={2}>
                     <Grid.Column>
                         <Explore {...project.toJS()}/>
+                        <Divider/>
+                        <ActionMemberForm members={ members }/>
                         <Divider/>
                         <TeamList items={team.toJS()}/>
                     </Grid.Column>
@@ -43,7 +50,8 @@ class ProjectContainer extends React.Component {
 
             </Grid>
 
-        );
+        )
+            ;
     }
 }
 
@@ -53,13 +61,16 @@ const mapStateToProps = ( state ) => ({
     slug   : state.getIn( [ 'routing', 'last' ] ),
     tasks  : state.getIn( [ 'single', 'tasks' ] ),
     team   : state.getIn( [ 'single', 'team' ] ),
+    members: state.getIn( [ 'members', 'list' ] )
+
+
 });
 
 const mapDispatchToProps = ( dispatch ) =>
     ( {
-        fetchProject: ( slug ) => {
-            dispatch( fetchProjectBySlug( slug ) );
-        }
+        fetchProject: ( slug ) => dispatch( fetchProjectBySlug( slug ) ),
+
+        fetchMembers: () => dispatch( fetchMembers() )
     });
 
 

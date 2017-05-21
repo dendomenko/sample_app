@@ -40,7 +40,8 @@ var config = {
             'semantic-ui-react'
         ],
 
-        bundle: [ 'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr',
+        bundle: [ 'babel-polyfill',
+            'webpack-hot-middleware/client?http://localhost.target.com:8080/__webpack_hmr',
             './app/js/index.js' ],
         styles: './app/assets/less/main.less'
 
@@ -129,8 +130,16 @@ var config = {
         new webpack
             .optimize
             .UglifyJsPlugin( {
+                beautify: false,
+                comments: false,
                 compress: {
-                    warnings: false
+                    sequences   : true,
+                    booleans    : true,
+                    loops       : true,
+                    unused      : true,
+                    warnings    : false,
+                    drop_console: true,
+                    unsafe      : true
                 }
             } ),
 
@@ -141,6 +150,8 @@ var config = {
         ),
 
         new webpack.HotModuleReplacementPlugin(),
+
+        new webpack.optimize.OccurrenceOrderPlugin(),
 
         new webpack.NoErrorsPlugin(),
 
@@ -158,12 +169,17 @@ var config = {
             allChunks: true
         } ),
         new WebpackNotifierPlugin( { title: 'Webpack has been done', alwaysNotify: true } ),
+
+        new webpack.EnvironmentPlugin(),
+
         new webpack
             .optimize
             .CommonsChunkPlugin( {
 
                 // This name 'vendor' ties into the entry definition
-                name: 'vendor',
+                name    : 'vendor',
+                children: true,
+                async   : true,
 
                 // We don't want the default vendor.js name
                 filename: 'vendor-bundle.js',
