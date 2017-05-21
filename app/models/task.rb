@@ -6,4 +6,6 @@ class Task < ApplicationRecord
   belongs_to :type
   belongs_to :priority
 
+  has_many :attachments
+
 end
