@@ -44,8 +44,8 @@ module Api
 
       def add_user
         return render(json: {text: 'Already exist!'}) if Role.find_by(
-            project_id: params[:project_id],
-            user_id: params[:user_id]
+          project_id: params[:project_id],
+          user_id: params[:user_id]
         )
         @role = Role.new(role_params)
         if @role.save

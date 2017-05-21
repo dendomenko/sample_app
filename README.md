@@ -90,8 +90,13 @@ if error return 200 OK and errors array
 ### TASK requests
 
 GET:<br>
-Get all tasks
+Get all tasks for project
 ```/api/v1/projects/:project_id/tasks```
+
+Get all tasks for project for user
+ 
+ ```/api/v1/projects/:project_id/tasks/user/:user_id```
+
 
 POST: CREATE NEW TASK<br>
 ```/api/v1/projects/:project_id/tasks```

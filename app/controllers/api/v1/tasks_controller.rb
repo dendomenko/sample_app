@@ -4,7 +4,7 @@ module Api
 
       def index
         tasks = Task.all
-        render json: tasks, status: :created
+        render json: tasks, status: :ok
       end
 
       def create
@@ -24,6 +24,11 @@ module Api
         task = Task.find params[:id]
         task.update task_params
         render json: {task: task}, status: :created
+      end
+
+      def all_user_tasks
+        tasks = Task.all.where(executor_id: params[:user_id])
+        render json: tasks, status: :ok
       end
 
       private
