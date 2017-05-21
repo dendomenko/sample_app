@@ -43,7 +43,11 @@ module Api
       end
 
       def add_user
-        @role = Role.new(user_id: params[:user_id], project_id: params[:project_id], role: params[:role])
+        return render(json: {text: 'Already exist!'}) if Role.find_by(
+            project_id: params[:project_id],
+            user_id: params[:user_id]
+        )
+        @role = Role.new(role_params)
         if @role.save
           render json: {role: 'Created'}, status: :created
         else
@@ -71,6 +75,10 @@ module Api
 
       def project_params
         params.permit(:name, :task_name, :description)
+      end
+
+      def role_params
+        params.permit(:user_id, :project_id, :role)
       end
 
     end
