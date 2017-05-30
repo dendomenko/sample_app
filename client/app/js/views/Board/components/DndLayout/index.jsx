@@ -6,7 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 /**
  *
  */
-export default Grid = ( { children } ) => (
+const DndLayout = ( { children } ) => (
 
     <DragDropContextProvider backend={HTML5Backend}>
         <Grid>
@@ -14,3 +14,5 @@ export default Grid = ( { children } ) => (
         </Grid>
     </DragDropContextProvider>
 );
+
+export default DndLayout;
