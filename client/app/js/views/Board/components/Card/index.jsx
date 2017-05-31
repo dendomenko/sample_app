@@ -78,6 +78,7 @@ export default class DndCard extends Component {
 
 
         console.log( 'CARD PROPS', this.props );
+
         return connectDragSource(
             <div>
                 <Card color='red'>
