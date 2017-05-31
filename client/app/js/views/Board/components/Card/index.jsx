@@ -8,46 +8,33 @@ import { Card } from 'semantic-ui-react';
 
 const cardSource = {
 
-    canDrag( props ) {
-
-        console.log( 'canDrag', props );
-        return props.isReady;
-    },
+    // canDrag( props ) {
+    //
+    //     console.log( 'canDrag', props );
+    //     // return props.isReady;
+    // },
     isDragging( props, monitor ) {
 
-        console.log( 'isDragging', props, monitor );
         // If your component gets unmounted while dragged
         // (like a card in Kanban board dragged between lists)
         // you can implement something like this to keep its
         // appearance dragged:
         return monitor.getItem().id === props.id;
     },
-    beginDrag( props, monitor, component ) {
+    beginDrag( props ) {
         // Return the data describing the dragged item
-        console.info( 'beginDrag', props );
+
         const item = { id: props.id };
         return item;
     },
 
     endDrag( props, monitor, component ) {
 
-        console.log( 'endDrag props', props );
-        console.log( 'endDrag monitor', monitor );
-        console.log( 'endDrag component', component );
-        if (!monitor.didDrop()) {
-            // You can check whether the drop was successful
-            // or if the drag ended but nobody handled the drop
-            return;
-        }
+        console.log( 'card end drag', props, component, monitor );
+        const { id } = props;
 
-        // When dropped on a compatible target, do something.
-        // Read the original dragged item from getItem():
-        const item = monitor.getItem();
+        return id;
 
-        // You may also read the drop result from the drop target
-        // that handled the drop, if it returned an object from
-        // its drop() method.
-        const dropResult = monitor.getDropResult();
 
         // This is a good place to call some Flux action
 //        CardActions.moveCardToList( item.id, dropResult.listId );
@@ -55,17 +42,20 @@ const cardSource = {
 
 };
 
-const collect = ( connect, monitor ) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging       : monitor.isDragging(),
-});
+const collect = ( connect, monitor ) => {
+    console.log( 'S', connect );
+    return ({
+        connectDragSource: connect.dragSource(),
+        isDragging       : monitor.isDragging(),
+    });
+};
 
 @DragSource( ItemTypes.CARD, cardSource, collect )
 export default class DndCard extends Component {
 
     static propTypes = {
-        connectDragSource: PropTypes.func,
-        connectDropTarget: PropTypes.func,
+        connectDragSource: PropTypes.func.isRequired,
+        // connectDropTarget: PropTypes.func,
         index            : PropTypes.number,
         isDragging       : PropTypes.bool,
         id               : PropTypes.any,
@@ -73,27 +63,22 @@ export default class DndCard extends Component {
 //        moveCard         : PropTypes.func.isRequired,
     };
 
-    render() {
-        const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
+    render () {
+        const { id, isDragging, connectDragSource, connectDropTarget } = this.props;
 
 
-        console.log( 'CARD PROPS', this.props );
+        // console.log( 'CARD PROPS', this.props );
 
         return connectDragSource(
-            <div>
-                <Card color='red'>
-                    <Card.Content>
-                        <Card.Header>
-                            {text}
-                        </Card.Header>
-                        <Card.Meta>
-                            Friends of Elliot
-                        </Card.Meta>
-                        <Card.Description>
-                            Steve wants to add you to the group <strong>best friends</strong>
-                        </Card.Description>
-                    </Card.Content>
-                </Card>
+            <div style={
+                {
+                    border : '1px solid black',
+                    margin : '20px',
+                    padding: '20px',
+                    display: 'inline-block'
+                }}>
+                <span>{id}</span>
+                <div>HEllo</div>
             </div>,
         );
     }

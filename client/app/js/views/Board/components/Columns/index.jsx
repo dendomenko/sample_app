@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { DropTarget, } from 'react-dnd';
 import ItemTypes from './../../Item-types';
-
+import Card from './../Card';
+import { generate } from 'shortid';
 
 const style = {
     height         : '12rem',
@@ -16,84 +17,65 @@ const style = {
     textAlign      : 'center',
     fontSize       : '1rem',
     lineHeight     : 'normal',
-    float          : 'left',
+    border         : '1px solid black'
 };
 const boxTarget = {
     canDrop( props, monitor ) {
-        console.log( 'canDrop', props, monitor );
+        console.log( 'COLUMN drop canDrop', props, monitor );
         // You can disallow drop based on props or item
         const item = monitor.getItem();
-        return canMakeChessMove( item.fromPosition, props.position );
+        return true;
+        // return canMakeChessMove( item.fromPosition, props.position );
     },
 
-    hover( props, monitor, component ) {
-        console.log( 'hover', props, monitor, component );
-        // This is fired very often and lets you perform side effects
-        // in response to the hover. You can't handle enter and leave
-        // here—if you need them, put monitor.isOver() into collect() so you
-        // can just use componentWillReceiveProps() to handle enter/leave.
 
-        // You can access the coordinates if you need them
-        const clientOffset = monitor.getClientOffset();
-        const componentRect = findDOMNode( component ).getBoundingClientRect();
-
-        // You can check whether we're over a nested drop target
-        const isJustOverThisOne = monitor.isOver( { shallow: true } );
-
-        // You will receive hover() even for items for which canDrop() is false
-        const canDrop = monitor.canDrop();
+    drop( props, monitor ) {
+        console.log( 'Props', props );
+        props.onDrop( monitor.getItem() );
     },
 
-    drop( props, monitor, component ) {
-        console.log( 'drop', props, monitor, component );
-        if (monitor.didDrop()) {
-            // If you want, you can check whether some nested
-            // target already handled drop
-            return;
-        }
+    // endDrag( props, monitor, component )
+    // {
+    //     console.log( 'endDrag card props', props );
+    //     console.log( 'endDrag card component', component );
+    //     console.log( 'endDrag card monitor', monitor );
+    // }
 
-        // Obtain the dragged item
-        const item = monitor.getItem();
 
-        // You can do something with it
-//        ChessActions.movePiece( item.fromPosition, props.position );
-
-        // You can also do nothing and return a drop result,
-        // which will be available as monitor.getDropResult()
-        // in the drag source's endDrag() method
-        return { moved: true };
-    }
 };
 
-const collect = ( connect, monitor ) => ({
-    connectDropTarget: connect.dropTarget(),
-    // You can ask the monitor about the current drag state:
-    isOver           : monitor.isOver(),
-    isOverCurrent    : monitor.isOver( { shallow: true } ),
-    canDrop          : monitor.canDrop(),
-    itemType         : monitor.getItemType()
-});
+function collect ( connect, monitor ) {
 
+    console.log( 'T', connect );
+
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver           : monitor.isOver(),
+        canDrop          : monitor.canDrop(),
+    };
+
+}
 @DropTarget( ItemTypes.CARD, boxTarget, collect )
-
-
 export default class Column extends Component {
 
-    componentWillReceiveProps( nextProps ) {
+    state = {
+        cards: []
+    };
 
-        console.log( 'PROPS', nextProps );
-        if (!this.props.isOver && nextProps.isOver) {
-            // You can use this as enter handler
+    componentWillReceiveProps ( nextProps ) {
+
+        console.log( 'old PROPS', this.props );
+        console.log( 'new PROPS', nextProps );
+        // const { id } = nextProps;
+        if ( this.props.canDrop !== nextProps.canDrop ) {
+
+
+            console.log( 'Render' );
+            // this.setState( {
+            //     cards: this.state.cards.concat( [ id ] )
+            // } );
         }
 
-        if (this.props.isOver && !nextProps.isOver) {
-            // You can use this as leave handler
-        }
-
-        if (this.props.isOverCurrent && !nextProps.isOverCurrent) {
-            // You can be more specific and track enter/leave
-            // shallowly, not including nested targets
-        }
     }
 
     static propTypes = {
@@ -103,28 +85,29 @@ export default class Column extends Component {
         lastDroppedItem  : PropTypes.object
     };
 
-    render() {
+    render () {
 
         const {
-                  accepts,
-                  position,
-                  canDrop,
-                  isOver,
-                  connectDropTarget,
-                  lastDroppedItem
-              } = this.props;
+            accepts,
+            position,
+            canDrop,
+            isOver,
+            connectDropTarget,
+            lastDroppedItem,
+            cards
+        } = this.props;
 
 
         const isActive = canDrop && isOver;
 
-        
+
         console.log( 'Main props', this.props );
 
 
         return connectDropTarget(
             <div style={{ ...style }}>
                 <Grid.Column>
-                    <div>asdasdsa</div>
+                    {cards.map( id => <Card key={generate()} id={id}/> )}
                 </Grid.Column>,
             </div>
         );
