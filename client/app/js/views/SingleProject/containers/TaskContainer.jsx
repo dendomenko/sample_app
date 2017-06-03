@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CreateTask from 'containers/TaskForm';
+
 import TaskList from './../../../components/Task/FeedList';
-import { Loader } from 'semantic-ui-react';
-
-
+import { Loader, Divider, Segment } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
+import CreateTask from 'containers/TaskForm';
 class TaskContainer extends React.Component {
+
+    state = { open: false };
+    show = () => () => this.setState( { open: true } );
+    close = () => this.setState( { open: false } );
 
 
     render() {
 
         const { tasks, isFetching } = this.props;
-
+        const { open } = this.state;
         if (!isFetching)
             return <Loader
                 active
@@ -19,8 +23,29 @@ class TaskContainer extends React.Component {
                 content='Loading tasks'/>;
 
         return (
-            <TaskList tasks={tasks.toJS()}/>
+            <div>
+                <Segment tertiary>
+                    <Button
+                        onClick={this.show()}
+                        basic
+                        color='green'>
+                        Create new task
+                    </Button>
+                </Segment>
 
+                <TaskList tasks={tasks.toJS()}/>
+                <Modal dimmer='blurring' open={open} onClose={this.close}>
+                    <Modal.Header>Create task</Modal.Header>
+                    <Modal.Content>
+                        <CreateTask/>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button negative onClick={this.close}>
+                            Close
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
+            </div>
         );
     }
 }
