@@ -8,42 +8,15 @@ import { Card } from 'semantic-ui-react';
 
 const cardSource = {
 
-    // canDrag( props ) {
-    //
-    //     console.log( 'canDrag', props );
-    //     // return props.isReady;
-    // },
-    isDragging( props, monitor ) {
+    isDragging: ( props, monitor ) => monitor.getItem().id === props.id,
 
-        // If your component gets unmounted while dragged
-        // (like a card in Kanban board dragged between lists)
-        // you can implement something like this to keep its
-        // appearance dragged:
-        return monitor.getItem().id === props.id;
-    },
-    beginDrag( props ) {
-        // Return the data describing the dragged item
+    beginDrag: ( props ) => props,
 
-        const item = { id: props.id };
-        return item;
-    },
-
-    endDrag( props, monitor, component ) {
-
-        console.log( 'card end drag', props, component, monitor );
-        const { id } = props;
-
-        return id;
-
-
-        // This is a good place to call some Flux action
-//        CardActions.moveCardToList( item.id, dropResult.listId );
-    }
+    endDrag: ( props, monitor, component ) => props.id
 
 };
 
 const collect = ( connect, monitor ) => {
-    console.log( 'S', connect );
     return ({
         connectDragSource: connect.dragSource(),
         isDragging       : monitor.isDragging(),
@@ -55,22 +28,18 @@ export default class DndCard extends Component {
 
     static propTypes = {
         connectDragSource: PropTypes.func.isRequired,
-        // connectDropTarget: PropTypes.func,
         index            : PropTypes.number,
+        order            : PropTypes.number,
         isDragging       : PropTypes.bool,
         id               : PropTypes.any,
-        text             : PropTypes.string
-//        moveCard         : PropTypes.func.isRequired,
     };
 
-    render () {
-        const { id, isDragging, connectDragSource, connectDropTarget } = this.props;
+    render() {
+        const { id, text, connectDragSource } = this.props;
 
-
-        // console.log( 'CARD PROPS', this.props );
 
         return connectDragSource(
-            <div style={
+            <div id={id} style={
                 {
                     border : '1px solid black',
                     margin : '20px',
@@ -78,7 +47,8 @@ export default class DndCard extends Component {
                     display: 'inline-block'
                 }}>
                 <span>{id}</span>
-                <div>HEllo</div>
+                <span>REP</span>
+                <span>{text}</span>
             </div>,
         );
     }

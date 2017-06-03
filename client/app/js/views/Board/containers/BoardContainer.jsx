@@ -1,78 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Column from './../components/Columns';
+
 import DnDGrid from './../components/DndLayout';
 import Card from './../components/Card';
+import { generate } from 'shortid';
 
 
 const default_cards = [
     {
-        id  : 1,
-        text: 'Write a cool JS library',
+        id    : 1,
+        text  : 'Write a cool JS library',
+        status: 'todo'
     }, {
-        id  : 2,
-        text: 'Make it generic enough',
+        id    : 2,
+        text  : 'Make it generic enough',
+        status: 'todo'
     }, {
-        id  : 3,
-        text: 'Write README',
+        id    : 3,
+        text  : 'Write README',
+        status: 'todo'
     }, {
-        id  : 4,
-        text: 'Create some examples',
+        id    : 4,
+        text  : 'Create some examples',
+        status: 'todo'
     }, {
-        id  : 5,
-        text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+        id    : 5,
+        text  : 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+        status: 'todo'
     }, {
-        id  : 6,
-        text: '???',
+        id    : 6,
+        text  : '???',
+        status: 'todo'
     }, {
-        id  : 7,
-        text: 'PROFIT',
+        id    : 7,
+        text  : 'PROFIT',
+        status: 'todo'
     }
 ];
 
+const columnsType = [ 'todo', 'onHold', 'inProgress', 'inReview', 'done' ];
 
 export class BoardContainer extends React.Component {
 
-    state = {
-        cards: []
-    };
+    render() {
 
-    componentWillReceiveProps ( nextProps ) {
-
-        console.log( 'main old PROPS', this.props );
-        console.log( 'main new PROPS', nextProps );
-        // const { id } = nextProps;
-        if ( this.props.canDrop !== nextProps.canDrop ) {
-
-
-            console.log( 'Render' );
-            // this.setState( {
-            //     cards: this.state.cards.concat( [ id ] )
-            // } );
-        }
-
-    }
-
-    render () {
-        const { cards } = this.state;
-        return (
-            <DnDGrid>
-                <Column cards={cards}/>
-                <div>
-                    {default_cards.map( ( card, i ) => (
-                        <Card
-                            key={card.id}
-                            index={i}
-                            id={card.id}
-                        />
-                    ) )}
-
-                </div>
-            </DnDGrid>
-
+        const columns = columnsType.map( column => ({
+                items: default_cards,
+                type : column
+            })
         );
+
+        return <DnDGrid columns={columns}/>;
     }
 }
+
+/**
+ *
+ * @param state
+ */
+const mapStateToProps = state => state;
+/**
+ *
+ * @param dispatch
+ * @returns {{mapActions: (A|B|M|N)}}
+ */
+const mapDispatchToProps = ( dispatch ) =>
+    ({ dispatch } );
 
 
 export default connect()( BoardContainer );

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
-import { DropTarget, } from 'react-dnd';
+import React, { Component } from 'react';
+import { DropTarget } from 'react-dnd';
+import { generate } from 'shortid';
 import ItemTypes from './../../Item-types';
 import Card from './../Card';
-import { generate } from 'shortid';
+
 
 const style = {
     height         : '12rem',
@@ -20,111 +20,97 @@ const style = {
     border         : '1px solid black'
 };
 const boxTarget = {
-    canDrop( props, monitor ) {
-        console.log( 'COLUMN drop canDrop', props, monitor );
-        // You can disallow drop based on props or item
-        const item = monitor.getItem();
-        return true;
-        // return canMakeChessMove( item.fromPosition, props.position );
+    drop: ( props, monitor ) => {
+        if (monitor.didDrop())
+            return;
     },
 
-
-    drop( props, monitor ) {
-        console.log( 'Props', props );
-        props.onDrop( monitor.getItem() );
-    },
-
-    // endDrag( props, monitor, component )
-    // {
-    //     console.log( 'endDrag card props', props );
-    //     console.log( 'endDrag card component', component );
-    //     console.log( 'endDrag card monitor', monitor );
-    // }
-
-
+    canDrop: ( props, monitor ) => Boolean( monitor.getItem() )
+    ,
 };
 
-function collect ( connect, monitor ) {
-
-    console.log( 'T', connect );
+function collect( connect, monitor ) {
 
     return {
         connectDropTarget: connect.dropTarget(),
         isOver           : monitor.isOver(),
         canDrop          : monitor.canDrop(),
+        item             : monitor.getItem()
     };
 
 }
 @DropTarget( ItemTypes.CARD, boxTarget, collect )
 export default class Column extends Component {
 
-    state = {
-        cards: []
-    };
-
-    componentWillReceiveProps ( nextProps ) {
-
-        console.log( 'old PROPS', this.props );
-        console.log( 'new PROPS', nextProps );
-        // const { id } = nextProps;
-        if ( this.props.canDrop !== nextProps.canDrop ) {
-
-
-            console.log( 'Render' );
-            // this.setState( {
-            //     cards: this.state.cards.concat( [ id ] )
-            // } );
-        }
-
-    }
-
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
         isOver           : PropTypes.bool.isRequired,
         canDrop          : PropTypes.bool.isRequired,
-        lastDroppedItem  : PropTypes.object
+        lastDroppedItem  : PropTypes.object,
+        type             : PropTypes.string.isRequired
+    };
+    static defaultProps = {
+        items: [],
+        type : ''
     };
 
-    render () {
+    constructor( props ) {
+        super( props );
+
+        console.log( 'Column', props );
+
+        this.state = {
+            cards: props.items,
+        };
+        console.log( 'Column state', this.state );
+    }
+
+
+    componentWillReceiveProps( nextProps ) {
+        console.log( 'recive' );
+        console.log( nextProps );
+        console.log( this.props );
+
+        console.log( 'recive' );
+        if (this.props.isOver && !nextProps.isOver) {
+            const { item: { id } } = nextProps;
+            this.setState( {
+                cards: this.state.cards.concat( [ id ] )
+            } );
+
+        }
+
+    }
+
+    shouldComponentUpdate( nextProps, nextState ) {
+        console.log( 'should' );
+        console.log( nextProps );
+        console.log( this.props );
+        return true;
+    }
+
+
+    render() {
 
         const {
-            accepts,
-            position,
-            canDrop,
-            isOver,
-            connectDropTarget,
-            lastDroppedItem,
-            cards
-        } = this.props;
+                  canDrop,
+                  isOver,
+                  connectDropTarget,
+                  type
+              } = this.props;
 
+        const { cards } = this.state;
 
-        const isActive = canDrop && isOver;
-
-
-        console.log( 'Main props', this.props );
-
-
+        console.log( 'Render column', this.props, this.state );
         return connectDropTarget(
-            <div style={{ ...style }}>
-                <Grid.Column>
-                    {cards.map( id => <Card key={generate()} id={id}/> )}
-                </Grid.Column>,
+            <div>
+
+                {cards.map( card => <Card {...card}/> )}
             </div>
         );
     }
 }
 
-
-//export const Column = ( { children, type } ) => (
-//    <GridColumn >
-//        <div type={type}>
-//            {children}
-//        </div>
-//    </GridColumn>
-//);
-//
-//
-//export default Column;
 
 
 
