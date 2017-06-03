@@ -10,8 +10,7 @@ export default class SingleProjectView extends React.PureComponent {
     render() {
         return (
 
-            <Grid divided='horizontal'>
-
+            <Grid>
                 <Grid.Row columns={2}>
                     <Grid.Column>
                         <ProjectContainer/>
