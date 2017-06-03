@@ -2,8 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
 
-      before_action :inspect_params, :authenticate_request!, except: [:login, :create]
-      # skip_before_action :authenticate_request!, only: [:login, :create]
+      # before_action :inspect_params, :authenticate_request!, except: [:login, :create]
 
       def index
         @users = User.all

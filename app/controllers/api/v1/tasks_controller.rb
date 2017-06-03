@@ -3,8 +3,13 @@ module Api
     class TasksController < ApplicationController
 
       def index
-        tasks = Task.all
-        render json: tasks, status: :ok
+        project = find_project
+        if project
+        @tasks = Task.all.where project_id: project.id
+        else
+          render json: {error: 'Project doesn\'t exist'}
+        end
+
       end
 
       def show
@@ -13,7 +18,6 @@ module Api
       end
 
       def create
-        # user = User.find(params[:user_id])
         task = Task.create(task_params)
         task.user = load_current_user!
         task.project = Project.find(params[:project_id])
@@ -52,6 +56,11 @@ module Api
 
       def add_attachment(task_id, file)
         Attachment.create(task_id: task_id, file: file)
+      end
+
+      def find_project
+        project = Project.find_by_id params[:project_id]
+        project ||= Project.find_by_slug params[:project_id]
       end
 
     end
