@@ -1,7 +1,7 @@
 module Api
   module V1
     class ProjectsController < ApplicationController
-      before_action :authenticate_request!
+      # before_action :authenticate_request!
 
       def index
         @projects = load_current_user!.projects
