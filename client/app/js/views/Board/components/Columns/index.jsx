@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { generate } from 'shortid';
 import ItemTypes from './../../Item-types';
-import {DndCard} from './../Card';
+import { DndCard } from './../Card';
 
 
 const style = {
@@ -94,13 +94,12 @@ export default class Column extends Component {
                   connectDropTarget,
                   type
               } = this.props;
-
+        console.log( this.props );
         const { cards } = this.state;
 
 
         return connectDropTarget(
             <div>
-
                 {cards.map( card => <DndCard key={generate()}{...card}/> )}
             </div>
         );
