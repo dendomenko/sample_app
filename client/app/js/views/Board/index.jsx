@@ -4,9 +4,15 @@ import NavBar  from './components/Navbar';
 import BoardContainer from './containers/BoardContainer';
 export default class BoardView extends React.PureComponent {
 
+    constructor( props, context ) {
+        super();
+        console.log( 'CONTEXT', context );
+    }
+
     render() {
+        console.log( 'Views', this.props );
         return (
-            <Container>
+            <Container fluid>
                 <NavBar/>
                 <BoardContainer/>
             </Container>

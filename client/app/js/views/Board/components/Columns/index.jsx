@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { generate } from 'shortid';
 import ItemTypes from './../../Item-types';
-import Card from './../Card';
+import {DndCard} from './../Card';
 
 
 const style = {
@@ -62,16 +62,12 @@ export default class Column extends Component {
         this.state = {
             cards: props.items,
         };
-        console.log( 'Column state', this.state );
+
     }
 
 
     componentWillReceiveProps( nextProps ) {
-        console.log( 'recive' );
-        console.log( nextProps );
-        console.log( this.props );
 
-        console.log( 'recive' );
         if (this.props.isOver && !nextProps.isOver) {
             const { item: { id } } = nextProps;
             this.setState( {
@@ -101,11 +97,11 @@ export default class Column extends Component {
 
         const { cards } = this.state;
 
-        console.log( 'Render column', this.props, this.state );
+
         return connectDropTarget(
             <div>
 
-                {cards.map( card => <Card {...card}/> )}
+                {cards.map( card => <DndCard key={generate()}{...card}/> )}
             </div>
         );
     }

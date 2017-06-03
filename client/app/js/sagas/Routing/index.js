@@ -1,6 +1,6 @@
 import { fork, take } from 'redux-saga/effects';
 import { CALL_HISTORY_METHOD, LOCATION_CHANGE } from 'react-router-redux';
-//import {} from ''
+import { parsePath } from 'history';
 
 
 export function* routing() {
@@ -11,24 +11,14 @@ export function* routing() {
 function * watchRouting() {
     while ( true ) {
 
-        const resp1 = yield take( LOCATION_CHANGE );
-        console.log( 'RR!', resp1 );
-
+        const { payload } = yield take( LOCATION_CHANGE );
 
     }
 }
 
-function* watch() {
-
-    while ( true ) {
-        const resp = yield take( CALL_HISTORY_METHOD );
-        console.log( 'RR', resp );
-    }
-}
 function *rootRoutingSaga() {
     yield [
         fork( watchRouting ),
-        fork( watch )
     ];
 }
 

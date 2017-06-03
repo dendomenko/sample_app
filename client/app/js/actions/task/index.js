@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { createRequest } from './../common';
 
 
-export const fetchAll = () => createRequest( types.FETCH_ALL_TASKS );
+export const fetchAll = ( project_id ) => createRequest( types.FETCH_ALL_TASKS, { project_id } );
 
 
 export const fetchAllSuccess = ( payload ) => ({
@@ -40,6 +40,5 @@ export const updateTaskSuccess = ( {} ) => ({
     type   : types.CREATE_TASK_SUCCESS,
     payload: fromJS( {} )
 });
-
 
 

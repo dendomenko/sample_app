@@ -38,7 +38,7 @@ function* create( { payload: { data, resolve, reject } } ) {
 function * fetchAll( project_id ) {
 
     try {
-
+        debugger;
         const response = yield call( apiTask.fetchAll, project_id );
 
         yield put( actions.fetchAllSuccess( response ) );
@@ -75,6 +75,18 @@ function *fetchAllFlow() {
 
 
     }
+
+}
+
+
+function* watchFetchTasks() {
+
+    while ( true ) {
+        const { project_id } = take( types.FETCH_ALL_TASKS );
+
+        yield call( fetchAll, project_id );
+    }
+
 
 }
 

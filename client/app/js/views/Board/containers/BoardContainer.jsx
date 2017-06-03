@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { fetchAll } from './../../../actions/task';
 import DnDGrid from './../components/DndLayout';
 import Card from './../components/Card';
 import { generate } from 'shortid';
@@ -42,7 +42,13 @@ const columnsType = [ 'todo', 'onHold', 'inProgress', 'inReview', 'done' ];
 
 export class BoardContainer extends React.Component {
 
+    componentDidMount() {
+
+    }
+
     render() {
+
+        console.log( 'ss', this );
 
         const columns = columnsType.map( column => ({
                 items: default_cards,
@@ -58,14 +64,19 @@ export class BoardContainer extends React.Component {
  *
  * @param state
  */
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+    tasks     : state.getIn( [ 'tasks', 'items' ] ),
+    isFetching: state.getIn( [ 'tasks', 'isFetching' ] ),
+});
 /**
  *
  * @param dispatch
  * @returns {{mapActions: (A|B|M|N)}}
  */
 const mapDispatchToProps = ( dispatch ) =>
-    ({ dispatch } );
+    (
+        { fetchTask: dispatch( fetchAll() ) }
+    );
 
 
 export default connect()( BoardContainer );
