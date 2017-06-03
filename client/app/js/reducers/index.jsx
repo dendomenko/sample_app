@@ -1,11 +1,12 @@
-// import { routerReducer } from "react-router-redux";
 import { combineReducers } from 'redux-immutable';
-import { reducer as formReducer } from 'redux-form';
+import { reducer as formReducer } from 'redux-form/immutable';
 import userReducer from './user';
 import routeReducer from './routing';
-import projectsReducer from './project/all-projects';
-import singleProjectReducer from './project/single';
+import projectsReducer from './../views/Project/reducer';
+import singleProjectReducer from './../views/SingleProject/reducer';
 import memberReducer  from './members';
+import metaReducer from './meta-data';
+import taskReducer from './task';
 
 const rootReducer = combineReducers( {
     user    : userReducer,
@@ -13,7 +14,9 @@ const rootReducer = combineReducers( {
     routing : routeReducer,
     projects: projectsReducer,
     single  : singleProjectReducer,
-    members : memberReducer
+    members : memberReducer,
+    meta    : metaReducer,
+    tasks   : taskReducer
 } );
 
 export default rootReducer;

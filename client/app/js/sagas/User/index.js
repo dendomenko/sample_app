@@ -7,6 +7,9 @@ import * as types from './../../constants/user';
 import { Session } from 'utils/Session';
 import { handleRequestFailure, } from './../../actions/common';
 import * as actionMember from './../../actions/members';
+
+import { normalizeUsers } from './../../utils/normalizr-select';
+
 import {
     userLoginSuccess,
     registerUserSuccess,
@@ -63,11 +66,11 @@ function* checkAuth() {
  * @param payload
  * @returns {*}
  */
-function* register( { payload: { values, resolve, reject } } ) {
+function* register( { payload: { data, resolve, reject } } ) {
 
     try {
 
-        const { data, status } = yield call( apiUser.register, values );
+        const { data, status } = yield call( apiUser.register, data );
 
         if (data.errors) {
             console.log( data.errors );
@@ -97,11 +100,11 @@ function* register( { payload: { values, resolve, reject } } ) {
  * @param payload
  * @returns {boolean}
  */
-function* authorize( { payload: { values, resolve, reject } } ) {
+function* authorize( { payload: { data, resolve, reject } } ) {
 
     try {
 
-        const response = yield call( apiUser.login, values );
+        const response = yield call( apiUser.login, data );
         if (response.errors) {
             yield call(
                 reject,
@@ -119,7 +122,7 @@ function* authorize( { payload: { values, resolve, reject } } ) {
 
     }
     catch ( error ) {
-        debugger;
+
         yield put( handleRequestFailure( types.USER_LOGIN_FAILURE, error ) );
 
         return false;
@@ -145,11 +148,11 @@ function* logout() {
  * @param reject
  * @returns {boolean}
  */
-function* update( { payload: { values, resolve, reject } } ) {
+function* update( { payload: { data, resolve, reject } } ) {
 
     try {
 
-        const response = yield call( apiUser.update, values );
+        const response = yield call( apiUser.update, data );
 
         if (response.errors) {
 
@@ -177,13 +180,11 @@ function* update( { payload: { values, resolve, reject } } ) {
 function * fetchUsers() {
 
     try {
-        
+
         const response = yield call( apiUser.fetch );
 
-        console.info( 'RESPONSE INFO USERS', response );
 
-
-        yield put( actionMember.fetchSuccess( response ) );
+        yield put( actionMember.fetchSuccess( normalizeUsers( response ) ) );
     }
     catch ( e ) {
 

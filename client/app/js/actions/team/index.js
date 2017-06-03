@@ -4,5 +4,5 @@ import { Map } from 'immutable';
 
 export const createTeam = ( payload ) => ({
     type   : types.CREATE_TEAM_SUCCESS,
-    payload: Map( payload )
+    payload: fromJS( payload )
 });

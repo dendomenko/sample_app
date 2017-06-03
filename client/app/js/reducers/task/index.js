@@ -1,12 +1,20 @@
 import * as types from './../../constants/Task';
-import { List, Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 
-const initialState = Map( {} );
+const initialState = {
+    items     : [],
+    errors    : null,
+    isFetching: false
+};
 
-const reducer = ( state = initialState, { type, payload } ) => {
+const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
 
     switch ( type ) {
+
+        case types.FETCH_ALL_TASKS_SUCCESS:
+            return state.merge( payload );
+
         default:
             return state;
     }

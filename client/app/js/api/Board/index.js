@@ -1,18 +1,20 @@
 import Api from 'api';
+import { FailueRequest, SuccessRequest } from 'utils/handle-request';
 
-
+/**
+ * 
+ */
 const fetch = () => Api.get()
-    .then( res => res.data )
-    .catch( error => {
-        throw new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
+/**
+ *
+ */
 const update = () => Api.get()
-    .then( res => res.data )
-    .catch( error => {
-        throw new Error( error );
-    } );
+    .then( SuccessRequest )
+    .catch( FailueRequest );
 
 
 export const apiBoard = {
