@@ -15,8 +15,8 @@ services:
       - web
     volumes:
       - ./client:/client
-      -  /client/node_modules
-
+      - ./client/node_modules:/client/node_modules
+      - ./client/package.json:/client/package.json
   web:
     container_name: web
     build: .

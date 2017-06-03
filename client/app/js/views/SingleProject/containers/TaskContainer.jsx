@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CreateTask from 'containers/TaskForm';
 import TaskList from './../../../components/Task/FeedList';
-
 import { Loader } from 'semantic-ui-react';
+
 
 class TaskContainer extends React.Component {
 

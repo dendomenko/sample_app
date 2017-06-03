@@ -26,6 +26,7 @@ export default ( { name, description, task_name }: Props ) => (
                         go to board
                     </Link>
                 </div>
+
             </Item.Extra>
         </Item.Content>
     </Item>
