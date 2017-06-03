@@ -28,9 +28,10 @@ class ProjectContainer extends React.Component {
 
     render() {
 
-        const { team, project, tasks, members, project_id } = this.props;
+        const { team, project, members, project_id } = this.props;
 
         console.log( 'PROJECT_ID', project_id );
+
         return (
             <Grid stackable relaxed divided doubling>
                 <Grid.Column>

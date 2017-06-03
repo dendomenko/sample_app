@@ -7,8 +7,6 @@ WORKDIR $APP_CLIENT
 ENV PATH=$APP_CLIENT/node_modules/.bin:$PATH
 COPY package.json $APP_HOME/
 
-RUN yarn global add webpack --ignore-scripts --unsafe-perm  && yarn add global flow-bin &&yarn
+RUN yarn global add webpack --ignore-scripts --unsafe-perm  && yarn add global flow-bin && yarn install
 
 COPY . $APP_CLIENT
-CMD yarn start
-EXPOSE 8080
