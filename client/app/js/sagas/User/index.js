@@ -70,14 +70,18 @@ function* register( { payload: { data, resolve, reject } } ) {
 
     try {
 
-        const { data, status } = yield call( apiUser.register, data );
+        const { status, body: { errors } } = yield call( apiUser.register, data );
 
-        if (data.errors) {
-            console.log( data.errors );
+
+        if (errors) {
+
+
             yield call(
                 reject,
-                new SubmissionError( data.errors )
+                new SubmissionError( errors )
             );
+
+
         }
         else {
             yield call( resolve );
