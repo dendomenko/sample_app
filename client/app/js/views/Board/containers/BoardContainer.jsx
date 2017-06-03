@@ -4,59 +4,36 @@ import { fetchAll } from './../../../actions/task';
 import DnDGrid from './../components/DndLayout';
 import Card from './../components/Card';
 import { generate } from 'shortid';
+import { Loader } from 'semantic-ui-react';
+import { List } from 'immutable';
 
 
-const default_cards = [
-    {
-        id    : 1,
-        text  : 'Write a cool JS library',
-        status: 'todo'
-    }, {
-        id    : 2,
-        text  : 'Make it generic enough',
-        status: 'todo'
-    }, {
-        id    : 3,
-        text  : 'Write README',
-        status: 'todo'
-    }, {
-        id    : 4,
-        text  : 'Create some examples',
-        status: 'todo'
-    }, {
-        id    : 5,
-        text  : 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-        status: 'todo'
-    }, {
-        id    : 6,
-        text  : '???',
-        status: 'todo'
-    }, {
-        id    : 7,
-        text  : 'PROFIT',
-        status: 'todo'
-    }
-];
-
-const columnsType = [ 'todo', 'onHold', 'inProgress', 'inReview', 'done' ];
+const columnsType = [ 'to_do', 'on_hold', 'in_progress', 'in_review', 'done' ];
 
 export class BoardContainer extends React.Component {
 
     componentDidMount() {
+        const { fetchTask, slug } = this.props;
 
+        fetchTask( slug );
     }
 
     render() {
 
-        console.log( 'ss', this );
 
-        const columns = columnsType.map( column => ({
-                items: default_cards,
-                type : column
-            })
-        );
+        const { isFetching, tasks } = this.props;
 
-        return <DnDGrid columns={columns}/>;
+
+        if (!isFetching)
+            return <Loader/>;
+        else {
+            const columns = columnsType.map( column => ({
+                    items: tasks.get( column ) || List(),
+                    type : column
+                })
+            );
+            return <DnDGrid columns={columns}/>;
+        }
     }
 }
 
@@ -75,8 +52,8 @@ const mapStateToProps = state => ({
  */
 const mapDispatchToProps = ( dispatch ) =>
     (
-        { fetchTask: dispatch( fetchAll() ) }
+        { fetchTask: ( slug ) => dispatch( fetchAll( slug ) ) }
     );
 
 
-export default connect()( BoardContainer );
+export default connect( mapStateToProps, mapDispatchToProps )( BoardContainer );

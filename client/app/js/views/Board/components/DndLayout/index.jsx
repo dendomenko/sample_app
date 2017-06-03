@@ -12,12 +12,9 @@ import { generate } from 'shortid';
 
 
 const DndLayout = ( { columns } ) => {
-    console.log( columns );
     return (
 
-        <div style={{
-            border: '1px solid black'
-        }}>
+        <div>
             <DragDropContextProvider backend={HTML5Backend}>
                 <Grid columns='equal' divided stretched>
                     {columns.map( col =>

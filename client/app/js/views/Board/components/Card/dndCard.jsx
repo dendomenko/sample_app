@@ -8,18 +8,33 @@ import Card from './SimpleCard';
 
 const cardSource = {
 
-    isDragging: ( props, monitor ) => monitor.getItem().id === props.id,
+    isDragging( props, monitor ) {
 
-    beginDrag: ( props ) => props,
+        console.log( 'isDrag', monitor.getItem() );
+        const { item } = monitor.getItem();
+        return item.get( 'id' ) === props.item.get( 'id' );
+    },
 
-    endDrag: ( props, monitor, component ) => props.id
+    beginDrag ( props ) {
+        return props;
+    },
+
+    endDrag ( props, monitor, component ) {
+
+        const { item } = props;
+        console.log( 'end', props );
+        console.log( 'end', monitor.getItem() );
+        return item.get( 'id' );
+    }
 
 };
 
 const collect = ( connect, monitor ) => {
+
     return ({
         connectDragSource: connect.dragSource(),
         isDragging       : monitor.isDragging(),
+
     });
 };
 
@@ -28,22 +43,20 @@ export default class DndCard extends Component {
 
     static propTypes = {
         connectDragSource: PropTypes.func.isRequired,
-        index            : PropTypes.number,
         order            : PropTypes.number,
         isDragging       : PropTypes.bool,
-        id               : PropTypes.any,
+
     };
 
     render() {
-        const { id, text, connectDragSource } = this.props;
-
-
+        const { item, connectDragSource } = this.props;
         return connectDragSource(
-            <div style={{
-                marginTop   : '10px',
-                marginBottom: '10px'
-            }}>
-                <Card/>
+            <div id={item.get( 'id' )}
+                 style={{
+                     marginTop   : '10px',
+                     marginBottom: '10px'
+                 }}>
+                <Card {...item.toJS()}/>
             </div>
         );
     }

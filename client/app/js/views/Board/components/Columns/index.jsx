@@ -4,7 +4,7 @@ import { DropTarget } from 'react-dnd';
 import { generate } from 'shortid';
 import ItemTypes from './../../Item-types';
 import { DndCard } from './../Card';
-
+import { List } from  'immutable';
 
 const style = {
     height         : '12rem',
@@ -25,11 +25,18 @@ const boxTarget = {
             return;
     },
 
-    canDrop: ( props, monitor ) => Boolean( monitor.getItem() )
-    ,
+    canDrop: ( props, monitor ) => {
+
+
+        const { item } = monitor.getItem();
+        console.log( 'B', item.get( 'id' ) );
+        return !item.get( 'id' );
+    }
 };
 
 function collect( connect, monitor ) {
+    console.log( 'M', monitor.getItem() );
+//    const { item } = monitor.getItem();
 
     return {
         connectDropTarget: connect.dropTarget(),
@@ -50,18 +57,17 @@ export default class Column extends Component {
         type             : PropTypes.string.isRequired
     };
     static defaultProps = {
-        items: [],
+        items: List( [] ),
         type : ''
     };
 
     constructor( props ) {
         super( props );
-
-        console.log( 'Column', props );
-
+        console.log( 'Constructor', props );
         this.state = {
             cards: props.items,
         };
+        console.log( 'Constructor STATE', this.state );
 
     }
 
@@ -69,19 +75,20 @@ export default class Column extends Component {
     componentWillReceiveProps( nextProps ) {
 
         if (this.props.isOver && !nextProps.isOver) {
-            const { item: { id } } = nextProps;
-            this.setState( {
-                cards: this.state.cards.concat( [ id ] )
-            } );
+            console.log( 'RECIVE', nextProps );
+//            const { item: { id } } = nextProps;
+//            this.setState( {
+//                cards: this.state.cards.concat( [ id ] )
+//            } );
 
         }
 
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-        console.log( 'should' );
-        console.log( nextProps );
-        console.log( this.props );
+//        console.log( 'should' );
+//        console.log( nextProps );
+//        console.log( this.props );
         return true;
     }
 
@@ -94,13 +101,13 @@ export default class Column extends Component {
                   connectDropTarget,
                   type
               } = this.props;
-        console.log( this.props );
+
         const { cards } = this.state;
 
 
         return connectDropTarget(
             <div>
-                {cards.map( card => <DndCard key={generate()}{...card}/> )}
+                {cards.map( card => <DndCard key={generate()} item={card}/> )}
             </div>
         );
     }
