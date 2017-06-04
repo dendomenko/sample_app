@@ -8,35 +8,50 @@ import Card from './SimpleCard';
 
 const cardSource = {
 
-    isDragging( props, monitor ) {
-
-        console.log( 'isDrag', monitor.getItem() );
-        const { item } = monitor.getItem();
-        return item.get( 'id' ) === props.item.get( 'id' );
+    canDrag( props ) {
+        const { item } = props;
+        return item.get( 'id' );
     },
 
-    beginDrag ( props ) {
-        return props;
+    isDragging(props, monitor) {
+        // If your component gets unmounted while dragged
+        // (like a card in Kanban board dragged between lists)
+        // you can implement something like this to keep its
+        // appearance dragged:
+        console.log('ssss');
+        return monitor.getItem().id === props.id;
+    },
+
+    beginDrag ( props, monitor, component ) {
+
+        console.log( 'begin', props );
+        const { item } = props;
+        return {
+            id: item.get( 'id' )
+        };
+
     },
 
     endDrag ( props, monitor, component ) {
 
-        const { item } = props;
         console.log( 'end', props );
         console.log( 'end', monitor.getItem() );
-        return item.get( 'id' );
+        if (!monitor.didDrop())
+            return;
+
+//        const { item } = props;
+
+//        return item.get( 'id' );
     }
 
 };
 
-const collect = ( connect, monitor ) => {
-
-    return ({
-        connectDragSource: connect.dragSource(),
-        isDragging       : monitor.isDragging(),
-
+const collect = ( connect, monitor ) =>
+    ({
+        connectDragSource : connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
+        isDragging        : monitor.isDragging(),
     });
-};
 
 @DragSource( ItemTypes.CARD, cardSource, collect )
 export default class DndCard extends Component {
@@ -49,7 +64,12 @@ export default class DndCard extends Component {
     };
 
     render() {
-        const { item, connectDragSource } = this.props;
+        const { item, isDragging, connectDragSource } = this.props;
+
+        if (isDragging) {
+            return false;
+        }
+
         return connectDragSource(
             <div id={item.get( 'id' )}
                  style={{

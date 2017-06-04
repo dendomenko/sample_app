@@ -5,7 +5,7 @@ import DnDGrid from './../components/DndLayout';
 import Card from './../components/Card';
 import { generate } from 'shortid';
 import { Loader } from 'semantic-ui-react';
-import { List } from 'immutable';
+import { List, fromJS } from 'immutable';
 
 
 const columnsType = [ 'to_do', 'on_hold', 'in_progress', 'in_review', 'done' ];
@@ -28,7 +28,7 @@ export class BoardContainer extends React.Component {
             return <Loader/>;
         else {
             const columns = columnsType.map( column => ({
-                    items: tasks.get( column ) || List(),
+                    items: tasks.get( column ) || List( [] ),
                     type : column
                 })
             );

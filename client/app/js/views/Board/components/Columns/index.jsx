@@ -20,26 +20,35 @@ const style = {
     border         : '1px solid black'
 };
 const boxTarget = {
-    drop: ( props, monitor ) => {
-        if (monitor.didDrop())
+
+    drop( props, monitor, component ) {
+        if (monitor.didDrop()) {
+            // If you want, you can check whether some nested
+            // target already handled drop
             return;
+        }
+
+        const item = monitor.getItem();
+
+        console.log( 'drop', item );
+        console.log( 'drop', props );
     },
 
     canDrop: ( props, monitor ) => {
-
-
-        const { item } = monitor.getItem();
-        console.log( 'B', item.get( 'id' ) );
-        return !item.get( 'id' );
+//        const { item } = monitor.getItem();
+//        console.log( 'B', props );
+//        console.log( 'B1', monitor.getItem() );
+        return true;
     }
 };
 
 function collect( connect, monitor ) {
-    console.log( 'M', monitor.getItem() );
-//    const { item } = monitor.getItem();
+
 
     return {
         connectDropTarget: connect.dropTarget(),
+        itemType         : monitor.getItemType(),
+        isOverCurrent    : monitor.isOver( { shallow: true } ),
         isOver           : monitor.isOver(),
         canDrop          : monitor.canDrop(),
         item             : monitor.getItem()
@@ -63,11 +72,11 @@ export default class Column extends Component {
 
     constructor( props ) {
         super( props );
-        console.log( 'Constructor', props );
+//        console.log( 'Constructor', props );
         this.state = {
             cards: props.items,
         };
-        console.log( 'Constructor STATE', this.state );
+//        console.log( 'Constructor STATE', this.state );
 
     }
 
@@ -76,20 +85,14 @@ export default class Column extends Component {
 
         if (this.props.isOver && !nextProps.isOver) {
             console.log( 'RECIVE', nextProps );
-//            const { item: { id } } = nextProps;
+            const { item: { id } } = nextProps;
+            console.log( 'id', id );
 //            this.setState( {
 //                cards: this.state.cards.concat( [ id ] )
 //            } );
 
         }
 
-    }
-
-    shouldComponentUpdate( nextProps, nextState ) {
-//        console.log( 'should' );
-//        console.log( nextProps );
-//        console.log( this.props );
-        return true;
     }
 
 
@@ -104,6 +107,7 @@ export default class Column extends Component {
 
         const { cards } = this.state;
 
+        console.log( type, cards );
 
         return connectDropTarget(
             <div>
