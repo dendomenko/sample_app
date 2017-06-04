@@ -48,10 +48,9 @@ export default class BoardContainer extends Component {
             <div className="Board">
                 <h1>Board</h1>
                 {columns.map( column =>
-                    <DndColumn
-                        colType={column}
-                        items={this.renderCards( column )}
-                        key={generate()}/>
+                    <DndColumn colType={column} key={generate()}>
+                        {this.renderCards( column )}
+                    </DndColumn>
                 )}
             </div>
         );

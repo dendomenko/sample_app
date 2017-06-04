@@ -6,7 +6,7 @@ import Column from './Column';
 
 const columnTarget = {
     canDrop( props, monitor ) {
-        console.log( 'column candrop', monitor.getItem() );
+//        console.log( 'column candrop', monitor.getItem() );
         return true;
     },
 
