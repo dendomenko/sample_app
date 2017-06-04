@@ -73,7 +73,8 @@ module Api
       end
 
       def activity
-        @logger = ProjectLogger.all.where(project_id: params[:project_id]).reverse_order
+        project = find_project
+        @logger = ProjectLogger.all.where(project_id: project.id).reverse_order
       end
 
 
