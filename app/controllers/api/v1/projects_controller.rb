@@ -18,6 +18,7 @@ module Api
         project = load_current_user!.projects.create(project_params)
         project.slug = params[:name].to_ascii.parameterize
         if project.save
+          log_create project
           render json: {id: project.id}, status: :created
         else
           render json: {errors: project.errors}, status: :ok
@@ -47,8 +48,9 @@ module Api
           project_id: params[:project_id],
           user_id: params[:user_id]
         )
-        @role = Role.new(role_params)
-        if @role.save
+        role = Role.new(role_params)
+        if role.save
+          log_role role
           render json: {role: 'Created'}, status: :created
         else
           render json: {role: 'No content'}, status: :no_content
@@ -70,6 +72,10 @@ module Api
         Project.find(params[:id]).destroy
       end
 
+      def activity
+        @logger = ProjectLogger.all.where(project_id: params[:project_id]).reverse_order
+      end
+
 
       private
 
@@ -79,6 +85,16 @@ module Api
 
       def role_params
         params.permit(:user_id, :project_id, :role)
+      end
+
+      def log_create(project)
+        text = "Project #{project.name} was created"
+        ProjectLogger.create(project_id: project.id, description: text)
+      end
+
+      def log_role role
+        text = "User #{role.user.name} was added to project with role #{role.role}"
+        ProjectLogger.create(project_id: role.project_id, description: text)
       end
 
     end
