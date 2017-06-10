@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :users, through: :roles
 
   has_many :tasks
+  # has_many :project_loggers
 
   belongs_to :team, optional: true
 

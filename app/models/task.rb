@@ -7,5 +7,6 @@ class Task < ApplicationRecord
   belongs_to :priority
 
   has_many :attachments
+  has_many :comments
 
 end

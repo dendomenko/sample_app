@@ -5,7 +5,8 @@ module Api
       def index
         project = find_project
         if project
-        @tasks = Task.all.where project_id: project.id
+          @tasks = Task.all.where project_id: project.id
+          @statuses = Status.all
         else
           render json: {error: 'Project doesn\'t exist'}
         end
@@ -18,12 +19,13 @@ module Api
       end
 
       def create
-        task = Task.create(task_params)
+        task = Task.new(task_params)
         task.user = load_current_user!
         task.project = Project.find(params[:project_id])
         task.name= "#{task.project.task_name}-#{task_number+1}"
         if task.save!
           add_attachment(task.id, params[:file]) if params[:file]
+          log_create task
           render json: {task: task}, status: :created
         else
           render json: {errors: task.errors}, status: :ok
@@ -34,12 +36,29 @@ module Api
         task = Task.find params[:id]
         task.update task_params
         add_attachment(task.id, params[:file]) if params[:file]
+        log_update task
         render json: {task: task}, status: :created
       end
 
       def all_user_tasks
         tasks = Task.all.where(executor_id: params[:user_id])
         render json: tasks, status: :ok
+      end
+
+      def add_comment
+        comm = Comment.new(comment: params[:comment])
+        comm.task_id = params[:task_id]
+        comm.user_id = load_current_user!.id
+        if comm.save!
+          render json: {message: 'Comment created'}, status: :created
+        else
+          render json: {message: comm.errors}
+        end
+
+      end
+
+      def comments
+        @comments = Comment.all.where(task_id: params[:task_id])
       end
 
       private
@@ -58,9 +77,14 @@ module Api
         Attachment.create(task_id: task_id, file: file)
       end
 
-      def find_project
-        project = Project.find_by_id params[:project_id]
-        project ||= Project.find_by_slug params[:project_id]
+      def log_create(task)
+        text = "Task: #{task.name} was created and assigned to #{User.find(task.executor_id).name}"
+        ProjectLogger.create(project_id: task.project_id, description: text)
+      end
+
+      def log_update(task)
+        text = "Task: #{task.name} was updated"
+        ProjectLogger.create(project_id: task.project_id, description: text)
       end
 
     end

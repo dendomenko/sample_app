@@ -10,11 +10,12 @@ const initialState = {
     team       : [],
     error      : null,
     isFetching : false,
-    slug       : null
+    slug       : null,
+    activity   : []
 };
 
 /**
- * TODO SHOULD REWORK ADD_USER_MEMBER
+ * TODO SHOULD ADD ERROR HANDLER
  * @param state
  * @param type
  * @param payload
@@ -32,8 +33,21 @@ export default ( state = fromJS( initialState ),
         case types.FETCH_PROJECT_FAILURE:
             return state.merge( payload );
 
-//        case types.ADD_MEMBER_SUCCESS:
-//            return state.update( 'team', team => team.push( payload ) );
+        case types.FETCH_ACTIVITY_SUCCESS:
+            return state.merge( payload );
+        case  types.FETCH_ACTIVITY_FAILURE:
+            return state.merge( payload );
+
+
+        case types.REMOVE_MEMBER_SUCCESS:
+            return state.update(
+                'team',
+                items => items.filter(
+                    item => item.get( 'id' ) !== payload.id ) );
+
+        case types.ADD_MEMBER_SUCCESS:
+            return state.update( 'team', team => team.push( payload ) );
+
         default:
             return state;
     }

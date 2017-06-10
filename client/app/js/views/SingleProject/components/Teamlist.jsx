@@ -5,14 +5,15 @@ import { generate } from 'shortid';
 import Item from './TeamItem';
 
 type Props = {
-    items: Array<Object>
+    items: Array<Object>,
+    onRemove: void
 };
 
 /**
  *
  * @param items
  */
-export  default ( { items }: Props ) => (
+export  default ( { items, onRemove }: Props ) => (
 
     <Feed>
         <Header as='h4' icon textAlign='center'>
@@ -25,7 +26,7 @@ export  default ( { items }: Props ) => (
             </Header.Subheader>
         </Header>
         {
-            items.map( item => <Item key={generate()}{...item}/> )
+            items.map( item => <Item handleRemove={onRemove} key={generate()}{...item}/> )
         }
         <Divider/>
     </Feed>

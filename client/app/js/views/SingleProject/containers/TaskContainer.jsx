@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskList from './../../../components/Task/FeedList';
 import { Loader, Divider, Segment } from 'semantic-ui-react';
 import { Button, Modal } from 'semantic-ui-react';
-import CreateTask from 'containers/TaskForm';
+
 class TaskContainer extends React.Component {
 
     state = { open: false };

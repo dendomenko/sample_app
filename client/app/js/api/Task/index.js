@@ -35,10 +35,16 @@ const create = ( params ) => Api.post( path( params.project_id ), {
     .catch( FailueRequest );
 
 
+const updateTaskPath = ( id_project, id_task, ) => (`/projects/${id_project}/tasks/${id_task}`);
+
+
 /**
  *
  */
-const update = () => Api.put()
+const update = ( id_project, id_task, params ) => Api.put(
+    updateTaskPath( id_project, id_task ), {
+        ...params
+    } )
     .then( SuccessRequest )
     .catch( FailueRequest );
 

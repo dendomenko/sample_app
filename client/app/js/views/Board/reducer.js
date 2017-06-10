@@ -5,8 +5,7 @@ export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE';
 
 
-export const fetchTasks = ( projectID ) => createRequest( FETCH_TASKS, { projectID } );
-export const fetchTasksSuccess = ( payload ) => createRequest( FETCH_TASKS_SUCCESS, payload );
+export const UPDATE_CARD = 'UPDATE_CARD';
 
 
 const initialState = {
@@ -14,6 +13,15 @@ const initialState = {
     items     : {},
     error     : ''
 };
+/**
+ *
+ *
+ * @deprecated
+ * @param state
+ * @param type
+ * @param payload
+ * @returns {any}
+ */
 const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
 
     switch ( type ) {
