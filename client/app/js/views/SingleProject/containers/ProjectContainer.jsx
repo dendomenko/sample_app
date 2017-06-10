@@ -38,6 +38,7 @@ class ProjectContainer extends React.Component {
                     <Explore {...project.toJS()}/>
                     <Divider/>
                     {project_id !== null &&
+                    members.length !== 0 &&
                     <ActionMemberForm
                         initialValues={{
                             'project_id': project_id
@@ -63,7 +64,7 @@ const mapStateToProps = ( state ) => ({
     slug      : state.getIn( [ 'routing', 'last' ] ),
     tasks     : state.getIn( [ 'single', 'tasks' ] ),
     team      : state.getIn( [ 'single', 'team' ] ),
-    members   : getMembersSelector(state)
+    members   : getMembersSelector( state )
 });
 
 const mapDispatchToProps = ( dispatch ) =>
