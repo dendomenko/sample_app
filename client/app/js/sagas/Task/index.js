@@ -1,5 +1,4 @@
-import { takeLatest, } from 'redux-saga';
-import { call, take, fork, put, select, actionChannel } from 'redux-saga/effects';
+import { call, take, fork, put, select, actionChannel, takeLatest } from 'redux-saga/effects';
 import { apiTask } from './../../api/Task';
 import { handleRequestFailure } from './../../actions/common';
 import * as actions from '../../actions/task';
@@ -51,11 +50,14 @@ function * fetchAll( project_id ) {
 }
 
 
-function *move( taks ) {
+function *move( { payload } ) {
 
     try {
+        console.log( 'Payload', payload );
+        const { newType, task } = payload;
 
-
+        const taskId = task.getIn( [ 'status', 'id' ] );
+        console.log( taskId );
 
     }
     catch ( e ) {
@@ -65,7 +67,15 @@ function *move( taks ) {
 
 }
 
+
 /* ======================================================================================== */
+
+function* watchMoveTask() {
+
+    yield takeLatest( types.MOVE_TASK, move );
+
+}
+
 function* createFlow() {
 
     yield takeLatest( types.CREATE_TASK, create );
@@ -108,7 +118,8 @@ function *rootSagaTask() {
     yield [
         fork( createFlow ),
         fork( fetchAllFlow ),
-        fork( watchFetchTasks )
+        fork( watchFetchTasks ),
+        fork( watchMoveTask )
     ];
 }
 export default rootSagaTask;

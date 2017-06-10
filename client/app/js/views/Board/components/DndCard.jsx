@@ -20,7 +20,7 @@ const cardSource = {
         const { newType, task } = monitor.getDropResult();
         const { onMoveTask, columnType } = props;
 
-        console.log( '---- old =>>', columnType, '-------new =>>>', newType );
+
 
         onMoveTask( newType, columnType, task );
 

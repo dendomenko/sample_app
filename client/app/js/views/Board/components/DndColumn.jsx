@@ -5,9 +5,14 @@ import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Column from './Column';
 
+
+/**
+ * TODO: Should add hover effect;
+ * @type {{canDrop: (()), drop: ((props, monitor))}}
+ */
 const columnTarget = {
-    canDrop( props, monitor ) {
-//        console.log( 'column candrop', monitor.getItem() );
+    canDrop() {
+
         return true;
     },
 
@@ -15,7 +20,6 @@ const columnTarget = {
 
         const { colType } = props;
         const { card } = monitor.getItem();
-        console.log( 'cc', card );
         return {
             newType: colType,
             task   : card
@@ -39,7 +43,7 @@ export default class DndColumn extends Component {
 
 
     render() {
-        const { connectDropTarget, isOver, canDrop, children, colType, sizeOf } = this.props;
+        const { connectDropTarget, children, colType, sizeOf } = this.props;
 
 
         return connectDropTarget(
