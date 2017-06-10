@@ -11,7 +11,7 @@ const initialState = {
     error      : null,
     isFetching : false,
     slug       : null,
-    activity   : {}
+    activity   : []
 };
 
 /**
