@@ -49,6 +49,9 @@ GET:<br>
 ```http://localhost:3000/api/v1/projects/```<br>
 **PROJECT BY ID**
 ```http://localhost:3000/api/v1/projects/:id``` <br>
+**ACTIVITY BY PROJECT**
+```http://localhost:3000/api/v1/projects/:id/activity``` <br>
+
 
 POST:<br>
 **CREATE PROJECT** ```http://localhost:3000/api/v1/projects/```

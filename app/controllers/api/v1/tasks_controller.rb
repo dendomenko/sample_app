@@ -62,7 +62,7 @@ module Api
       end
 
       def log_create(task)
-        text = "Task: #{task.name} was created and assigned to #{task.executor_id}"
+        text = "Task: #{task.name} was created and assigned to #{User.find(task.executor_id).name}"
         ProjectLogger.create(project_id: task.project_id, description: text)
       end
 
