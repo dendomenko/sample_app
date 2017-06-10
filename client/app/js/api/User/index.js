@@ -16,7 +16,10 @@ const registerRequest = ( { name, email, password, confirm_pwd } ) => Api.post(
         "password"             : password || null,
         "password_confirmation": confirm_pwd || null,
     } )
-    .then( SuccessRequest )
+    .then( res => ({
+        status: res.status,
+        body  : res.data
+    }) )
     .catch( FailueRequest );
 
 

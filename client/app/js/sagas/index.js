@@ -4,6 +4,7 @@ import rootProjectsSagas from './../views/Project/sagas';
 import rootSingleProjectSagas from './../views/SingleProject/sagas';
 import rootTaskSaga from './Task';
 import rootMetaSaga from  './MetaData';
+import rootRoutingSaga from './Routing';
 //import rootTeamSaga from './Team';
 
 /**
@@ -15,7 +16,8 @@ function* root() {
         fork( rootProjectsSagas ),
         fork( rootSingleProjectSagas ),
         fork( rootTaskSaga ),
-        fork( rootMetaSaga )
+        fork( rootMetaSaga ),
+        fork( rootRoutingSaga )
     ];
 }
 

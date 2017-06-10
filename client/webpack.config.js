@@ -60,11 +60,10 @@ var config = {
     resolve: {
 
         // Allow to omit extensions when requiring these files
-        modulesDirectories: [ 'node_modules' ],
-        extensions        : [
-            "", ".js", ".jsx"
-        ],
-        alias             : {
+        modulesDirectories: [ 'node_modules', path.resolve( __dirname, 'app/js' ) ],
+        extensions        : [ "", ".js", ".jsx" ],
+
+        alias: {
             images     : path.resolve( __dirname, 'app/assets/img' ),
             views      : path.resolve( __dirname, 'app/js/views' ),
             utils      : path.resolve( __dirname, 'app/js/utils' ),

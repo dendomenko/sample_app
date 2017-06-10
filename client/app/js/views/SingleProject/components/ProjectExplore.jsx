@@ -22,10 +22,11 @@ export default ( { name, description, task_name }: Props ) => (
             <Item.Extra>
                 <strong>Should add action like edit,remove</strong>
                 <div>
-                    <Link to='board'>
+                    <Link to={`${location.pathname}board`}>
                         go to board
                     </Link>
                 </div>
+
             </Item.Extra>
         </Item.Content>
     </Item>

@@ -38,4 +38,9 @@ class ApplicationController < ActionController::API
     @current_user = User.find_by(id: payload[0]['user_id'])
   end
 
+  def find_project
+    project = Project.find_by_id params[:project_id]
+    project ||= Project.find_by_slug params[:project_id]
+  end
+
 end
