@@ -83,7 +83,7 @@ module Api
       end
 
       def log_update(task)
-        text "Task: #{task.name} was updated"
+        text = "Task: #{task.name} was updated"
         ProjectLogger.create(project_id: task.project_id, description: text)
       end
 
