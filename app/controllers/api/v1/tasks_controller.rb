@@ -6,6 +6,7 @@ module Api
         project = find_project
         if project
         @tasks = Task.all.where project_id: project.id
+        @statuses = Status.all
         else
           render json: {error: 'Project doesn\'t exist'}
         end
@@ -59,11 +60,6 @@ module Api
       def add_attachment(task_id, file)
         Attachment.create(task_id: task_id, file: file)
       end
-
-      # def find_project
-      #   project = Project.find_by_id params[:project_id]
-      #   project ||= Project.find_by_slug params[:project_id]
-      # end
 
       def log_create(task)
         text = "Task: #{task.name} was created and assigned to #{task.executor_id}"
