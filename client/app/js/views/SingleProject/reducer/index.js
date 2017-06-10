@@ -10,7 +10,8 @@ const initialState = {
     team       : [],
     error      : null,
     isFetching : false,
-    slug       : null
+    slug       : null,
+    activity   : {}
 };
 
 /**
@@ -30,6 +31,11 @@ export default ( state = fromJS( initialState ),
         case  types.FETCH_PROJECT_SUCCESS:
             return state.merge( payload );
         case types.FETCH_PROJECT_FAILURE:
+            return state.merge( payload );
+
+        case types.FETCH_ACTIVITY_SUCCESS:
+            return state.merge( payload );
+        case  types.FETCH_ACTIVITY_FAILURE:
             return state.merge( payload );
 
 //        case types.ADD_MEMBER_SUCCESS:

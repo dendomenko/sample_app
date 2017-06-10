@@ -21,8 +21,8 @@ const cardSource = {
         const { onMoveTask, columnType } = props;
 
 
-
-        onMoveTask( newType, columnType, task );
+        if (columnType !== newType)
+            onMoveTask( newType, columnType, task );
 
     }
 };

@@ -9,7 +9,7 @@ import { handleRequestFailure, createRequest } from './../../../actions/common';
 
 /**
  *
- * @param id
+ * @param slug
  * @returns {boolean}
  */
 function* fetch( { slug } ) {
@@ -20,14 +20,37 @@ function* fetch( { slug } ) {
 
         yield put( Actions.fetchSuccess( response ) );
 
-        return response.name;
+
+        return response.id;
     }
     catch ( e ) {
         yield put( handleRequestFailure( types.FETCH_PROJECT_FAILURE, e ) );
-        return true;
+        return false;
     }
 }
 
+
+function* fetchActivity( project_id ) {
+
+    try {
+
+
+        const response = yield call( apiProject.fetchActivity, project_id );
+
+
+        yield put( Actions.fetchActivitySuccess( response ) );
+
+        return true;
+
+    }
+    catch ( e ) {
+
+        yield put( handleRequestFailure( types.FETCH_ACTIVITY_SUCCESS, e ) );
+        return false;
+    }
+
+
+}
 
 function* addMember( { payload: { data, resolve, reject } } ) {
 
@@ -55,7 +78,11 @@ function* singleFlow() {
 
         const slug = yield  take( types.FETCH_PROJECT );
 
-        yield  call( fetch, slug );
+        const id = yield  call( fetch, slug );
+
+        if (false !== id) {
+            yield call( fetchActivity, id );
+        }
     }
 }
 
