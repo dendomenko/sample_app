@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { GridColumn } from 'semantic-ui-react';
 
 export default class Column extends Component {
 
@@ -9,16 +9,9 @@ export default class Column extends Component {
         const { children } = this.props;
 
         return (
-            <div
-                style={{
-                    color : 'red',
-                    width : '100%',
-                    height: '100%',
-                    border: '1px solid black'
-                }}
-            >
+            <GridColumn>
                 {children}
-            </div>
+            </GridColumn>
         );
     }
 }

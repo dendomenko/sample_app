@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import DndColumn from './../components/DndColumn';
+import { Grid } from 'semantic-ui-react';
 import { fetchAll, moveTask } from './../../../actions/task';
 import { generate } from 'shortid';
 import DndCard from './../components/DndCard';
@@ -55,14 +56,19 @@ export default class BoardContainer extends Component {
         }
         return (
             <div className="Board">
-                <h1>Board</h1>
-                {Object.keys( columns.toObject() ).map( column =>
-                    <DndColumn sizeOf={columns.get( column ).size} colType={column}
-                               key={generate()}>
-                        {this.renderCards( column )}
-                    </DndColumn>
-                )
-                }
+                <Grid  columns='equal'  divided stretched padded>
+                    <Grid.Row>
+                        {Object.keys( columns.toObject() ).map( column =>
+                            <Grid.Column key={generate()}>
+                                <DndColumn sizeOf={columns.get( column ).size} colType={column}>
+                                    {this.renderCards( column )}
+                                </DndColumn>
+                            </Grid.Column>
+                        )
+                        }
+                    </Grid.Row>
+
+                </Grid>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
-
+import TaskCard from './Card';
 
 const cardSource = {
 
@@ -45,18 +45,8 @@ export default class DndCard extends Component {
 
 
         return connectDragSource(
-            <div
-                style={{
-                    fontSize  : 10,
-                    fontWeight: 'bold',
-                    cursor    : 'move',
-                    margin    : '20px',
-                    display   : 'block',
-                    opacity   : isDragging ? 0.5 : 1,
-                    border    : '1px solid grey'
-                }}
-            >
-                ♘{` ${data.get( 'title' )}| ${columnType}`}
+            <div className="tm-margin">
+                <TaskCard {...data.toJS()}/>
             </div>,
         );
     }

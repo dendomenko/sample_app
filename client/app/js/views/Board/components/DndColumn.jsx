@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
+import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Column from './Column';
 
@@ -42,38 +43,14 @@ export default class DndColumn extends Component {
 
 
         return connectDropTarget(
-            <div
-                style={{
-                    width  : '350px',
-                    height : '100vh',
-                    margin : '10px',
-                    display: 'inline-block',
-                }}
-            >
-                <h1>{colType} <span>({sizeOf})</span></h1>
-                <Column>
+            <div>
+                <Segment className="height-1-1" padded>
+                    <h1>{colType}
+                        <span>({sizeOf})</span>
+                    </h1>
                     {children}
-                </Column>
-                {isOver && !canDrop && this.renderOverlay( 'red' )}
-                {!isOver && canDrop && this.renderOverlay( 'yellow' )}
-                {isOver && canDrop && this.renderOverlay( 'green' )}
+                </Segment>
             </div>,
-        );
-    }
-
-    renderOverlay( color ) {
-        return (
-            <div
-                style={{
-                    top            : 0,
-                    left           : 0,
-                    height         : '100%',
-                    width          : '100%',
-                    zIndex         : 1,
-                    opacity        : 0.5,
-                    backgroundColor: color,
-                }}
-            />
         );
     }
 }
