@@ -1,7 +1,16 @@
 module Api
   module V1
+    ##
+    # This class respond for project actions
+
     class ProjectsController < ApplicationController
       # before_action :authenticate_request!
+
+
+      ##
+      # Get all projects of current user
+      #
+      # /api/v1/projects - get
 
       def index
         @projects = load_current_user!.projects
