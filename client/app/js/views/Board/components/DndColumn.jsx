@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
+import { connect } from 'react-redux';
 import Column from './Column';
-
 
 const columnTarget = {
     canDrop( props, monitor ) {
@@ -11,7 +11,13 @@ const columnTarget = {
     },
 
     drop( props, monitor ) {
-        console.log( 'column drop', monitor.getItem() );
+
+        const { colType, onMoveTask } = props;
+        const { card } = monitor.getItem();
+
+        console.log( 'column drop', colType, card );
+        onMoveTask( colType, card );
+
     },
 };
 
@@ -24,25 +30,27 @@ function collect( connect, monitor ) {
     };
 }
 
+const mapDispatchToProps = dispatch => ({
+    moveTask: ( type, task ) => dispatch( moveTask( type, task ) )
+});
+
 @DropTarget( 'card', columnTarget, collect )
 export default class DndColumn extends Component {
 
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps( nextProps ) {
         if (!this.props.isOver && nextProps.isOver) {
             // You can use this as enter handler
-            console.log('recive');
         }
 
         if (this.props.isOver && !nextProps.isOver) {
             // You can use this as leave handler
-            console.log('recive 2 ');
         }
 
 
-            // You can be more specific and track enter/leave
-            // shallowly, not including nested targets
-        }
+        // You can be more specific and track enter/leave
+        // shallowly, not including nested targets
+    }
 
     render() {
         const { connectDropTarget, isOver, canDrop, children, colType } = this.props;

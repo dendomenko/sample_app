@@ -15,6 +15,10 @@ const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
         case types.FETCH_ALL_TASKS_SUCCESS:
             return state.merge( payload );
 
+        case types.MOVE_TASK:
+            debugger;
+            return state.merge( payload );
+
         default:
             return state;
     }

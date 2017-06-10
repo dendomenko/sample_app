@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import DndColumn from './../components/DndColumn';
-import { fetchAll } from './../../../actions/task';
+import { fetchAll, moveTask } from './../../../actions/task';
 import { generate } from 'shortid';
 import DndCard from './../components/DndCard';
 
@@ -14,9 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = ( dispatch ) =>
     ( {
-        fetchAll: ( id_project ) => dispatch( fetchAll( id_project ) )
-
-
+        fetchAll: ( id_project ) => dispatch( fetchAll( id_project ) ),
+        moveTask: ( type, task ) => dispatch( moveTask( type, task ) )
     });
 
 @connect( mapStateToProps, mapDispatchToProps )
@@ -42,13 +41,13 @@ export default class BoardContainer extends Component {
 
     render() {
         const columns = [ 'to_do', 'on_hold', 'in_progress' ];
-        const { tasks } = this.props;
+        const { tasks, moveTask } = this.props;
         console.log( 'ss', tasks );
         return (
             <div className="Board">
                 <h1>Board</h1>
                 {columns.map( column =>
-                    <DndColumn colType={column} key={generate()}>
+                    <DndColumn onMoveTask={moveTask} colType={column} key={generate()}>
                         {this.renderCards( column )}
                     </DndColumn>
                 )}

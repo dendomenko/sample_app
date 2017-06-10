@@ -51,6 +51,20 @@ function * fetchAll( project_id ) {
 }
 
 
+function *move( taks ) {
+
+    try {
+
+
+
+    }
+    catch ( e ) {
+        console.error( e.message );
+        return false;
+    }
+
+}
+
 /* ======================================================================================== */
 function* createFlow() {
 

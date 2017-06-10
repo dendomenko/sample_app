@@ -42,3 +42,10 @@ export const updateTaskSuccess = ( {} ) => ({
 });
 
 
+export const moveTask = ( type, task ) => ({
+    type   : types.MOVE_TASK,
+    payload: {
+        type,
+        task
+    }
+});
