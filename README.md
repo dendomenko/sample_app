@@ -100,6 +100,10 @@ Get all tasks for project for user
  
  ```/api/v1/projects/:project_id/tasks/user/:user_id```
 
+Get all comments of task
+  
+  ```/api/v1/projects/:project_id/tasks/:task_id/comments```
+
 
 POST: CREATE NEW TASK<br>
 ```/api/v1/projects/:project_id/tasks```
@@ -117,6 +121,15 @@ POST: CREATE NEW TASK<br>
 }
 ```
 
+POST: CREATE NEW TASK<br>
+```/api/v1/projects/:project_id/tasks/:task_id/comment```
+```
+{
+        "comment":"<text>"
+}
+```
+
+
 PUT: UPDATE TASK<br>
 ```/api/v1/projects/:project_id/tasks/:id```
 ```
@@ -132,3 +145,4 @@ PUT: UPDATE TASK<br>
 
 }
 ```
+
