@@ -8,14 +8,14 @@ import { generate } from 'shortid';
 import DndCard from './../components/DndCard';
 
 const mapStateToProps = state => ({
-    tasks     : state.getIn( [ 'tasks', 'items' ] ),
+    columns   : state.getIn( [ 'tasks', 'items' ] ),
     isFetching: state.getIn( [ 'tasks', 'isFetching' ] ),
 });
 
 const mapDispatchToProps = ( dispatch ) =>
     ( {
         fetchAll: ( id_project ) => dispatch( fetchAll( id_project ) ),
-        moveTask: ( type, task ) => dispatch( moveTask( type, task ) )
+        moveTask: ( newType, oldType, task ) => dispatch( moveTask( newType, oldType, task ) )
     });
 
 @connect( mapStateToProps, mapDispatchToProps )
@@ -28,29 +28,41 @@ export default class BoardContainer extends Component {
     }
 
     renderCards( type ) {
-        const { tasks } = this.props;
 
-        const list = tasks.get( type );
+        const { columns, moveTask } = this.props;
+
+        const list = columns.get( type );
+
 
         if (typeof list !== 'undefined')
-            return list.map( item => <DndCard key={generate()} {...item.toJS()}/> );
+            return list.map( item => <DndCard
+                columnType={type}
+                data={item}
+                onMoveTask={moveTask}
+                key={generate()}/> );
         else
             return null;
 
     }
 
     render() {
-        const columns = [ 'to_do', 'on_hold', 'in_progress' ];
-        const { tasks, moveTask } = this.props;
-        console.log( 'ss', tasks );
+
+        const { isFetching, columns } = this.props;
+
+
+        if (!isFetching) {
+            return <div>Loading</div>;
+        }
         return (
             <div className="Board">
                 <h1>Board</h1>
-                {columns.map( column =>
-                    <DndColumn onMoveTask={moveTask} colType={column} key={generate()}>
+                {Object.keys( columns.toObject() ).map( column =>
+                    <DndColumn sizeOf={columns.get( column ).size} colType={column}
+                               key={generate()}>
                         {this.renderCards( column )}
                     </DndColumn>
-                )}
+                )
+                }
             </div>
         );
     }

@@ -16,8 +16,18 @@ const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
             return state.merge( payload );
 
         case types.MOVE_TASK:
-            debugger;
-            return state.merge( payload );
+
+            return state.withMutations( record => {
+
+                const { newType, oldType, task } = payload;
+
+                record.updateIn( [ 'items', newType ], item => item.push( task ) );
+                record.updateIn( [ 'items', oldType ], item => item.filter(
+                    props => props.get( 'id' ) !== task.get( 'id' ) )
+                );
+
+
+            } );
 
         default:
             return state;

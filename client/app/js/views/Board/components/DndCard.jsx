@@ -7,9 +7,23 @@ const cardSource = {
 
     beginDrag( props ){
 
+        const { data } = props;
         return {
-            card: props
+            card: data
         };
+    },
+
+    endDrag ( props, monitor, ) {
+        if (!monitor.didDrop()) {
+            return;
+        }
+        const { newType, task } = monitor.getDropResult();
+        const { onMoveTask, columnType } = props;
+
+        console.log( '---- old =>>', columnType, '-------new =>>>', newType );
+
+        onMoveTask( newType, columnType, task );
+
     }
 };
 
@@ -26,12 +40,10 @@ function collect( connect, monitor ) {
 @DragSource( 'card', cardSource, collect )
 export default class DndCard extends Component {
 
-    componentDidMount() {
-        console.log( 'card DID momo' );
-    }
-
     render() {
-        const { connectDragSource, isDragging, title } = this.props;
+        const { connectDragSource, isDragging, data, columnType } = this.props;
+
+
         return connectDragSource(
             <div
                 style={{
@@ -44,7 +56,7 @@ export default class DndCard extends Component {
                     border    : '1px solid grey'
                 }}
             >
-                ♘{title}
+                ♘{` ${data.get( 'title' )}| ${columnType}`}
             </div>,
         );
     }

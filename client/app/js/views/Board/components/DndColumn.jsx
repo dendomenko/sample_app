@@ -12,11 +12,13 @@ const columnTarget = {
 
     drop( props, monitor ) {
 
-        const { colType, onMoveTask } = props;
+        const { colType } = props;
         const { card } = monitor.getItem();
-
-        console.log( 'column drop', colType, card );
-        onMoveTask( colType, card );
+        console.log( 'cc', card );
+        return {
+            newType: colType,
+            task   : card
+        };
 
     },
 };
@@ -26,34 +28,19 @@ function collect( connect, monitor ) {
         connectDropTarget: connect.dropTarget(),
         isOver           : monitor.isOver(),
         canDrop          : monitor.canDrop(),
-        card             : monitor.getItem()
+        card             : monitor.getItem(),
     };
 }
 
-const mapDispatchToProps = dispatch => ({
-    moveTask: ( type, task ) => dispatch( moveTask( type, task ) )
-});
 
 @DropTarget( 'card', columnTarget, collect )
 export default class DndColumn extends Component {
 
 
-    componentWillReceiveProps( nextProps ) {
-        if (!this.props.isOver && nextProps.isOver) {
-            // You can use this as enter handler
-        }
-
-        if (this.props.isOver && !nextProps.isOver) {
-            // You can use this as leave handler
-        }
-
-
-        // You can be more specific and track enter/leave
-        // shallowly, not including nested targets
-    }
-
     render() {
-        const { connectDropTarget, isOver, canDrop, children, colType } = this.props;
+        const { connectDropTarget, isOver, canDrop, children, colType, sizeOf } = this.props;
+
+
         return connectDropTarget(
             <div
                 style={{
@@ -63,7 +50,7 @@ export default class DndColumn extends Component {
                     display: 'inline-block',
                 }}
             >
-                <h1>{colType}</h1>
+                <h1>{colType} <span>({sizeOf})</span></h1>
                 <Column>
                     {children}
                 </Column>
