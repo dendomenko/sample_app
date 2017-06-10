@@ -51,7 +51,7 @@ const validate = values => {
     const errors = {};
 
     if (!values.get( 'user_id' )) {
-        errors.user_id = 'Requeired';
+        errors.user_id = 'Required';
     }
     if (!values.get( 'role' )) {
 

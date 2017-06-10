@@ -28,6 +28,12 @@ export const addMemberSuccess = ( payload ) => ({
     payload: fromJS( payload )
 });
 
+
+export const removeMember = ( id ) => createRequest( types.REMOVE_MEMBER, { id } );
+
+export const removeMemberSuccess = ( id ) => createRequest( types.REMOVE_MEMBER_SUCCESS, { id } );
+
+
 /**
  *
  * @param payload

@@ -77,6 +77,10 @@ const fetch = () => Api
     .catch( FailueRequest );
 
 
+const getUser = ( id ) => Api.get( `users/${id}` )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
 /**
  *
  * @param token
@@ -97,5 +101,7 @@ export const apiUser = {
     logout    : logoutRequest,
     update    : updateRequest,
     checkToken: checkToken,
-    fetch     : fetch
+    fetch     : fetch,
+    getUser
+
 };

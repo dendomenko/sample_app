@@ -42,6 +42,13 @@ const add_members = ( { user_id, role, project_id } ) => {
         .then( SuccessRequest )
         .catch( FailueRequest );
 };
+
+
+const removePath = ( project_id, user_id ) => (`/projects/${project_id}/delete-user/${user_id}`);
+const remove = ( project_id, user_id ) => Api.delete( removePath( project_id, user_id ) )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+;
 /**
  *
  */
@@ -55,9 +62,10 @@ const fetch = () => Api.get( '/teams' )
  * @type {{create: ((p1:Props)=>(*))}}
  */
 export const apiTeam = {
-    create    : create,
-    fetch     : fetch,
-    update    : update,
+    create,
+    fetch,
+    update,
+    remove,
     addMember : add,
     addMembers: add_members
 };

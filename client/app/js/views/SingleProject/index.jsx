@@ -5,9 +5,8 @@ import { Container, Grid } from 'semantic-ui-react';
 /**
  *
  */
-const SingleProjectView = ( props ) => {
-    return (
-        <Grid>
+const SingleProjectView = (  ) => (
+        <Grid relaxed>
             <Grid.Row columns={2}>
                 <Grid.Column>
                     <ProjectContainer/>
@@ -19,7 +18,7 @@ const SingleProjectView = ( props ) => {
         </Grid>
 
     );
-};
+
 
 
 export  default SingleProjectView;

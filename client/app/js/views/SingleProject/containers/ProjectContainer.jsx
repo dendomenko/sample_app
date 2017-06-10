@@ -9,6 +9,7 @@ import CreateTask from 'containers/TaskForm';
 import TaskList from './../../../components/Task/FeedList';
 import  ActionMemberForm from './../components/ActionMembers';
 import { fetchMembers } from 'actions/members';
+import { removeMember } from './../actions';
 import { generate } from 'shortid';
 
 /**
@@ -28,9 +29,7 @@ class ProjectContainer extends React.Component {
 
     render() {
 
-        const { team, project, members, project_id } = this.props;
-
-        console.log( 'PROJECT_ID', project_id );
+        const { team, project, members, project_id, removeMember } = this.props;
 
         return (
             <Grid stackable relaxed divided doubling>
@@ -46,7 +45,7 @@ class ProjectContainer extends React.Component {
                     />
                     }
                     <Divider/>
-                    <TeamList items={team.toJS()}/>
+                    <TeamList onRemove={removeMember} items={team.toJS()}/>
                 </Grid.Column>
 
             </Grid>
@@ -72,7 +71,9 @@ const mapDispatchToProps = ( dispatch ) =>
     ( {
         fetchProject: ( slug ) => dispatch( fetchProjectBySlug( slug ) ),
 
-        fetchMembers: () => dispatch( fetchMembers() )
+        fetchMembers: () => dispatch( fetchMembers() ),
+
+        removeMember: ( id ) => dispatch( removeMember( id ) )
     });
 
 
