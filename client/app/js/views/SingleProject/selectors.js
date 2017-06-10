@@ -1,25 +1,21 @@
 import diff from 'lodash/differenceBy';
-
+import { createSelector } from 'reselect';
 
 /**
  * TODO:Should Add reselect
  * @param state
  * @returns {*}
  */
-const getMembers = state => {
-
-    const members = state.getIn( [ 'members', 'list' ] );
-    const team = state.getIn( [ 'single', 'team' ] );
-    if (members.size === 0 || team.size === 0)
-        return [];
-
-    const arrMem = members.toJS();
-    const arrTeam = team.toJS();
-
-    const difference = diff( arrMem, arrTeam, 'id' );
-    console.log( difference );
-    return difference;
-};
+const getMembers = state => state.getIn( [ 'members', 'list' ] ).toJS();
+const getTeam = state => state.getIn( [ 'single', 'team' ] ).toJS();
 
 
-export { getMembers };
+const getMembersSelector = createSelector(
+    [ getMembers, getTeam ],
+    ( members, team ) => {
+        return diff( members, team, 'id' );
+    }
+);
+
+
+export { getMembersSelector };
