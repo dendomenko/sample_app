@@ -3,13 +3,13 @@ import { fromJS } from 'immutable';
 import { createRequest } from './../common';
 
 
-export const fetchAll = () => createRequest( types.FETCH_ALL_TASKS );
+export const fetchAll = ( project_id ) => createRequest( types.FETCH_ALL_TASKS, { project_id } );
 
 
 export const fetchAllSuccess = ( payload ) => ({
     type   : types.FETCH_ALL_TASKS_SUCCESS,
     payload: fromJS( {
-        items     : payload,
+        ...payload,
         isFetching: true
     } )
 });
@@ -42,4 +42,11 @@ export const updateTaskSuccess = ( {} ) => ({
 });
 
 
-
+export const moveTask = ( newType, oldType, task ) => ({
+    type   : types.MOVE_TASK,
+    payload: {
+        newType,
+        oldType,
+        task
+    }
+});

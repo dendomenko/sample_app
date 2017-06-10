@@ -36,7 +36,12 @@ const MembersForm = ( { members, submitting, handleSubmit } ) => {
                 <Field name="user_id" label="Member name" options={members} component={SelectField}/>
                 <Field name="role" label="Role" options={roles} component={SelectField}/>
                 <Field name="project_id" type="hidden" component='input'/>
-                <Button type="submit" disabled={submitting} loading={submitting}>
+                <Button
+                    basic
+                    color='teal'
+                    type="submit"
+                    disabled={submitting}
+                    loading={submitting}>
                     Add
                 </Button>
             </Form.Group>
@@ -51,12 +56,19 @@ const validate = values => {
     const errors = {};
 
     if (!values.get( 'user_id' )) {
-        errors.user_id = 'Requeired';
+        errors.user_id = 'Required';
+    }
+    if (typeof values.get( 'user_id' ) === 'undefined') {
+        errors.user_id = 'Required';
     }
     if (!values.get( 'role' )) {
 
         errors.role = 'Required';
     }
+    if (values.get( 'role' ) === 'author') {
+        errors.role = 'role is not available';
+    }
+
 
     return values;
 };

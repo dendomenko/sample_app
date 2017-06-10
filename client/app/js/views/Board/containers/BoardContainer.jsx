@@ -1,71 +1,76 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import DnDGrid from './../components/DndLayout';
-import Card from './../components/Card';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import DndColumn from './../components/DndColumn';
+import { Grid } from 'semantic-ui-react';
+import { fetchAll, moveTask } from './../../../actions/task';
 import { generate } from 'shortid';
+import DndCard from './../components/DndCard';
 
+const mapStateToProps = state => ({
+    columns   : state.getIn( [ 'tasks', 'items' ] ),
+    isFetching: state.getIn( [ 'tasks', 'isFetching' ] ),
+});
 
-const default_cards = [
-    {
-        id    : 1,
-        text  : 'Write a cool JS library',
-        status: 'todo'
-    }, {
-        id    : 2,
-        text  : 'Make it generic enough',
-        status: 'todo'
-    }, {
-        id    : 3,
-        text  : 'Write README',
-        status: 'todo'
-    }, {
-        id    : 4,
-        text  : 'Create some examples',
-        status: 'todo'
-    }, {
-        id    : 5,
-        text  : 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-        status: 'todo'
-    }, {
-        id    : 6,
-        text  : '???',
-        status: 'todo'
-    }, {
-        id    : 7,
-        text  : 'PROFIT',
-        status: 'todo'
+const mapDispatchToProps = ( dispatch ) =>
+    ( {
+        fetchAll: ( id_project ) => dispatch( fetchAll( id_project ) ),
+        moveTask: ( newType, oldType, task ) => dispatch( moveTask( newType, oldType, task ) )
+    });
+
+@connect( mapStateToProps, mapDispatchToProps )
+@DragDropContext( HTML5Backend )
+export default class BoardContainer extends Component {
+
+    componentDidMount() {
+        const { slug, fetchAll } = this.props;
+        fetchAll( slug );
     }
-];
 
-const columnsType = [ 'todo', 'onHold', 'inProgress', 'inReview', 'done' ];
+    renderCards( type ) {
 
-export class BoardContainer extends React.Component {
+        const { columns, moveTask } = this.props;
+
+        const list = columns.get( type );
+
+
+        if (typeof list !== 'undefined')
+            return list.map( item => <DndCard
+                columnType={type}
+                data={item}
+                onMoveTask={moveTask}
+                key={generate()}/> );
+        else
+            return null;
+
+    }
 
     render() {
 
-        const columns = columnsType.map( column => ({
-                items: default_cards,
-                type : column
-            })
+        const { isFetching, columns } = this.props;
+
+
+        if (!isFetching) {
+            return <div>Loading</div>;
+        }
+        return (
+            <div className="Board">
+                <Grid  columns='equal'  divided stretched padded>
+                    <Grid.Row>
+                        {Object.keys( columns.toObject() ).map( column =>
+                            <Grid.Column key={generate()}>
+                                <DndColumn sizeOf={columns.get( column ).size} colType={column}>
+                                    {this.renderCards( column )}
+                                </DndColumn>
+                            </Grid.Column>
+                        )
+                        }
+                    </Grid.Row>
+
+                </Grid>
+            </div>
         );
-
-        return <DnDGrid columns={columns}/>;
     }
+
 }
-
-/**
- *
- * @param state
- */
-const mapStateToProps = state => state;
-/**
- *
- * @param dispatch
- * @returns {{mapActions: (A|B|M|N)}}
- */
-const mapDispatchToProps = ( dispatch ) =>
-    ({ dispatch } );
-
-
-export default connect()( BoardContainer );

@@ -7,13 +7,7 @@ const initialState = {
     current_location         : null
 };
 
-/**
- *
- *  TODO: check @@INIT action
- */
-
 const routeReducer = ( state = Map( initialState ), { type, payload } ) => {
-
 
     if (type === LOCATION_CHANGE) {
         return state.merge( {
@@ -22,10 +16,7 @@ const routeReducer = ( state = Map( initialState ), { type, payload } ) => {
             locationBeforeTransitions: payload
         } );
     }
-    // if ( type == INIT ) {
-    //     console.log( payload );
-    //     return state.merge( { locationBeforeTransitions: payload } );
-    // }
+
     return state;
 };
 

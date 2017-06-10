@@ -5,11 +5,16 @@ import rootSingleProjectSagas from './../views/SingleProject/sagas';
 import rootTaskSaga from './Task';
 import rootMetaSaga from  './MetaData';
 import rootRoutingSaga from './Routing';
+import rootBoardSaga from './../views/Board/sagas';
 //import rootTeamSaga from './Team';
 
 /**
  *
  */
+
+
+
+
 function* root() {
     yield[
         fork( rootUserSagas ),
@@ -17,7 +22,8 @@ function* root() {
         fork( rootSingleProjectSagas ),
         fork( rootTaskSaga ),
         fork( rootMetaSaga ),
-        fork( rootRoutingSaga )
+        fork( rootRoutingSaga ),
+        fork( rootBoardSaga )
     ];
 }
 

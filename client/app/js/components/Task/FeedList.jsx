@@ -8,8 +8,7 @@ type Props = {
 };
 
 export default ( { tasks }: Props ) => {
-
-    console.log( 'tasksks', tasks );
+    
 
     return (
         <Item.Group relaxed divided link>

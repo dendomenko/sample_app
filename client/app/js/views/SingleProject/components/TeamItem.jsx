@@ -8,11 +8,12 @@ type Props = {
     avatar: string,
     name: string,
     role: string,
-    email: string
+    email: string,
+    handleRemove: void
 };
 
 
-export default ( { id, avatar, name, role }: Props ) => (
+export default ( { id, avatar, name, role, handleRemove }: Props ) => (
     <Feed.Event>
         <Feed.Label>
             <img src={avatar.thumb}/>
@@ -23,18 +24,24 @@ export default ( { id, avatar, name, role }: Props ) => (
         <Feed.Meta>
             {role}
         </Feed.Meta>
+
+
+        { role !== 'author' &&
         <Feed.Extra>
             <Popup
                 trigger={
                     <Button
                         size='tiny'
+                        basic
                         negative
                         circular
+                        onClick={() => handleRemove( id )}
                         icon='remove circle'/>}
                 content='Remove member'
             />
-
         </Feed.Extra>
+        }
+
     </Feed.Event>
 );
 

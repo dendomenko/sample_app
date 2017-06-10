@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TaskList from './../../../components/Task/FeedList';
 import { Loader, Divider, Segment } from 'semantic-ui-react';
 import { Button, Modal } from 'semantic-ui-react';
-import CreateTask from 'containers/TaskForm';
+
 class TaskContainer extends React.Component {
 
     state = { open: false };
@@ -16,6 +16,7 @@ class TaskContainer extends React.Component {
 
         const { tasks, isFetching } = this.props;
         const { open } = this.state;
+
         if (!isFetching)
             return <Loader
                 active
@@ -33,7 +34,7 @@ class TaskContainer extends React.Component {
                     </Button>
                 </Segment>
 
-                <TaskList tasks={tasks.toJS()}/>
+                {/*<TaskList tasks={tasks.toJS()}/>*/}
                 <Modal dimmer='blurring' open={open} onClose={this.close}>
                     <Modal.Header>Create task</Modal.Header>
                     <Modal.Content>

@@ -48,6 +48,15 @@ const fetchRoles = () =>
         .then( SuccessRequest )
         .catch( FailueRequest );
 
+
+const activityPath = ( id ) => (`/projects/${id}/activity `);
+
+const fetchActivity = ( id_project ) => Api.get(
+    activityPath( id_project ) )
+    .then( SuccessRequest )
+    .catch( FailueRequest );
+
+
 /**
  *
  * @type {{fetchALL: (()=>Promise.<T>), create: ((p1:{name?: *, task_name?: *, description?: *})=>(*)), remove: string}}
@@ -57,6 +66,7 @@ export const apiProject = {
     create     : createProject,
     remove     : '',
     fetchSingle: fetchSingleProject,
+    fetchActivity,
     members    : {
         getRoles: fetchRoles,
         getUsers: fetchUsers
