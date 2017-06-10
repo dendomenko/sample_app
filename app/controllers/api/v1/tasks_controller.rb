@@ -5,8 +5,8 @@ module Api
       def index
         project = find_project
         if project
-        @tasks = Task.all.where project_id: project.id
-        @statuses = Status.all
+          @tasks = Task.all.where project_id: project.id
+          @statuses = Status.all
         else
           render json: {error: 'Project doesn\'t exist'}
         end
@@ -43,6 +43,22 @@ module Api
       def all_user_tasks
         tasks = Task.all.where(executor_id: params[:user_id])
         render json: tasks, status: :ok
+      end
+
+      def add_comment
+        comm = Comment.new(comment: params[:comment])
+        comm.task_id = params[:task_id]
+        comm.user_id = load_current_user!.id
+        if comm.save!
+          render json: {message: 'Comment created'}, status: :created
+        else
+          render json: {message: comm.errors}
+        end
+
+      end
+
+      def comments
+        @comments = Comment.all.where(task_id: params[:task_id])
       end
 
       private
