@@ -1,36 +1,15 @@
 tasks ||= @tasks
+statuses ||= @statuses
 
-tasks.each do |task|
-  case task.status_id
-    when 1
-      json.to_do do
-          json.child! {
-            json.partial! 'info', task: task
-          }
-      end
-    when 2
-      json.on_hold do
+statuses.each do |s|
+  json.set! s.name, ''
+  tasks.each do |t|
+    json.set! s.name do
+      if s.id == t.status_id
         json.child! {
-          json.partial! 'info', task: task
+          json.partial! 'info', task: t
         }
       end
-    when 3
-      json.in_progress do
-        json.child! {
-          json.partial! 'info', task: task
-        }
-      end
-    when 4
-      json.in_review do
-        json.child! {
-          json.partial! 'info', task: task
-        }
-      end
-    when 5
-      json.done do
-        json.child! {
-          json.partial! 'info', task: task
-        }
-      end
+    end
   end
 end
