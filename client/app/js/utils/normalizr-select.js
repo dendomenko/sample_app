@@ -13,7 +13,8 @@ export const normalizeUsers = ( { users }: Array, exclude_id ?: number ): Array 
             key  : generate(),
             text : item.name,
             value: item.id,
-            image: item.avatar.thumb
+            image: item.avatar.thumb,
+            id   : item.id
         }) );
 
 /**

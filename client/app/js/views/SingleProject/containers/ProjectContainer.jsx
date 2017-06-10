@@ -12,6 +12,7 @@ import { fetchMembers } from 'actions/members';
 import { removeMember } from './../actions';
 import { generate } from 'shortid';
 
+import { getMembers } from './../selectors';
 /**
  * TODO should to rework members
  */
@@ -62,9 +63,7 @@ const mapStateToProps = ( state ) => ({
     slug      : state.getIn( [ 'routing', 'last' ] ),
     tasks     : state.getIn( [ 'single', 'tasks' ] ),
     team      : state.getIn( [ 'single', 'team' ] ),
-    members   : state.getIn( [ 'members', 'list' ] )
-
-
+    members   : getMembers(state)
 });
 
 const mapDispatchToProps = ( dispatch ) =>

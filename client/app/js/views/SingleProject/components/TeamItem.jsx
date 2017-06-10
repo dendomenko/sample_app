@@ -32,6 +32,7 @@ export default ( { id, avatar, name, role, handleRemove }: Props ) => (
                 trigger={
                     <Button
                         size='tiny'
+                        basic
                         negative
                         circular
                         onClick={() => handleRemove( id )}
