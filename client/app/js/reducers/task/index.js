@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 
 
 const initialState = {
-    items     : [],
+    items     : {},
+    columns   : {},
     errors    : null,
     isFetching: false
 };

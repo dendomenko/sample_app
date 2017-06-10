@@ -9,7 +9,7 @@ export const fetchAll = ( project_id ) => createRequest( types.FETCH_ALL_TASKS, 
 export const fetchAllSuccess = ( payload ) => ({
     type   : types.FETCH_ALL_TASKS_SUCCESS,
     payload: fromJS( {
-        items     : payload,
+        ...payload,
         isFetching: true
     } )
 });

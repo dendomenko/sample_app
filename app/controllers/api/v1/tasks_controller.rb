@@ -5,8 +5,8 @@ module Api
       def index
         project = find_project
         if project
-        @tasks = Task.all.where project_id: project.id
-        @statuses = Status.all
+          @tasks = Task.all.where project_id: project.id
+          @statuses = Status.all
         else
           render json: {error: 'Project doesn\'t exist'}
         end
@@ -45,6 +45,22 @@ module Api
         render json: tasks, status: :ok
       end
 
+      def add_comment
+        comm = Comment.new(comment: params[:comment])
+        comm.task_id = params[:task_id]
+        comm.user_id = load_current_user!.id
+        if comm.save!
+          render json: {message: 'Comment created'}, status: :created
+        else
+          render json: {message: comm.errors}
+        end
+
+      end
+
+      def comments
+        @comments = Comment.all.where(task_id: params[:task_id])
+      end
+
       private
       def task_number
         Task.where(:project_id => params[:project_id]).count
@@ -62,7 +78,7 @@ module Api
       end
 
       def log_create(task)
-        text = "Task: #{task.name} was created and assigned to #{task.executor_id}"
+        text = "Task: #{task.name} was created and assigned to #{User.find(task.executor_id).name}"
         ProjectLogger.create(project_id: task.project_id, description: text)
       end
 

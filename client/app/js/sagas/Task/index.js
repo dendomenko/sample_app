@@ -6,6 +6,7 @@ import * as types from './../../constants/Task';
 import { SubmissionError } from 'redux-form';
 
 
+const getColumnId = state => state.getIn( [ 'tasks', 'columns' ] );
 function* create( { payload: { data, resolve, reject } } ) {
 
     try {
@@ -40,6 +41,7 @@ function * fetchAll( project_id ) {
 
         const response = yield call( apiTask.fetchAll, project_id );
 
+
         yield put( actions.fetchAllSuccess( response ) );
 
 
@@ -54,10 +56,15 @@ function *move( { payload } ) {
 
     try {
         console.log( 'Payload', payload );
-        const { newType, task } = payload;
-
-        const taskId = task.getIn( [ 'status', 'id' ] );
-        console.log( taskId );
+        const columns = yield  select( getColumnId );
+        const { newType, oldType, task } = payload;
+        const status_id = columns.getIn( [ newType, 'id' ] );
+        console.log( 'RR', status_id );
+//        const oldTypeId = columns.get( oldType );
+        const id_project = task.get( 'project_id' );
+        const id_task = task.get( 'id' );
+        const response = yield call( apiTask.update, id_project, id_task, { status_id } );
+        console.log( 'RESPOND', response );
 
     }
     catch ( e ) {

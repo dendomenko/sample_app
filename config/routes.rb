@@ -26,7 +26,10 @@ Rails.application.routes.draw do
         delete 'delete-user/:user_id', to: 'projects#delete_user'
 
         get 'tasks/user/:user_id', to: 'tasks#all_user_tasks'
-        resources :tasks, :except => [:new, :edit]
+        resources :tasks, :except => [:new, :edit] do
+          post 'comment', to: 'tasks#add_comment'
+          get 'comments', to: 'tasks#comments'
+        end
       end
 
     end
