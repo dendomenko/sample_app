@@ -43,16 +43,31 @@ export default class DndColumn extends Component {
 
 
     render() {
-        const { connectDropTarget, children, colType, sizeOf } = this.props;
+        const {
+                  connectDropTarget,
+                  children,
+                  colType,
+                  sizeOf,
+                  canDrop,
+                  isOver
+              } = this.props;
+
+        const isActive = canDrop && isOver;
 
 
         return connectDropTarget(
             <div>
-                <Segment className="height-1-1" padded>
+                <Segment
+                    className="height-1-1"
+                    padded
+                    secondary={isActive}>
+
                     <h1>{colType}
                         <span>({sizeOf})</span>
                     </h1>
+
                     {children}
+
                 </Segment>
             </div>,
         );

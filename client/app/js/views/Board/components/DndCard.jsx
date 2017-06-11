@@ -45,7 +45,7 @@ export default class DndCard extends Component {
 
 
         return connectDragSource(
-            <div className="tm-margin">
+            <div className="tm-margin drag-element">
                 <TaskCard {...data.toJS()}/>
             </div>,
         );

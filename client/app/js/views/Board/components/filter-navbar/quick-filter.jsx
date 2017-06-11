@@ -31,16 +31,22 @@ const filters = [
     }
 
 ];
-const Filter = ( { location: { state: { active } } } ) => (
-    <Menu text>
-        <Menu.Item header>Quick Filter</Menu.Item>
-        {filters.map( filter => <Menu.Item
-            key={generate()}
-            active={filter.name === active}
-            as={Link}
-            {...filter}/> )}
-    </Menu>
-);
+const Filter = ( { location: { state } } ) => {
+    const active = (typeof state !== 'undefined'
+    && typeof state.active !== 'undefined')
+        ? state.active : '';
+
+    return (
+        <Menu text>
+            <Menu.Item header>Quick Filter</Menu.Item>
+            {filters.map( filter => <Menu.Item
+                key={generate()}
+                active={filter.name === active}
+                as={Link}
+                {...filter}/> )}
+        </Menu>
+    );
+};
 
 
 Filter.propTypes = {
