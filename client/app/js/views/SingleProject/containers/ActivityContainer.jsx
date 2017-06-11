@@ -8,7 +8,7 @@ import { Loader, Button, Modal, Segment } from 'semantic-ui-react';
 export class ActivityContainer extends Component {
 
     state = { open: false };
-    triggerModal = () => () => this.setState( { open: !this.state.open } );
+    triggerModal = () => this.setState( () => ({ open: !this.state.open }) );
 
 
     render() {
@@ -26,7 +26,7 @@ export class ActivityContainer extends Component {
             return ( <Segment>
                     <Segment attached='top'>
                         <Button
-                            onClick={this.triggerModal()}
+                            onClick={this.triggerModal}
                             basic
                             color='teal'>
                             Create new task
