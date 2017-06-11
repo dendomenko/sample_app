@@ -26,8 +26,10 @@ const PrivateNavigation = ( { projects, boards } ) => (
             </Dropdown.Menu>
         </Dropdown>
 
-        <Menu.Item as={Button}>
-            Create
+        <Menu.Item>
+            <Button basic color="teal">
+                Create
+            </Button>
         </Menu.Item>
     </Menu.Menu>
 );

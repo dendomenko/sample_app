@@ -52,7 +52,16 @@ export default class DndColumn extends Component {
                   isOver
               } = this.props;
 
+        let style = {};
         const isActive = canDrop && isOver;
+
+        if (isActive) {
+            style = Object.assign( {}, { 'secondary': true } );
+        }
+        else
+            if (canDrop) {
+                style = Object.assign( {}, { 'tertiary': true } );
+            }
 
 
         return connectDropTarget(
@@ -64,7 +73,7 @@ export default class DndColumn extends Component {
                 <Segment
                     className="height-1-1"
                     padded
-                    secondary={isActive}>
+                    {...style}>
 
 
                     {children}

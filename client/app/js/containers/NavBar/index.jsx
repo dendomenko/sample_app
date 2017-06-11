@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import  { userLogout } from 'actions/user';
-import {Menu} from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { FETCH_PROJECTS } from './../../views/Project/constants';
 import { createRequest } from './../../actions/common';
 import {
@@ -71,10 +71,10 @@ class NavBarContainer extends React.PureComponent<Props> {
         const isAuth = token !== null;
 
         return (
-            <Menu color='black' pointing secondary  widths={2}>
+            <Menu color='black' pointing secondary widths={2} size='large'>
                 {this.renderPrivateMenu( isAuth )}
                 <Menu.Item position='right'>
-                {this.renderUserNavigation( isAuth )}
+                    {this.renderUserNavigation( isAuth )}
                 </Menu.Item>
             </Menu>
 

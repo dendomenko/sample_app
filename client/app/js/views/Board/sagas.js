@@ -1,12 +1,13 @@
-import { take, select, fork, put, call } from 'redux-saga/effects';
+import { take, select, fork, put, call, all } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
-import { apiBoard } from './../../api/Board';
+import { apiProject } from './../../api/Project';
 import { apiTeam } from './../../api/Team';
 import { Session } from 'utils/Session';
 import { FETCH_ALL_TASKS } from './../../constants/Task';
 import {
     FETCH_PROJECT_TEAM_FAILURE,
-    fetchMemberSuccess
+    fetchMemberSuccess,
+    fetchInfoSuccess
 } from  './reducer';
 import { handleRequestFailure } from './../../actions/common';
 
@@ -20,21 +21,43 @@ function *fetchTeam( id ) {
         const response = yield call( apiTeam.getForProject, id, token );
 
         yield put( fetchMemberSuccess( response ) );
+        return true;
     }
     catch ( e ) {
         yield put( handleRequestFailure( FETCH_PROJECT_TEAM_FAILURE, e ) );
+        return false;
     }
 
 }
 
+function* fetchProjectInfo( id ) {
+
+    try {
+        const response = yield call( apiProject.fetchSingle, id );
+
+        yield put( fetchInfoSuccess( response ) );
+
+        return true;
+    }
+    catch ( e ) {
+        console.error( e.message );
+
+        return false;
+    }
+
+}
 
 function* fetchTeamFlow() {
-//    const chan = yield actionChannel( FETCH_ALL_TASKS_SUCCESS );
+
     while ( true ) {
 
         const { payload: { project_id } } = yield take( FETCH_ALL_TASKS );
 
-        yield call( fetchTeam, project_id );
+        yield all( {
+            team: call( fetchTeam, project_id ),
+            info: call( fetchProjectInfo, project_id )
+        } );
+
     }
 }
 
