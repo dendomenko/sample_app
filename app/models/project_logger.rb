@@ -1,3 +1,4 @@
 class ProjectLogger < ApplicationRecord
-  # has_one :projects
+  belongs_to :project
+  belongs_to :user
 end

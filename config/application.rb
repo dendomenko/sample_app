@@ -8,20 +8,7 @@ Bundler.require(*Rails.groups)
 
 module SimpleApp
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-    # config.authoload_paths << Rails.root.join('lib')
-    # config.middleware.use ActionDispatch::Cookies
-    # config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-
-    # config.middleware.insert_before 0, "Rack::Cors" do
-    #   allow do
-    #     origins '*'
-    #     resource '*', :headers => :any, :methods => [:get]
-    #   end
-    # end
     # config.api_only = true
-
+    config.autoload_paths += %W(#{config.root}/app)
   end
 end
