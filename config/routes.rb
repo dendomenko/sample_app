@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :users, :teams, :except => [:new, :edit]
 
       resources :projects, :except => [:new, :edit] do
+        get 'members', to: 'projects#members'
         get 'activity', to: 'projects#activity'
         post 'add-user', to:'projects#add_user'
         delete 'delete-user/:user_id', to: 'projects#delete_user'
