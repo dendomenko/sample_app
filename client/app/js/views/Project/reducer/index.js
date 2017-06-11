@@ -1,10 +1,10 @@
-import { Map, List } from 'immutable';
+import { fromJS } from 'immutable';
 import  * as types  from './../constants';
 
 
 const initialState = {
 
-    items     : List( [] ),
+    items     : [],
     isFetching: false,
     error     : null
 
@@ -15,18 +15,15 @@ const initialState = {
  *  TODO: Should to rework
  */
 
-const reducer = ( state = Map( initialState ), { type, payload } ) => {
+const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
 
     switch ( type ) {
         case types.FETCH_PROJECTS:
             return state.update( 'isFetching', val => payload.isFetching );
         case types.FETCH_PROJECTS_SUCCESS:
-            return state.merge( Map( {
-                isFetching: payload.isFetching,
-                items     : payload.items
-            } ) );
+            return state.merge( payload );
         case types.FETCH_PROJECTS_FAILURE:
-            return state.merge( Map( {
+            return state.merge( fromJS( {
                 isFetching: payload.isFetching,
                 error     : payload.error
             } ) );

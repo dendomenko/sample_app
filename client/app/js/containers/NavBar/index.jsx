@@ -1,9 +1,17 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Segment, } from 'semantic-ui-react';
 import  { userLogout } from 'actions/user';
-import { UserDropdown, PublicNavigation, PrivateNavigation } from './../../components/NavigationBar';
+import {Menu} from 'semantic-ui-react';
+import { FETCH_PROJECTS } from './../../views/Project/constants';
+import { createRequest } from './../../actions/common';
+import {
+    NavBar,
+    UserNavigation,
+    CommonNavigation,
+    PrivateNavigation
+} from './../../components/NavigationBar';
+import { boardsSelector, projectsMenuSelector } from './selectors';
 
 /**
  *
@@ -13,38 +21,69 @@ type Props = {
     token: string;
     handleLogout: void
 };
-class NavBar extends React.PureComponent<Props> {
+class NavBarContainer extends React.PureComponent<Props> {
 
-    /**
-     *
-     * @param nextProps
-     * @returns {boolean}
-     */
+    componentDidMount() {
+        const { fetchProjects } = this.props;
+
+        fetchProjects();
+
+    }
+
     shouldComponentUpdate( nextProps ) {
-        return this.props.username !== nextProps.username;
+//        return this.props.username !== nextProps.username;
+        return true;
     }
 
     /**
      *
      * @returns {XML}
      */
+    renderUserNavigation( isAuth ) {
+
+
+        if (isAuth) {
+            const { username, avatar, handleLogout } = this.props;
+            return (<UserNavigation handleLogout={handleLogout}
+                                    username={username}
+                                    avatar={avatar}/>
+            );
+        }
+        else return null;
+    }
+
+    renderPrivateMenu( isAuth ) {
+        if (isAuth) {
+            const { projects, boards } = this.props;
+            return <PrivateNavigation
+                projects={projects}
+                boards={boards}/>;
+        }
+
+        else
+            return <CommonNavigation/>;
+    }
+
+
     render() {
-        const { username, token, avatar, handleLogout } = this.props;
+        const { token } = this.props;
+
+        const isAuth = token !== null;
 
         return (
-            <Segment inverted>
-                <Menu inverted pointing secondary>
-                    {(token !== null) ? <PrivateNavigation /> : <PublicNavigation/>}
-                    {(token !== null) && <UserDropdown
-                        handleLogout={handleLogout}
-                        username={username}
-                        avatar={avatar}
-                    />}
-                </Menu>
-            </Segment>
+            <Menu color='black' pointing secondary  widths={2}>
+                {this.renderPrivateMenu( isAuth )}
+                <Menu.Item postion='right'>
+                {this.renderUserNavigation( isAuth )}
+                </Menu.Item>
+            </Menu>
+
+
         );
     }
+
 }
+
 
 /**
  *
@@ -54,7 +93,10 @@ const mapStateToProps = state => (
     {
         username: state.getIn( [ 'user', 'name' ] ),
         token   : state.getIn( [ 'user', 'token' ] ),
-        avatar  : state.getIn( [ 'user', 'avatar', 'thumb' ] )
+        avatar  : state.getIn( [ 'user', 'avatar', 'thumb' ] ),
+        projects: projectsMenuSelector( state ),
+        boards  : boardsSelector( state )
+
     });
 /**
  *
@@ -62,10 +104,13 @@ const mapStateToProps = state => (
  */
 const mapDispatchToProps = ( dispatch ) =>
     ( {
-        handleLogout: () => {
+        handleLogout : () => {
             dispatch( userLogout() );
+        },
+        fetchProjects: () => {
+            dispatch( createRequest( FETCH_PROJECTS ) );
         }
     });
 
-export default connect( mapStateToProps, mapDispatchToProps )( NavBar );
+export default connect( mapStateToProps, mapDispatchToProps )( NavBarContainer );
 

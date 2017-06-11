@@ -16,10 +16,10 @@ import { Map, List, fromJS } from 'immutable';
 export const fetchSuccess = ( data ) => (
     {
         type   : types.FETCH_PROJECTS_SUCCESS,
-        payload: {
+        payload: fromJS( {
             isFetching: true,
-            items     : List( data )
-        }
+            items     : data
+        } )
     }
 );
 
@@ -59,7 +59,7 @@ export const createSuccess = ( payload ) => ({
 
 
 export const addMemberSuccess = ( payload ) => ({
-    type   : types.ADD_MEMBER_SUCCESS,
+    type: types.ADD_MEMBER_SUCCESS,
 });
 /**
  *
