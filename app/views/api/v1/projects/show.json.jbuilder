@@ -7,7 +7,6 @@ json.slug p.slug
 json.task_name p.task_name
 json.description p.description
 json.created p.created_at
-json.tasks tasks
 json.team @team do |t|
   json.id t.user.id
   json.name t.user.name
