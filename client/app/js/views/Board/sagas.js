@@ -1,13 +1,11 @@
-import { take, select, fork, put,call } from 'redux-saga/effects';
+import { take, select, fork, put, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 import { apiBoard } from './../../api/Board';
 import { apiTeam } from './../../api/Team';
 import { Session } from 'utils/Session';
 import { FETCH_ALL_TASKS } from './../../constants/Task';
 import {
-    FETCH_PROJECT_TEAM,
     FETCH_PROJECT_TEAM_FAILURE,
-    FETCH_PROJECT_TEAM_SUCCESS,
     fetchMemberSuccess
 } from  './reducer';
 import { handleRequestFailure } from './../../actions/common';
@@ -21,10 +19,10 @@ function *fetchTeam( id ) {
 
         const response = yield call( apiTeam.getForProject, id, token );
 
-        console.log( 'REW', response );
+        yield put( fetchMemberSuccess( response ) );
     }
     catch ( e ) {
-//        yield put( handleRequestFailure( FETCH_TASKS_FAILURE, e ) );
+        yield put( handleRequestFailure( FETCH_PROJECT_TEAM_FAILURE, e ) );
     }
 
 }

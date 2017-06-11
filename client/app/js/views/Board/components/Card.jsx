@@ -1,16 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon, Header } from 'semantic-ui-react';
+import { Card, Icon, Header, } from 'semantic-ui-react';
 import _ from 'lodash';
 
-const SimpleCard = ( { title, name, status, user_id, description, type, priority } ) => (
+const SimpleCard = ( {
+                         title,
+                         name,
+                         status,
+                         user_id,
+                         description,
+                         type,
+                         priority,
+                         children
+                     } ) => (
     <Card fluid color={getPriority( priority.name )}>
         <Card.Content>
+            {children}
             <Card.Header>
                 {title}
             </Card.Header>
             <Card.Meta>
                 {name}
+                <div>
+                    {`Priority ${priority.name}`}
+                </div>
             </Card.Meta>
             <Card.Content/>
             {getIconByType( type.name )}
@@ -40,16 +53,16 @@ const getPriority = name => {
 const getIconByType = ( type ) => {
     switch ( type ) {
         case "Task":
-            return <Header as='span' color="blue" icon='configure' content={_.startCase( _.toLower( type ) )}/>;
+            return <Header as='h5' color="blue" icon='configure' content={_.startCase( _.toLower( type ) )}/>;
         case "Improvement":
-            return <Header as='h4' color="teal" icon='idea' content={_.startCase( _.toLower( type ) )}/>;
+            return <Header as='h5' color="teal" icon='idea' content={_.startCase( _.toLower( type ) )}/>;
         case "Feature":
-            return <Header as='h4' color="purple" icon='expand' content={_.startCase( _.toLower( type ) )}/>;
+            return <Header as='h5' color="purple" icon='expand' content={_.startCase( _.toLower( type ) )}/>;
         case "Bug":
-            return <Header as='h4' color="red" icon='bug' content={_.startCase( _.toLower( type ) )}/>;
+            return <Header as='h5' color="red" icon='bug' content={_.startCase( _.toLower( type ) )}/>;
 
         default:
-            return <Header as='h4' color="blue" icon='configure' content={_.startCase( _.toLower( type ) )}/>;
+            return <Header as='h5' color="blue" icon='configure' content={_.startCase( _.toLower( type ) )}/>;
 
     }
 

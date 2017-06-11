@@ -57,7 +57,7 @@ const fetch = () => Api.get( '/teams' )
     .catch( FailueRequest );
 
 
-const getMembersOfProject = ( id, token ) => Api.get( `projects/${id}/members/'`, {
+const getMembersOfProject = ( id, token ) => Api.get( `projects/${id}/members/`, {
     headers: {
         'Authorization': token
     },

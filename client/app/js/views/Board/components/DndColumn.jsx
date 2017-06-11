@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Column from './Column';
 
@@ -57,14 +57,15 @@ export default class DndColumn extends Component {
 
         return connectDropTarget(
             <div>
+
+                <Header as="h1" textAlign="center">{colType}
+                    <span>({sizeOf})</span>
+                </Header>
                 <Segment
                     className="height-1-1"
                     padded
                     secondary={isActive}>
 
-                    <h1>{colType}
-                        <span>({sizeOf})</span>
-                    </h1>
 
                     {children}
 

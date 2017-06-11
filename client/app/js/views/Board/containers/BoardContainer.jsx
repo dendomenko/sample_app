@@ -11,6 +11,7 @@ import DndCard from './../components/DndCard';
 const mapStateToProps = state => ({
     columns   : state.getIn( [ 'tasks', 'items' ] ),
     isFetching: state.getIn( [ 'tasks', 'isFetching' ] ),
+    team      : state.getIn( [ 'board', 'team' ] )
 });
 
 const mapDispatchToProps = ( dispatch ) =>
@@ -30,7 +31,7 @@ export default class BoardContainer extends Component {
 
     renderCards( type ) {
 
-        const { columns, moveTask } = this.props;
+        const { columns, moveTask, team } = this.props;
 
         const list = columns.get( type );
 
@@ -38,6 +39,7 @@ export default class BoardContainer extends Component {
         if (typeof list !== 'undefined')
             return list.map( item => <DndCard
                 columnType={type}
+                team={team}
                 data={item}
                 onMoveTask={moveTask}
                 key={generate()}/> );
@@ -56,7 +58,7 @@ export default class BoardContainer extends Component {
         }
         return (
             <div className="Board">
-                <Grid  columns='equal'  divided stretched padded>
+                <Grid columns='equal' divided stretched padded>
                     <Grid.Row>
                         {Object.keys( columns.toObject() ).map( column =>
                             <Grid.Column key={generate()}>
