@@ -41,7 +41,7 @@ module Api
       end
 
       def all_user_tasks
-        tasks = Task.all.where(executor_id: params[:user_id])
+        tasks = find_project.tasks.where(executor_id: params[:user_id])
         render json: tasks, status: :ok
       end
 
