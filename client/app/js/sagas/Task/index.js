@@ -55,19 +55,23 @@ function * fetchAll( project_id ) {
 function *move( { payload } ) {
 
     try {
-        console.log( 'Payload', payload );
+
         const columns = yield  select( getColumnId );
-        const { newType, oldType, task } = payload;
+        const { newType, task } = payload;
+
         const status_id = columns.getIn( [ newType, 'id' ] );
-        console.log( 'RR', status_id );
-//        const oldTypeId = columns.get( oldType );
+
         const id_project = task.get( 'project_id' );
         const id_task = task.get( 'id' );
-        const response = yield call( apiTask.update, id_project, id_task, { status_id } );
-        console.log( 'RESPOND', response );
+
+        yield call( apiTask.update, id_project,
+            id_task, { status_id } );
+
+        yield put( actions.updateTaskSuccess() );
 
     }
     catch ( e ) {
+
         console.error( e.message );
         return false;
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Column from './Column';
 
@@ -43,16 +43,41 @@ export default class DndColumn extends Component {
 
 
     render() {
-        const { connectDropTarget, children, colType, sizeOf } = this.props;
+        const {
+                  connectDropTarget,
+                  children,
+                  colType,
+                  sizeOf,
+                  canDrop,
+                  isOver
+              } = this.props;
+
+        let style = {};
+        const isActive = canDrop && isOver;
+
+        if (isActive) {
+            style = Object.assign( {}, { 'secondary': true } );
+        }
+        else
+            if (canDrop) {
+                style = Object.assign( {}, { 'tertiary': true } );
+            }
 
 
         return connectDropTarget(
             <div>
-                <Segment className="height-1-1" padded>
-                    <h1>{colType}
-                        <span>({sizeOf})</span>
-                    </h1>
+
+                <Header as="h1" textAlign="center">{colType}
+                    <span>({sizeOf})</span>
+                </Header>
+                <Segment
+                    className="height-1-1"
+                    padded
+                    {...style}>
+
+
                     {children}
+
                 </Segment>
             </div>,
         );

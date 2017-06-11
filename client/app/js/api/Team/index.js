@@ -57,6 +57,14 @@ const fetch = () => Api.get( '/teams' )
     .catch( FailueRequest );
 
 
+const getMembersOfProject = ( id, token ) => Api.get( `projects/${id}/members/`, {
+    headers: {
+        'Authorization': token
+    },
+} ).then( SuccessRequest )
+    .catch( FailueRequest );
+
+
 /**
  *
  * @type {{create: ((p1:Props)=>(*))}}
@@ -66,7 +74,8 @@ export const apiTeam = {
     fetch,
     update,
     remove,
-    addMember : add,
-    addMembers: add_members
+    addMember    : add,
+    addMembers   : add_members,
+    getForProject: getMembersOfProject
 };
 

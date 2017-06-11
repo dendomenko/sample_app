@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from "react";
-import { Radio, Container } from "semantic-ui-react";
+import { Radio, Container, Segment } from "semantic-ui-react";
 import RegisterForm from "components/RegisterForm";
 import SignInForm from "components/SignIn";
 //import { registerUser, loginUser, userLogout } from "actions/user";
@@ -29,15 +29,21 @@ export  default  class HomeView extends React.PureComponent {
 
     render() {
         return (
-            <Container textAlign="center">
-                <Radio slider label={this.state.label}
-                       checked={this.state.checked}
-                       onChange={this.handleChangeForm}/>
-                { this.state.checked
-                    ? <RegisterForm />
-                    : <SignInForm />
-                }
-            </Container>
+            <div className="withBg">
+                <Container
+                    as={Segment}
+                    className="formBlock"
+                    textAlign="center">
+
+                    <Radio slider label={this.state.label}
+                           checked={this.state.checked}
+                           onChange={this.handleChangeForm}/>
+                    { this.state.checked
+                        ? <RegisterForm />
+                        : <SignInForm />
+                    }
+                </Container>
+            </div>
         );
     }
 

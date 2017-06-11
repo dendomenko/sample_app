@@ -6,7 +6,6 @@ const initialState = {
     name       : null,
     task_name  : null,
     description: null,
-    tasks      : [],
     team       : [],
     error      : null,
     isFetching : false,

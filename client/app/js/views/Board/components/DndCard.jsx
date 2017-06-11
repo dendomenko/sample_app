@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import TaskCard from './Card';
+import CardAvatar from './CardAvatar';
 
 const cardSource = {
 
@@ -41,12 +42,17 @@ function collect( connect, monitor ) {
 export default class DndCard extends Component {
 
     render() {
-        const { connectDragSource, isDragging, data, columnType } = this.props;
+        const { connectDragSource, isDragging, data, columnType, team } = this.props;
+
+        const user_id = data.get( 'executor_id' );
+        const index = team.findIndex( member => member.get( 'id' ) === user_id );
 
 
         return connectDragSource(
-            <div className="tm-margin">
-                <TaskCard {...data.toJS()}/>
+            <div className="tm-margin drag-element">
+                <TaskCard {...data.toJS()}>
+                    <CardAvatar user={team.get( index )}/>
+                </TaskCard>
             </div>,
         );
     }

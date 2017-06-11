@@ -1,41 +1,70 @@
-import { take, call, put, fork, takeLatest, select, all } from 'redux-saga/effects';
+import { take, select, fork, put, call, all } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
-import { apiBoard } from './../../api/Board';
+import { apiProject } from './../../api/Project';
+import { apiTeam } from './../../api/Team';
 import { Session } from 'utils/Session';
+import { FETCH_ALL_TASKS } from './../../constants/Task';
 import {
-    FETCH_TASKS_SUCCESS,
-    FETCH_TASKS,
-    FETCH_TASKS_FAILURE,
-    fetchTasks,
-    fetchTasksSuccess
+    FETCH_PROJECT_TEAM_FAILURE,
+    fetchMemberSuccess,
+    fetchInfoSuccess
 } from  './reducer';
 import { handleRequestFailure } from './../../actions/common';
 
 
-function *fetch( { projectID } ) {
+function *fetchTeam( id ) {
 
     try {
 
         const token = yield select( state => state.getIn( [ 'user', 'token' ] ) );
-        const response = yield call( apiBoard.fetch, projectID, token );
 
-        console.log( response );
+        const response = yield call( apiTeam.getForProject, id, token );
+
+        yield put( fetchMemberSuccess( response ) );
+        return true;
     }
     catch ( e ) {
-        yield put( handleRequestFailure( FETCH_TASKS_FAILURE, e ) );
+        yield put( handleRequestFailure( FETCH_PROJECT_TEAM_FAILURE, e ) );
+        return false;
     }
 
 }
 
+function* fetchProjectInfo( id ) {
 
-function* fetchFlow() {
-    yield takeLatest( FETCH_TASKS, fetch );
+    try {
+        const response = yield call( apiProject.fetchSingle, id );
+
+        yield put( fetchInfoSuccess( response ) );
+
+        return true;
+    }
+    catch ( e ) {
+        console.error( e.message );
+
+        return false;
+    }
+
+}
+
+function* fetchTeamFlow() {
+
+    while ( true ) {
+
+        const { payload: { project_id } } = yield take( FETCH_ALL_TASKS );
+
+        yield all( {
+            team: call( fetchTeam, project_id ),
+            info: call( fetchProjectInfo, project_id )
+        } );
+
+    }
 }
 
 function* rootBoardSaga() {
 
     yield [
-        fork( fetchFlow )
+        fork( fetchTeamFlow )
     ];
 
 }
