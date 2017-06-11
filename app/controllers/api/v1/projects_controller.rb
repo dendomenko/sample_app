@@ -2,7 +2,6 @@ module Api
   module V1
     ##
     # This class respond for project actions
-
     class ProjectsController < ApplicationController
       # before_action :authenticate_request!
 
@@ -103,12 +102,12 @@ module Api
 
       def log_create(project)
         text = "Project #{project.name} was created"
-        ProjectLogger.create(project_id: project.id, description: text)
+        ProjectLogger.create(project_id: project.id, description: text, user_id: load_current_user!.id)
       end
 
       def log_role role
-        text = "User #{role.user.name} was added to project with role #{role.role}"
-        ProjectLogger.create(project_id: role.project_id, description: text)
+        text = "User: #{role.user.name} was added to project with role #{role.role}"
+        ProjectLogger.create(project_id: role.project_id, description: text, user_id: load_current_user!.id)
       end
 
     end

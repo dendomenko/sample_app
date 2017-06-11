@@ -1,5 +1,6 @@
 module Api
   module V1
+
     class TasksController < ApplicationController
 
       def index
@@ -34,9 +35,12 @@ module Api
 
       def update
         task = Task.find params[:id]
-        task.update task_params
+        task.assign_attributes task_params
+        log = log_update task
+        if task.save!
+          log.save!
+        end
         add_attachment(task.id, params[:file]) if params[:file]
-        log_update task
         render json: {task: task}, status: :created
       end
 
@@ -79,12 +83,15 @@ module Api
 
       def log_create(task)
         text = "Task: #{task.name} was created and assigned to #{User.find(task.executor_id).name}"
-        ProjectLogger.create(project_id: task.project_id, description: text)
+        ProjectLogger.create(project_id: task.project_id, description: text, user_id: load_current_user!.id)
       end
 
       def log_update(task)
-        text = "Task: #{task.name} was updated"
-        ProjectLogger.create(project_id: task.project_id, description: text)
+        text = "Task: #{task.name} was updated."
+        text += " Status was changed to #{task.status.name}." if task.status_id_changed?
+        text += " Type was changed to #{task.type.name}." if task.type_id_changed?
+        text += " Priority was changed to #{task.priority.name}." if task.priority_id_changed?
+        ProjectLogger.new(project_id: task.project_id, description: text, user_id: load_current_user!.id)
       end
 
     end
