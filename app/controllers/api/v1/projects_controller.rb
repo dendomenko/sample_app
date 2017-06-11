@@ -38,7 +38,6 @@ module Api
         user = load_current_user!
         @project = user.projects.find_by slug: params[:id]
         @project ||= user.projects.find params[:id]
-        @tasks = @project.tasks
         @team = @project.roles
       end
 
@@ -75,6 +74,11 @@ module Api
         else
           render json: {message: "User with id:#{params[:user_id]} not found in project with id:#{params[:project_id]} "}, status: :ok
         end
+      end
+
+      def members
+        project = find_project
+        @team = project.roles
       end
 
       def destroy

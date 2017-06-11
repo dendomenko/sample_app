@@ -1,16 +1,15 @@
 import { createRequest } from './../../actions/common';
 import { fromJS } from 'immutable';
-export const FETCH_TASKS = 'FETCH_TASKS';
-export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
-export const FETCH_TASKS_FAILURE = 'FETCH_TASKS_FAILURE';
 
 
-export const UPDATE_CARD = 'UPDATE_CARD';
+export const FETCH_PROJECT_TEAM = 'FETCH_PROJECT_TEAM';
+export const FETCH_PROJECT_TEAM_SUCCESS = 'FETCH_PROJECT_TEAM_SUCCESS';
+export const FETCH_PROJECT_TEAM_FAILURE = 'FETCH_PROJECT_TEAM_FAILURE';
 
 
 const initialState = {
     isFetching: false,
-    items     : {},
+    team      : [],
     error     : ''
 };
 /**
@@ -25,16 +24,17 @@ const initialState = {
 const reducer = ( state = fromJS( initialState ), { type, payload } ) => {
 
     switch ( type ) {
-        case FETCH_TASKS:
-            return state.update( 'isFetching', val => !val );
-        case FETCH_TASKS_SUCCESS:
-            return state.merge( {
-                isFetching: true,
-                items     : payload
-            } );
+        case FETCH_PROJECT_TEAM_SUCCESS:
+            return state.merge( payload );
         default:
             return state;
     }
 };
+
+
+export const fetchMemberSuccess = ( payload ) => ({
+    type   : FETCH_PROJECT_TEAM_SUCCESS,
+    payload: fromJS( payload )
+});
 
 export  default reducer;

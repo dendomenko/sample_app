@@ -73,7 +73,7 @@ class NavBarContainer extends React.PureComponent<Props> {
         return (
             <Menu color='black' pointing secondary  widths={2}>
                 {this.renderPrivateMenu( isAuth )}
-                <Menu.Item postion='right'>
+                <Menu.Item position='right'>
                 {this.renderUserNavigation( isAuth )}
                 </Menu.Item>
             </Menu>
