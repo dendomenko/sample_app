@@ -28,17 +28,15 @@ let registerForm = ( { error, handleSubmit, pristine, reset, submitting } ) => (
             <Field name="password" component={InputField} label="Password" type="password"/>
             <Field name="confirm_pwd" component={InputField} label="Confirm password" type="password"/>
 
-            <Button.Group>
-                <Button type="submit"
-                        fluid
-                        colro="teal"
-                        basic
-                        loading={submitting}
-                        disabled={submitting}>
-                    Register</Button>
-                <Button type="button" fluid negative disabled={pristine || submitting} onClick={reset}>Clear
-                    Values</Button>
-            </Button.Group>
+            <Button type="submit"
+                    fluid
+                    color="teal"
+                    basic
+                    loading={submitting}
+                    disabled={submitting}>
+                Register
+            </Button>
+
         </Form>
         {
             error && <Message attached='bottom' error>
