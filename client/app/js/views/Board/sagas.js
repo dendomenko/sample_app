@@ -19,7 +19,6 @@ function *fetch( { projectID } ) {
         const token = yield select( state => state.getIn( [ 'user', 'token' ] ) );
         const response = yield call( apiBoard.fetch, projectID, token );
 
-        console.log( response );
     }
     catch ( e ) {
         yield put( handleRequestFailure( FETCH_TASKS_FAILURE, e ) );
